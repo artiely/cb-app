@@ -1,0 +1,28 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
+    "stage-2"
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "transform-runtime", ["import", [{
+      "libraryName": "vant",
+      "libraryDirectory": "es",
+      "style": true
+    }, {
+      "libraryName": "muse-ui",
+      "libraryDirectory": "lib",
+      "camel2DashComponentName": false
+    }]]
+  ],
+  "env": {
+    "test": {
+      "presets": ["env", "stage-2"]
+    }
+  }
+}

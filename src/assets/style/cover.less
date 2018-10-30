@@ -1,0 +1,282 @@
+@import './var.less';
+@import './border.less';
+@font-face {
+  font-family: 'custom-iconfont';
+  src: url('./vant-icon.ttf') format('truetype');
+}
+
+.van-icon {
+  font-family: 'vant-icon', 'custom-iconfont' !important;
+}
+.login,
+.index {
+  .cube-input {
+    border: none !important;
+    padding-right: 8px;
+  }
+  .cube-input_active:after {
+    border: none !important;
+  }
+  .cube-input-field {
+    padding: 10px;
+  }
+  .cube-btn {
+    padding: 12px;
+    margin-top: 20px;
+    border-radius: 20px;
+  }
+  .cube-input:after {
+    border: none !important;
+  }
+}
+[class*='van-hairline']::after {
+  border: none;
+}
+.mu-calendar-container {
+  background: #fff;
+}
+.mu-dialog {
+  width: auto !important;
+}
+.mu-text-field-input {
+  text-align: right;
+  height: 50px !important;
+  line-height: 50px !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  background: transparent !important;
+}
+.mu-text-field-content {
+  padding: 0 !important;
+}
+.mu-text-field-line {
+  height: 0;
+  background: none !important;
+}
+.mu-text-field-focus-line {
+  height: 0;
+  background: none !important;
+}
+.mu-text-field-hint {
+  text-align: right;
+  font-size: 15px;
+  color: #999999 !important;
+  height: 60px;
+  line-height: 60;
+}
+.mu-date-display,
+.mu-day-button-bg {
+  background-color: @primary !important;
+}
+.mu-flat-button-primary {
+  color: @primary !important;
+}
+.mu-date-picker {
+  width: 100%;
+}
+// 键盘的删除
+.icon.icon-xiaotubiao-54 {
+  font-size: 26px !important;
+  vertical-align: 4px;
+}
+// switch选择的颜色
+.van-switch--on {
+  background-color: @primary;
+}
+.van-radio .van-icon-checked {
+  color: @primary;
+}
+// datepicker 的行高
+.mu-text-field-hint.show {
+  line-height: 60px;
+}
+.van-step--process {
+  .van-step__title {
+    color: @primary!important;
+  }
+  .van-icon-checked {
+    color: @primary!important;
+  }
+}
+
+.van-tabs__line {
+  background-color: @primary!important;
+}
+.van-radio .van-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.vdatetime-popup {
+  line-height: 1.2;
+  // top: 0px !important;
+  // transform: translate(-50%, 0) !important;
+}
+.vdatetime-input {
+  text-align: right;
+  width: 100%;
+}
+.van-checkbox--checked {
+  border-color: @primary;
+  background-color: @primary;
+}
+.vdatetime-popup__header {
+  background: @primary!important;
+}
+.vdatetime-calendar__month__day--selected > span > span,
+.vdatetime-calendar__month__day--selected:hover > span > span {
+  background: @primary!important;
+}
+.vdatetime-popup__actions__button {
+  color: @primary!important;
+}
+.vdatetime-time-picker__item--selected {
+  color: @primary!important;
+}
+.vdatetime-year-picker__item--selected {
+  color: @primary!important;
+}
+.van-radio__input {
+  width: 20px;
+}
+.mu-input.has-label .mu-input-label {
+  right: 15px;
+}
+.mu-input.is-solo .mu-input-content {
+  padding-top: 0;
+  padding-bottom: 0;
+  position: absolute;
+  top: 0;
+}
+.mu-input.has-label {
+  height: 50px !important;
+  min-height: 50px !important;
+}
+.van-cell.van-hairline {
+  .borderB(@dividers);
+}
+.van-cell-group {
+  background: #efefef;
+}
+.van-hairline--surround.van-password-input__security {
+  border: 1px solid #999;
+}
+.van-password-input .van-hairline {
+  border: 1px solid #fafafa;
+}
+.cube-pullup-wrapper {
+  .before-trigger {
+    color: #c7c7c7;
+  }
+}
+.login {
+  .v-input-icon-left {
+    .icon {
+      color: @primary!important;
+    }
+  }
+}
+.my-detail--tabs .van-tab {
+  flex: none !important;
+  width: 99px !important;
+  min-width: none !important;
+}
+.van-dialog {
+  .van-dialog__footer.van-dialog__footer--buttons {
+    border-top: 1px solid @dividers;
+    .van-dialog__confirm.van-hairline--left {
+      border-left: 1px solid @dividers;
+      border-radius: 0;
+    }
+  }
+}
+.van-dialog__confirm {
+  .van-button__text {
+    color: #1590ff;
+  }
+}
+.van-dialog__header {
+  font-weight: 600;
+}
+.jianpan-icon {
+  .icon {
+    font-size: 40px;
+  }
+}
+.van-key--green {
+  background: @primary;
+}
+.cube-pulldown-wrapper,
+.cube-pullup-wrapper {
+  color: #aaa !important;
+  .before-trigger {
+    color: #aaa !important;
+  }
+}
+.popup-radius {
+  &.van-popup.van-popup--bottom {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+}
+.van-tabbar{
+  background: #f8f8f8;
+}
+.van-checkbox__icon--checked .van-icon{
+  border-color: @primary;
+  background-color: @primary;
+}
+.van-tabbar-item--active{
+  color:@primary!important;
+}
+
+.van-dialog {
+  .van-dialog__header{
+    font-size:18px;
+  }
+  .van-dialog__content{
+    font-size:18px;
+    .van-dialog__message{
+      font-size:18px;
+    }
+  }
+  .van-button__text{
+    font-size:18px;
+  }
+}
+#nprogress .peg{
+  box-shadow: none;
+}
+[class*='van-hairline']::after {
+  border:1px solid #eee; 
+}
+
+.cb-actionsheet.van-actionsheet {
+  background: transparent;
+  .van-hairline--bottom {
+    margin: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
+    background: none;
+    .van-actionsheet__name {
+      font-size: 18px;
+      color: #1690ff;
+    }
+  }
+  .van-actionsheet__cancel {
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    overflow: hidden;
+    font-size: 18px;
+  }
+}
+.my-actionsheet{
+  .van-hairline--bottom::after{
+    border-width: 0;
+  }
+}

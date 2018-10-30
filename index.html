@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>车边店管家</title>
+  <!-- 添加到主屏后设置状态栏的背景颜色； -->
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <!-- 百度 -->
+  <!-- 通过百度手机打开网页时，百度可能会对你的网页进行转码，脱下你的衣服，往你的身上贴狗皮膏药的广告，为此可在 head 内添加 -->
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <!-- 360 -->
+  <!-- 设置 360 浏览器渲染模式：webkit 为极速内核，ie-comp 为 IE 兼容内核，ie-stand 为 IE 标准内核。 -->
+  <meta name="renderer" content="webkit">
+  <!--     360 浏览器就会在读取到这个标签后，立即切换对应的极速核。 另外为了保险起见再加入 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <!--忽略电话号码和email识别-->
+  <meta name="format-detection" content="telephone=yes" />
+  <meta name="format-detection" content="email=no" />
+  <!-- 针对一些不识别 viewport 的浏览器 -->
+  <meta name="HandheldFriendly" content="true">
+  <!--  微软的老式浏览器 -->
+  <meta name="MobileOptimized" content="320">
+  <!-- 可隐藏地址栏，仅针对IOS的Safari（注：IOS7.0版本以后，safari上已看不到效果） -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- 仅针对IOS的Safari顶端状态条的样式（可选default/black/black-translucent ） -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <!-- uc强制竖屏 -->
+  <!-- 1.设置屏幕方向：portrait为横屏，landscape为竖屏； -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- UC强制全屏 -->
+  <meta name="full-screen" content="yes">
+  <!-- UC应用模式 -->
+  <meta name="browsermode" content="application">
+  <!-- QQ强制竖屏 -->
+  <!-- 设置锁定横屏、竖屏显示模式，portrait（横屏），landscape（竖屏）-->
+  <meta name="x5-orientation" content="portrait">
+  <!-- QQ强制全屏 -->
+  <meta name="x5-fullscreen" content="true">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- windows phone 点击无高光 -->
+  <meta name="msapplication-tap-highlight" content="no">
+  <!-- minimal-ui iOS 7.1 beta 2 中新增属性，可以在页面加载时最小化上下状态栏。这是一个布尔值。但该参数在 IOS 8 后被移除了。 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes,minimal-ui">
+  <!-- 车边字体 -->
+  <!-- <link rel="stylesheet" href="//at.alicdn.com/t/font_622181_i03a5b9p4o.css"> -->
+  <!-- safri 添加到主屏界面的显示标题 -->
+  <meta name="apple-mobile-web-app-title" content="车边店管家">
+  <!-- <link rel="stylesheet" href="//at.alicdn.com/t/font_622181_9x0btcljyh5.css"> -->
+  <!-- <script src="//at.alicdn.com/t/font_765902_l8tugyq6hj.js"></script> -->
+  <style>
+    .scene {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9;
+      height: 100vh;
+      width: 100%;
+      background: #26a2ff;
+      background: -webkit-linear-gradient(top left, #26a2ff 0%, #52d5f4 100%);
+      background: -moz-linear-gradient(top left, #26a2ff 0%, #52d5f4 100%);
+      background: -o-linear-gradient(top left, #26a2ff 0%, #52d5f4 100%);
+      background: linear-gradient(to bottom right, #26a2ff 0%, #52d5f4 100%);
+      overflow: hidden;
+    }
+
+    .loader {
+      margin: 200px auto;
+    }
+
+    .loader h1 {
+      font-family: 'Actor', sans-serif;
+      color: #FFF;
+      font-size: 16px;
+      letter-spacing: 1px;
+      font-weight: 200;
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    .loader span {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: inline-block;
+      position: absolute;
+      left: 50%;
+      margin-left: -10px;
+      -webkit-animation: 3s infinite linear;
+      -moz-animation: 3s infinite linear;
+      -o-animation: 3s infinite linear;
+    }
+
+    .loader span:nth-child(2) {
+      background: #E84C3D;
+      -webkit-animation: kiri 1.2s infinite linear;
+      -moz-animation: kiri 1.2s infinite linear;
+      -o-animation: kiri 1.2s infinite linear;
+    }
+
+    .loader span:nth-child(3) {
+      background: #F1C40F;
+      z-index: 100;
+    }
+
+    .loader span:nth-child(4) {
+      background: #2FCC71;
+      -webkit-animation: kanan 1.2s infinite linear;
+      -moz-animation: kanan 1.2s infinite linear;
+      -o-animation: kanan 1.2s infinite linear;
+    }
+
+    @-webkit-keyframes kanan {
+      0% {
+        -webkit-transform: translateX(20px);
+      }
+      50% {
+        -webkit-transform: translateX(-20px);
+      }
+      100% {
+        -webkit-transform: translateX(20px);
+        z-index: 200;
+      }
+    }
+
+    @-moz-keyframes kanan {
+      0% {
+        -moz-transform: translateX(20px);
+      }
+      50% {
+        -moz-transform: translateX(-20px);
+      }
+      100% {
+        -moz-transform: translateX(20px);
+        z-index: 200;
+      }
+    }
+
+    @-o-keyframes kanan {
+      0% {
+        -o-transform: translateX(20px);
+      }
+      50% {
+        -o-transform: translateX(-20px);
+      }
+      100% {
+        -o-transform: translateX(20px);
+        z-index: 200;
+      }
+    }
+
+    @-webkit-keyframes kiri {
+      0% {
+        -webkit-transform: translateX(-20px);
+        z-index: 200;
+      }
+      50% {
+        -webkit-transform: translateX(20px);
+      }
+      100% {
+        -webkit-transform: translateX(-20px);
+      }
+    }
+
+    @-moz-keyframes kiri {
+      0% {
+        -moz-transform: translateX(-20px);
+        z-index: 200;
+      }
+      50% {
+        -moz-transform: translateX(20px);
+      }
+      100% {
+        -moz-transform: translateX(-20px);
+      }
+    }
+
+    @-o-keyframes kiri {
+      0% {
+        -o-transform: translateX(-20px);
+        z-index: 200;
+      }
+      50% {
+        -o-transform: translateX(20px);
+      }
+      100% {
+        -o-transform: translateX(-20px);
+      }
+    }
+  </style>
+  <!-- <link rel="preload" href="https://cdn.bootcss.com/vue/2.5.16/vue.min.js" as="script">
+    <link rel="preload" href="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js" as="script">
+    <link rel="preload" href="https://cdn.bootcss.com/vuex/3.0.1/vuex.min.js" as="script">
+    <link rel="preload" href="https://cdn.bootcss.com/axios/0.18.0/axios.min.js" as="script"> -->
+  <!-- <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+  <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.min.js"></script>
+  <script src="https://cdn.bootcss.com/vuex/3.0.1/vuex.min.js"></script>
+  <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script> -->
+  <script src="/static/js/fw-all.js"></script>
+  <script src="/static/js/axios.js"></script>
+  <script src="/static/js/svg.js"></script>
+  <script src="https://webapi.amap.com/maps?v=1.4.10&key=34e90f65ad52027c895004cf482bde35&plugin=AMap.Autocomplete,AMap.CitySearch,AMap.ToolBar"></script>
+  <!--引入UI组件库（1.0版本） -->
+<script src="//webapi.amap.com/ui/1.0/main.js"></script>
+</head>
+
+<body>
+  <div class="scene" id="scene">
+    <div class="loader">
+      <h1>欢迎访问车边店管家</h1>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <div id="app"></div>
+
+  <!-- built files will be auto injected -->
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+    console.log("DOM fully loaded and parsed");
+    document.getElementById('scene').style.display = 'none'
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?fb48c40564e3dcfe8527a1a7b20aa80e";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  });
+</script>
+
+</html>

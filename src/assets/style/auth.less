@@ -1,0 +1,156 @@
+@import '../../assets/style/var.less';
+.login-btn-box{
+  padding:0 50px;
+}
+.has-account {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #1690ff;
+  font-weight: 500;
+  text-align: center;
+}
+.login {
+  font-size: 16x;
+  background: #e8e8e8!important;
+  .logo-text{
+    text-align: center;
+    padding-bottom: 10px;
+  }
+  .login-forget-password{
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+    padding: 10px 5px 0px 0;
+    >span{
+      padding:10px 0;
+    }
+  }
+  .slide-wrapper {
+    padding:8px;
+  }
+  .icon-xiaotubiao-5 {
+    font-size: 60px;
+  }
+  .msg-box {
+    height: 14px;
+    width: 100%;
+  }
+ 
+  .error-msg {
+    font-size: 14px;
+    text-align: center;
+    color: @danger;
+    padding-bottom: 4px;
+  }
+  .brand {
+    text-align: center;
+    font-size: 60px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    margin: 0 auto;
+  }
+  .register-box {
+    position: absolute;
+    bottom:50px;
+    box-sizing: border-box;
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    .link{
+      color: @primary;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}
+.forget-password-wrapper {
+  padding: 0 8px;
+}
+.send-msg-box {
+  position: relative;
+  .send-msg-btn {
+    position: absolute;
+    top: 0;
+    right:0;
+    height: 30px;
+    line-height: 30px;
+    background: #1690ff;
+    color:#fff;
+    border-radius: 20px;
+    padding:0 8px;
+    margin-top:10px;
+    margin-right:10px; 
+    font-size: 16px;
+    min-width: 80px;
+    text-align: center;
+    &.disabled{
+      background: #ddd;
+    }
+  }
+}
+
+.input-sms-code {
+  position: relative;
+  .send-sms-text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    color: #1690ff;
+  }
+}
+.read-agree {
+  padding: 10px 0;
+  font-size: 12px;
+  font-size: #666;
+}
+.payok {
+  background: #f8f8f8;
+}
+.payok-top {
+  font-size: 20px;
+  color: #999;
+  padding-bottom:20px;
+  .icon {
+    font-size: 24px;
+    color: @success!important;
+  }
+}
+.payok-tip {
+  font-size: 18px;
+  color: #999;
+  padding: 14px 0 30px 0;
+}
+.payok-result {
+  color: #333;
+  font-size: 20px;
+  line-height: 2;
+  .payok-result-value{
+    color: @danger;
+  }
+}
+.payok-top.payerror {
+  font-size: 24px;
+   color: #333;
+  .icon {
+    font-size: 44px;
+    color: @warning!important;
+  }
+}
+.payok-tip {
+  font-size: 18px;
+  color: #999;
+  padding: 14px 0 30px 0;
+}
+.payok-result {
+  color: #666;
+  font-size: 14px;
+  line-height: 2;
+}
