@@ -338,3 +338,38 @@ export default {
   }
 }
 </style>
+    handleStaff(item) {
+      if (item === this.currentStaff) {
+        this.currentStaff = ''
+      } else {
+        this.currentStaff = item
+      }
+      this.staffVisible = false
+    }
+  },
+  activated() {
+    if (this.$route.query.id) {
+      this.id = this.$route.query.id
+    }
+    this.getData()
+    this.getEmployee()
+  }
+}
+</script>
+
+<style lang="less">
+@import '../../assets/style/var.less';
+.card-date {
+  padding: 4px 8px;
+  background: #fff;
+  border-radius: 4px;
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 14px;
+  border: 1px solid #c7c7c7;
+  color: #999;
+  .icon {
+    font-size: 12px;
+  }
+}
+</style>

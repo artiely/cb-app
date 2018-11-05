@@ -6,37 +6,43 @@
       {{item.name}}
     </div> -->
 
-    <div class="weui-wepay-flow weui-wepay-flow_vertical" style="height: 100px; background: #fff;padding:15px;" >
+    <div class="weui-wepay-flow weui-wepay-flow_vertical" style="min-height:150px; background: #fff;padding:2px 20px;" :class="result.length>=2&&result.length<=4?'margin_box':''">
       <div class="weui-wepay-flow__bd">
-        <div v-for="item in result" @click="handleResult(item)" :key="item.id">
+        <div v-for="(item,index) in result" @click="handleResult(item)" :key="item.id">
           <div class="weui-wepay-flow__li weui-wepay-flow__li_done">
-            <!-- 1 -->
+            <!-- 实心 -->
             <div class="weui-wepay-flow__state"></div>
             <p class="weui-wepay-flow__title-right"> {{item.name}}</p>
           </div>
-          <div class="weui-wepay-flow__line weui-wepay-flow__line_done">
+          <!-- <div class="weui-wepay-flow__state" ></div> -->
+          <div class="weui-wepay-flow__line weui-wepay-flow__line_done" :class="{'weui-wepay-flow__line_d':result.length>=3,'weui-none':index==3}">
             <div class="weui-wepay-flow__process"></div>
           </div>
         </div>
         <div class="weui-wepay-flow__li">
-            <!-- 3 -->
-          <div class="weui-wepay-flow__state" v-if="result.length<=3"></div>
-          <p class="weui-wepay-flow__title-right" v-if="result.length==0">请选择品牌</p>
+          <!-- <div class="weui-wepay-flow__li weui-wepay-flow__li_done" v-if="result.length==4">
+            <div class="weui-wepay-flow__state"></div>
+          </div> -->
+          <!-- 空心 -->
+          <div class="weui-wepay-flow__state" v-if="result.length<=3&&result.length!==0"></div>
+          <!-- <p class="" v-if="result.length==0">请选择品牌</p> -->
           <p class="weui-wepay-flow__title-right" v-if="result.length==1">请选择厂商</p>
           <p class="weui-wepay-flow__title-right" v-if="result.length==2">请选择车系</p>
           <p class="weui-wepay-flow__title-right" v-if="result.length==3">请选择车型</p>
         </div>
-        </div>
       </div>
+    </div>
 
-    <v-scroll-page :top="top">
+    <v-scroll-page :top="top" style="margin-top:0px;">
       <scroller :on-refresh="refresh" :on-infinite="infinite">
-        <p class="weui-wepay-flow__title-right" v-if="result.length==0">请选择品牌</p>
-        <p class="weui-wepay-flow__title-right" v-if="result.length==1">请选择厂商</p>
-        <p class="weui-wepay-flow__title-right" v-if="result.length==2">请选择车系</p>
-        <p class="weui-wepay-flow__title-right" v-if="result.length==3">请选择车型</p>
-        <div v-for="item in data" class="motortype-cell" @click="checkCell(item)" :key="item.id">
-          <span> {{item.name}}</span><i  class="checkOption">√</i>
+        <p class="pselect" v-if="result.length==0">选择品牌</p>
+        <p class="pselect" v-if="result.length==1">选择厂商</p>
+        <p class="pselect" v-if="result.length==2">选择车系</p>
+        <p class="pselect" v-if="result.length==3">选择车型</p>
+        <!-- :class="{'xx':index==currSelectIndex}" -->
+        <div v-for="(item,index) in data" class="motortype-cell" @click="checkCell(item)" :key="item.id">
+          <span class="carModel" style="margin-top:10px;"> {{item.name}}</span>
+          <i class="checkOption" v-if="index==currSelectIndex">√</i>
         </div>
       </scroller>
     </v-scroll-page>
@@ -60,19 +66,21 @@ export default {
     return {
       query: {
         pageNo: 1,
-        pageSize: 40,
+        pageSize: 42,
         type: '1',
         parentId: ''
       },
       totalPage: 0,
       data: [],
       currentLevel: 1,
-      result: []
+      result: [],
+      currSelectId: '',
+      currSelectIndex: 0
     }
   },
   computed: {
     top() {
-      return 94 + this.result.length * 40
+      return 94 + this.result.length * 42
     }
   },
   watch: {
@@ -96,11 +104,16 @@ export default {
         this.currentLevel = Number(res.message)
         done && done()
       }
+      function findFirstLargeNumber(element) {
+        return element.id === this.currSelectId
+      }
+      this.currSelectIndex = this.data.findIndex(findFirstLargeNumber)
     },
     handleResult(item) {
       function findFirstLargeNumber(element) {
         return element.id === item.id
       }
+      this.currSelectId = item.id
       var index = this.result.findIndex(findFirstLargeNumber)
       console.log('index', index)
       if (index === 0) {
@@ -153,21 +166,30 @@ export default {
 </script>
 
 <style scoped>
-.pselect{
+.weui-none {
+  display: none;
+}
+.c_clicence-wrapper {
+  height: 150px;
+}
+.margin_box {
+  margin-top: 5px;
+}
+.pselect {
   margin: 20px 0 0 15px;
+  color: #81818e;
 }
 .motortype-cell {
-  font-size: 18px;
-  height: 50px;
-  line-height: 50px;
-  padding-left: 10%;
-  font-size: 17px !important;
+  height: 45px;
+  line-height: 45px;
+  padding-left: 6%;
+  font-size: 16px;
 }
-.checkOption{
-   color:#1690ff;
-   font-size: 17px;
-   font-weight: bold;
-   margin-left: 10px;
+.checkOption {
+  color: #1690ff;
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 .weui-wepay-flow__bd {
@@ -176,12 +198,12 @@ export default {
   display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
-          justify-content: space-between;
+  justify-content: space-between;
   -webkit-box-align: left;
   /* -webkit-align-items: center;
           align-items: center; */
-   -webkit-align-items: baseline;
-          align-items: baseline;
+  -webkit-align-items: baseline;
+  align-items: baseline;
 }
 .weui-wepay-flow__li {
   width: 12px;
@@ -189,7 +211,8 @@ export default {
   position: relative;
   z-index: 1;
 }
-.weui-wepay-flow__li .weui-wepay-flow__state {/*空心蓝色*/
+.weui-wepay-flow__li .weui-wepay-flow__state {
+  /*空心蓝色*/
   position: absolute;
   left: 0;
   top: 0;
@@ -198,19 +221,20 @@ export default {
   font-size: 10px;
   line-height: 14px;
   text-align: center;
-  color: #FFF;
+  color: #fff;
   border: 1px solid #1690ff;
   border-radius: 7px;
   box-sizing: border-box;
 }
 .weui-wepay-flow__state {
-  background-color: #E2E2E2;
+  background-color: #e2e2e2;
 }
-.weui-wepay-flow__li_done .weui-wepay-flow__state { /*实心蓝色*/
+.weui-wepay-flow__li_done .weui-wepay-flow__state {
+  /*实心蓝色*/
   background-color: #1690ff;
 }
-[class^="weui-wepay-flow__title-"],
-[class*=" weui-wepay-flow__title-"] {
+[class^='weui-wepay-flow__title-'],
+[class*=' weui-wepay-flow__title-'] {
   position: absolute;
   color: #1690ff;
   font-size: 14px;
@@ -222,7 +246,7 @@ export default {
   bottom: 20px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
 }
 .weui-wepay-flow__li_done .weui-wepay-flow__title-top {
   color: #333;
@@ -231,7 +255,7 @@ export default {
   top: 20px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
 }
 .weui-wepay-flow__li_done .weui-wepay-flow__title-bottom {
   color: #333;
@@ -240,7 +264,7 @@ export default {
   right: 30px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   text-align: right;
 }
 .weui-wepay-flow__li_done .weui-wepay-flow__title-left {
@@ -250,26 +274,26 @@ export default {
   left: 30px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   text-align: left;
 }
 .weui-wepay-flow__li_done .weui-wepay-flow__title-right {
   color: #333;
 }
-[class^="weui-wepay-flow__intro-"],
-[class*=" weui-wepay-flow__intro-"] {
+[class^='weui-wepay-flow__intro-'],
+[class*=' weui-wepay-flow__intro-'] {
   height: 20px;
   line-height: 20px;
   background-color: #ff8a00;
   font-size: 10px;
-  color: #FFF;
+  color: #fff;
   white-space: nowrap;
   padding: 0 6px;
   position: relative;
   border-radius: 4px;
 }
-[class^="weui-wepay-flow__intro-"]:after,
-[class*=" weui-wepay-flow__intro-"]:after {
+[class^='weui-wepay-flow__intro-']:after,
+[class*=' weui-wepay-flow__intro-']:after {
   content: '';
   display: inline-block;
   width: 0;
@@ -282,7 +306,7 @@ export default {
   bottom: 25px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
   position: absolute;
 }
 .weui-wepay-flow__intro-top:after {
@@ -291,14 +315,14 @@ export default {
   border-width: 5px 3px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
   bottom: -10px;
 }
 .weui-wepay-flow__intro-bottom {
   top: 25px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
   position: absolute;
 }
 .weui-wepay-flow__intro-bottom:after {
@@ -307,14 +331,14 @@ export default {
   border-width: 5px 3px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
   top: -10px;
 }
 .weui-wepay-flow__intro-right {
   left: 36px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   position: absolute;
 }
 .weui-wepay-flow__intro-right:after {
@@ -323,14 +347,14 @@ export default {
   border-width: 3px 5px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   left: -10px;
 }
 .weui-wepay-flow__intro-left {
   right: 36px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   position: absolute;
 }
 .weui-wepay-flow__intro-left:after {
@@ -339,23 +363,23 @@ export default {
   border-width: 3px 5px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   right: -10px;
 }
-[class^="weui-wepay-flow__info-"] {
+[class^='weui-wepay-flow__info-'] {
   height: 14px;
   line-height: 14px;
   /* background-color: #09bb07; */
   background-color: #1690ff;
   font-size: 10px;
-  color: #FFF;
+  color: #fff;
   white-space: nowrap;
   padding: 0 6px;
   position: relative;
   border-radius: 2px;
   position: absolute;
 }
-[class^="weui-wepay-flow__info-"]:after {
+[class^='weui-wepay-flow__info-']:after {
   content: '';
   display: inline-block;
   width: 0;
@@ -364,14 +388,14 @@ export default {
   font-size: 0;
   position: absolute;
 }
-.weui-wepay-flow__line_ing [class^="weui-wepay-flow__info-"] {
+.weui-wepay-flow__line_ing [class^='weui-wepay-flow__info-'] {
   display: block;
 }
 .weui-wepay-flow__info-top {
   display: none;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
   bottom: 11px;
 }
 .weui-wepay-flow__line_ing .weui-wepay-flow__info-top {
@@ -390,7 +414,7 @@ export default {
   display: none;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
   top: 11px;
 }
 .weui-wepay-flow__line_ing .weui-wepay-flow__info-bottom {
@@ -402,14 +426,14 @@ export default {
   border-width: 5px 3px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
   top: -10px;
 }
 .weui-wepay-flow__info-left {
   display: none;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   right: 12px;
 }
 .weui-wepay-flow__line_ing .weui-wepay-flow__info-left {
@@ -421,14 +445,14 @@ export default {
   border-width: 3px 5px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   right: -10px;
 }
 .weui-wepay-flow__info-right {
   display: none;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   left: 12px;
 }
 .weui-wepay-flow__line_ing .weui-wepay-flow__info-right {
@@ -440,17 +464,19 @@ export default {
   border-width: 3px 5px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
   left: -10px;
 }
-.weui-wepay-flow__line {/*灰色*/
+.weui-wepay-flow__line {
+  /*灰色*/
   -webkit-box-flex: 1;
   -webkit-flex: 1;
-          flex: 1;
-  background-color: #E2E2E2;
-  height: 3px;
+  flex: 1;
+  background-color: #e2e2e2;
+
   position: relative;
 }
+
 .weui-wepay-flow__title {
   color: #999999;
   font-size: 14px;
@@ -460,7 +486,8 @@ export default {
   color: #999999;
   font-size: 12px;
 }
-.weui-wepay-flow__process {/*线条*/
+.weui-wepay-flow__process {
+  /*线条*/
   display: none;
   background-color: #1690ff;
   height: 3px;
@@ -476,26 +503,30 @@ export default {
 .weui-wepay-flow_custom .weui-wepay-flow__bd {
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
-          justify-content: flex-start;
+  justify-content: flex-start;
 }
 .weui-wepay-flow_custom .weui-wepay-flow__line {
   -webkit-box-flex: 0;
   -webkit-flex: none;
-          flex: none;
+  flex: none;
   width: 100px;
 }
 .weui-wepay-flow_vertical .weui-wepay-flow__bd {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   height: 100%;
   box-sizing: border-box;
 }
 .weui-wepay-flow_vertical .weui-wepay-flow__line {
-  height: auto;
+  height: 15px;
+  /* height: auto; */
   width: 3px;
   margin-left: 5px;
+}
+.weui-wepay-flow_vertical .weui-wepay-flow__line_d {
+  height: 22px;
 }
 .weui-wepay-flow_vertical .weui-wepay-flow__line_ing .weui-wepay-flow__process {
   height: 50%;
@@ -507,14 +538,16 @@ export default {
   height: 100%;
   width: 3px;
 }
-.weui-wepay-flow_vertical .weui-wepay-flow__line_done .weui-wepay-flow__process {
+.weui-wepay-flow_vertical
+  .weui-wepay-flow__line_done
+  .weui-wepay-flow__process {
   height: 100%;
 }
 .weui-wepay-flow_vertical-custom .weui-wepay-flow__bd {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   height: 100%;
   box-sizing: border-box;
 }
@@ -522,9 +555,11 @@ export default {
   width: 3px;
   -webkit-box-flex: 0;
   -webkit-flex: none;
-          flex: none;
+  flex: none;
 }
-.weui-wepay-flow_vertical-custom .weui-wepay-flow__line_ing .weui-wepay-flow__process {
+.weui-wepay-flow_vertical-custom
+  .weui-wepay-flow__line_ing
+  .weui-wepay-flow__process {
   height: 50%;
 }
 .weui-wepay-flow_vertical-custom .weui-wepay-flow__process {
@@ -534,7 +569,9 @@ export default {
   height: 100%;
   width: 3px;
 }
-.weui-wepay-flow_vertical-custom .weui-wepay-flow__line_done .weui-wepay-flow__process {
+.weui-wepay-flow_vertical-custom
+  .weui-wepay-flow__line_done
+  .weui-wepay-flow__process {
   height: 100%;
 }
 .weui-wepay-flow-auto {
@@ -552,9 +589,9 @@ export default {
   font-size: 10px;
   line-height: 14px;
   text-align: center;
-  color: #FFF;
+  color: #fff;
   border-radius: 7px;
-  background-color: #E2E2E2;
+  background-color: #e2e2e2;
   z-index: 2;
 }
 .weui-wepay-flow-auto__state_on {
@@ -585,5 +622,7 @@ export default {
 .weui-wepay-flow-auto__info {
   color: #999999;
   font-size: 12px;
+}
+.carModel {
 }
 </style>
