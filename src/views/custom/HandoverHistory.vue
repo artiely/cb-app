@@ -8,7 +8,7 @@
           <div class="balance-history--title clearfix">
             <div class="fl textover1"> {{item.dutyEmployee.name}}</div>
           </div>
-          <div class="balance-history--price">{{item.moneyTotal|currency('')}}
+          <div class="balance-history--price">{{item.moneyTotal|currency()}}
             <v-icon name="icon-youjiantou1"></v-icon>
           </div>
           <div class="balance-history--name" >{{item.dutyTime}} </div>
