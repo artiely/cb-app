@@ -920,18 +920,14 @@ router.beforeEach((to, from, next) => {
     return
   }
   //  快单中默认信息清空
-  if (
-    (from.path === '/cashdesk' && to.path === '/index') ||
-    (from.path === '/cashdesk' && to.path === '/ordersearch')
-  ) {
-    // console.log('执行到了这一步-----------传值为0')
+  if (from.path === '/cashdesk' && to.path === '/index') {
+    console.log('执行到了这一步-----------传值为0')
     store.commit('CLEAR_ORDER_DATA', 0)
+  } else if (from.path === '/cashdesk' && to.path === '/ordersearch') {
+    // 执行到了这一步-----------传值为1
+    console.log('执行到了这一步-----------传值为1')
+    store.commit('CLEAR_ORDER_DATA', 1)
   }
-  // else {
-  //   // 执行到了这一步-----------传值为1
-  //   console.log('执行到了这一步-----------传值为1')
-  //   store.commit('CLEAR_ORDER_DATA', 1)
-  // }
   if (to.meta.auth) {
     if (token && token !== 'undefined') {
       next({

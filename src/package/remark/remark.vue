@@ -316,9 +316,10 @@ textarea::-webkit-input-placeholder {
   }
   //快捷备注的内容
   .kjRemarkInfo {
-    margin-left: 16px;
+    margin: 0 16px;
     padding-top: 10px;
     border-top: 1px solid #ddd;
+    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     .kjRemarkItem {
@@ -330,10 +331,13 @@ textarea::-webkit-input-placeholder {
       display: flex;
       align-items: center;
       margin: 0 10px 10px 0;
+      max-width: 100%;
+      box-sizing: border-box;
       .kjRemarkItemName {
-        display: flex;
-        flex: 1;
-        max-width: 300px;
+        // display: flex;
+        // flex: 1;
+        // max-width: 300px;
+        text-align: center;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -346,6 +350,7 @@ textarea::-webkit-input-placeholder {
         justify-content: center;
         align-items: center;
         width: 18px;
+        min-width: 18px;
         height: 18px;
         margin-left: 5px;
       }
