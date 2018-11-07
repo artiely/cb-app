@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     handleRight() {
-      alert(2)
     },
     setCurrBrand(item) {
       this.choiceBrand = item

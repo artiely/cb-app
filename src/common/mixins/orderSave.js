@@ -84,8 +84,10 @@ export default {
       let data = {
         orderItems: orderItems,
         ...this.orderCustomInfo,
-        ...this.orderInfo
+        ...this.orderInfo,
+        attachment: this.attachment.join(',') // 重写orderinfo中的attachment
       }
+      console.log('保存的图片', this.attachment.join(','))
       let res = await this.$api.ORDER_MAIN(data)
       _toast && _toast.clear()
       if (res.status === 1) {
