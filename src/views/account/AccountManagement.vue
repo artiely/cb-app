@@ -58,7 +58,6 @@ export default {
     },
     // 收支账本
     accountJump() {
-      // this.$router.push('/account')
       this.$router.push('/balancepaymentcount')
     },
     // 记账账户
@@ -80,7 +79,6 @@ export default {
     }
   },
   activated() {
-    // this.active = 0
     this.getData()
   }
 }

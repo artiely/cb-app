@@ -5,11 +5,11 @@
     <v-tab-bar :data="tab" v-model="active" style="background:#f8f8f8"></v-tab-bar>
 
     <v-scroll-page top="90" style="overflow-y:scroll">
-      <div class="clearfix" v-if="valShow==0">
-        <span class="refresh">拖动刷新</span>
-      </div>
-      <v-br height="20" v-if="valShow==1"></v-br>
       <div v-if="data.length>0">
+        <div class="clearfix" v-if="valShow==0">
+          <span class="refresh">拖动刷新</span>
+        </div>
+        <v-br height="20" v-if="valShow==1"></v-br>
         <div class="account">
           <draggable v-model="allList" :move="getmove" @update="datadragEnd" :options="{animation:500,handle:'.account_sort'}" :no-transition-on-drag="true" @start="drag=true" @end="drag=false">
             <div class="account_info clearfix" v-for="item in allList " :key="item.id">
@@ -224,7 +224,7 @@ export default {
   .account_info {
     background: #fff;
   }
-  .account_info:not(:last-child){
+  .account_info:not(:last-child) {
     .borderB();
   }
   .account_dec,

@@ -6,53 +6,59 @@
     </v-header>
     <div class="c-scroll-wrapper-top">
       <cube-scroll :data="data">
-        <v-br :height="20"></v-br>
-        <v-cell-group class="topList">
-          <v-cell wrap>
-            <div slot="title">
-              <div class="cb_store-box">
-                <div class="cb_store-icon-box">
-                  <div class="cb_store-icon">
-                    <v-icon name="icon-xiaotubiao-9" class="xianjingfu2" v-if="data.accountType==0"></v-icon>
-                    <v-icon name="icon-zu" class="yinghangka" symbol v-if="data.accountType==1"></v-icon>
-                    <v-icon name="icon-xiaotubiao-27" class="zhifubao" v-if="data.accountType==2"></v-icon>
-                    <v-icon name="icon-weixinzhifu" class="payIcon weixin" v-if="data.accountType==3"></v-icon>
+        <div v-if="data">
+          <v-br :height="20"></v-br>
+          <v-cell-group class="topList">
+            <v-cell wrap>
+              <div slot="title">
+                <div class="cb_store-box">
+                  <div class="cb_store-icon-box">
+                    <div class="cb_store-icon">
+                      <v-icon name="icon-xiaotubiao-9" class="xianjingfu2" v-if="data.accountType==0"></v-icon>
+                      <v-icon name="icon-zu" class="yinghangka" symbol v-if="data.accountType==1"></v-icon>
+                      <v-icon name="icon-xiaotubiao-27" class="zhifubao" v-if="data.accountType==2"></v-icon>
+                      <v-icon name="icon-weixinzhifu" class="payIcon weixin" v-if="data.accountType==3"></v-icon>
+                    </div>
+                  </div>
+                  <div class="cb_store-info">
+                    <h1 style="font-size:18px;color:#333;font-weight:600">{{data.accountName}}</h1>
+                    <p style="font-size:14px;color:#999;padding-top:5px;" v-if="data.accountType==1">银行/卡</p>
+                    <p style="font-size:14px;color:#999;padding-top:5px;" v-if="data.accountType==2">支付宝</p>
+                    <p style="font-size:14px;color:#999;padding-top:5px;" v-if="data.accountType==3">微信</p>
                   </div>
                 </div>
-                <div class="cb_store-info">
-                  <h1 style="font-size:18px;color:#333;font-weight:600">{{data.accountName}}</h1>
-                  <p style="font-size:14px;color:#999;padding-top:5px;" v-if="data.accountType==1">银行/卡</p>
-                  <p style="font-size:14px;color:#999;padding-top:5px;" v-if="data.accountType==2">支付宝</p>
-                  <p style="font-size:14px;color:#999;padding-top:5px;" v-if="data.accountType==3">微信</p>
-                </div>
-              </div>
-            </div>
-          </v-cell>
-        </v-cell-group>
-        <div class="towList">
-          <v-cell-group class="active-info">
-            <!-- 现金没有启用状态 -->
-            <v-cell title="启用状态" :class="{'hidden':data.accountType==='0'}">
-              <div slot="right" class="right-slot">
-                <van-switch v-model="checked" @input="upDown" />
-              </div>
-            </v-cell>
-            <v-cell title="当前余额">
-              <div slot="right">
-                {{data.accountBalance+data.recordBalance|currency('￥')}}
-              </div>
-            </v-cell>
-            <v-cell title="明细">
-              <div slot="right" class="right-slot" @click="toBalancePaymentHistory(data)">
-                <span class="see">查看</span>
-                <i class="icon iconfont icon-youjiantou1"></i>
               </div>
             </v-cell>
           </v-cell-group>
+          <div class="towList">
+            <v-cell-group class="active-info">
+              <!-- 现金没有启用状态 -->
+              <v-cell title="启用状态" :class="{'hidden':data.accountType==='0'}">
+                <div slot="right" class="right-slot">
+                  <van-switch v-model="checked" @input="upDown" />
+                </div>
+              </v-cell>
+              <v-cell title="当前余额">
+                <div slot="right">
+                  {{data.accountBalance+data.recordBalance|currency('￥')}}
+                </div>
+              </v-cell>
+              <v-cell title="明细">
+                <div slot="right" class="right-slot" @click="toBalancePaymentHistory(data)">
+                  <span class="see">查看</span>
+                  <i class="icon iconfont icon-youjiantou1"></i>
+                </div>
+              </v-cell>
+            </v-cell-group>
+          </div>
+          <!-- 微信有备注 -->
+          <v-remark v-model="remarks" disabled style="font-size:12px;color:#666;" :class="{'hidden':data.accountType==='0'}"></v-remark>
+          <v-br height="5"></v-br>
         </div>
-        <!-- 微信有备注 -->
-        <v-remark v-model="remarks" disabled style="font-size:12px;color:#666;" :class="{'hidden':data.accountType==='0'}"></v-remark>
-        <v-br height="5"></v-br>
+        <!-- 暂无数据 -->
+        <div v-else>
+          <v-nodata></v-nodata>
+        </div>
       </cube-scroll>
     </div>
   </div>
@@ -65,8 +71,16 @@ export default {
       remarks: '', // 备注
       checked: true,
       data: {},
-      id: '',
-      moneySrcOri: 0 // 没打折时的原价
+      id: ''
+    }
+  },
+  watch: {
+    query: {
+      handler() {
+        this.noData = false
+        this.getData()
+      },
+      deep: true
     }
   },
   methods: {
@@ -80,34 +94,35 @@ export default {
     },
     // 明细 --收支账本明细 过滤
     toBalancePaymentHistory(data) {
-      this.$router.push({ name: 'BalancePaymentHistory', query: { id: data.id } })
-      // this.$router.push('/balancepaymenthistory')
+      this.$router.push({
+        name: 'BalancePaymentHistory',
+        query: { id: data.id }
+      })
     },
     // 跟新启用状态
     async upDown() {
       await this.$api.ACCOUNTDETAILSSTATUS_LIST({ id: this.id })
       this.getData(true)
     },
+    // 获取数据
     async getData(update) {
       let res = await this.$api.ACCOUNTDETAILS_LIST({ id: this.id })
       console.log(res)
       if (res.status === 1) {
-        if (res.data !== '' || res.data !== null || res.data !== undefined) {
-          if (res.data.isEnable === '0') {
-            this.checked = false
-            if (update === true) {
-              this.$toast.success('已停用')
-            }
-          } else {
-            this.checked = true
-            if (update === true) {
-              this.$toast.success('已启用')
-            }
+        if (res.data.isEnable === '0') {
+          this.checked = false
+          if (update === true) {
+            this.$toast.success('已停用')
           }
-          console.log('打印内容 =', res)
-          this.data = res.data
-          this.remarks = res.data.remarks
+        } else {
+          this.checked = true
+          if (update === true) {
+            this.$toast.success('已启用')
+          }
         }
+        console.log('打印内容 =', res)
+        this.data = res.data
+        this.remarks = res.data.remarks
       } else {
         console.error(`获取列表失败${res.stateMessage}`)
       }

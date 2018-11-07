@@ -1,31 +1,25 @@
 <template>
+<div class="motortypt">
   <van-popup v-model="value" style="width:100%;height:100%" position="bottom">
     <v-header title="请选择车型" :border="false" :left-click="closePopup"></v-header>
     <v-search placeholder="可直接输入车系搜索"></v-search>
-    <!-- <div v-for="item in result" @click="handleResult(item)" :key="item.id">
-      {{item.name}}
-    </div> -->
-
-    <div class="weui-wepay-flow weui-wepay-flow_vertical" style="min-height:150px; background: #fff;padding:2px 20px;" :class="result.length>=2&&result.length<=4?'margin_box':''">
+   
+     <div class="weui-wepay-flow weui-wepay-flow_vertical" style="padding:20px;" :class="styleFlage==0?'clickb':'clicka'">
       <div class="weui-wepay-flow__bd">
         <div v-for="(item,index) in result" @click="handleResult(item)" :key="item.id">
           <div class="weui-wepay-flow__li weui-wepay-flow__li_done">
             <!-- 实心 -->
-            <div class="weui-wepay-flow__state"></div>
+            <div class="weui-wepay-flow__state" :class="{'shixin_c':result.length>=3,'kongxin_c':index==3}"></div>
             <p class="weui-wepay-flow__title-right"> {{item.name}}</p>
           </div>
-          <!-- <div class="weui-wepay-flow__state" ></div> -->
-          <div class="weui-wepay-flow__line weui-wepay-flow__line_done" :class="{'weui-wepay-flow__line_d':result.length>=3,'weui-none':index==3}">
+
+          <div class="weui-wepay-flow__line weui-wepay-flow__line_done" :class="{'weui-none':index==3}">
             <div class="weui-wepay-flow__process"></div>
           </div>
         </div>
         <div class="weui-wepay-flow__li">
-          <!-- <div class="weui-wepay-flow__li weui-wepay-flow__li_done" v-if="result.length==4">
-            <div class="weui-wepay-flow__state"></div>
-          </div> -->
           <!-- 空心 -->
           <div class="weui-wepay-flow__state" v-if="result.length<=3&&result.length!==0"></div>
-          <!-- <p class="" v-if="result.length==0">请选择品牌</p> -->
           <p class="weui-wepay-flow__title-right" v-if="result.length==1">请选择厂商</p>
           <p class="weui-wepay-flow__title-right" v-if="result.length==2">请选择车系</p>
           <p class="weui-wepay-flow__title-right" v-if="result.length==3">请选择车型</p>
@@ -33,20 +27,23 @@
       </div>
     </div>
 
-    <v-scroll-page :top="top" style="margin-top:0px;">
+    <v-scroll-page :top="top" style="margin-top:0px;" class="scroll_page">
       <scroller :on-refresh="refresh" :on-infinite="infinite">
-        <p class="pselect" v-if="result.length==0">选择品牌</p>
-        <p class="pselect" v-if="result.length==1">选择厂商</p>
-        <p class="pselect" v-if="result.length==2">选择车系</p>
-        <p class="pselect" v-if="result.length==3">选择车型</p>
-        <!-- :class="{'xx':index==currSelectIndex}" -->
+        <p class="pselect" v-if="result.length==0" :class="styleFlage==0?'':'marginTop'">选择品牌</p>
+        <p class="pselect" v-if="result.length==1" :class="styleFlage==0?'':'marginTop'">选择厂商</p>
+        <p class="pselect" v-if="result.length==2" :class="styleFlage==0?'':'marginTop'">选择车系</p>
+        <p class="pselect" v-if="result.length==3" :class="styleFlage==0?'':'marginTop'">选择车型</p>
         <div v-for="(item,index) in data" class="motortype-cell" @click="checkCell(item)" :key="item.id">
           <span class="carModel" style="margin-top:10px;"> {{item.name}}</span>
-          <i class="checkOption" v-if="index==currSelectIndex">√</i>
+          <span class="checkOption">
+            <i class="icon iconfont icon-duigou1" v-if="index==currSelectIndex"></i>
+            <!-- <v-icon name="icon-duigou1" class="duigou" v-if="index==currSelectIndex"></v-icon> -->
+            </span>
         </div>
       </scroller>
     </v-scroll-page>
   </van-popup>
+  </div>
 </template>
 
 <script>
@@ -59,7 +56,9 @@ export default {
     },
     resultData: {
       type: Array,
-      default: () => []
+      default: () => {
+        return []
+      }
     }
   },
   data() {
@@ -75,12 +74,23 @@ export default {
       currentLevel: 1,
       result: [],
       currSelectId: '',
-      currSelectIndex: 0
+      currSelectIndex: 0,
+      styleFlage: 0
     }
   },
   computed: {
     top() {
-      return 94 + this.result.length * 42
+      if(this.result.length==0){
+        return 94 + this.result.length * 40 + 17
+      }else if(this.result.length==1){
+        return 94 + this.result.length * 40 + 40
+      }else if(this.result.length==2){
+        return 94 + this.result.length * 40 + 27
+      }else if(this.result.length==3){
+        return 94 + this.result.length * 40 + 15
+      }else if(this.result.length==4){
+        return 94 + this.result.length * 40 -17
+      }
     }
   },
   watch: {
@@ -102,17 +112,22 @@ export default {
         }
         this.totalPage = res.page.totalPage
         this.currentLevel = Number(res.message)
+        console.log('this.currSelectId', this.currSelectId)
+        // 作用域
+        let vm = this
+        function _findIndex(element) {
+          return element.id === vm.currSelectId
+        }
+        this.currSelectIndex = this.data.findIndex(_findIndex)
+        console.log('index--', this.currSelectIndex)
         done && done()
       }
-      function findFirstLargeNumber(element) {
-        return element.id === this.currSelectId
-      }
-      this.currSelectIndex = this.data.findIndex(findFirstLargeNumber)
     },
     handleResult(item) {
       function findFirstLargeNumber(element) {
         return element.id === item.id
       }
+      console.log('item', item)
       this.currSelectId = item.id
       var index = this.result.findIndex(findFirstLargeNumber)
       console.log('index', index)
@@ -127,6 +142,7 @@ export default {
       this.getData()
     },
     checkCell(item) {
+      this.styleFlage=1
       this.getResult({ type: this.currentLevel, categoryId: item.id })
       if (this.currentLevel === 4) {
         this.$emit('input', false)
@@ -166,17 +182,23 @@ export default {
 </script>
 
 <style scoped>
+.c_header .c_header_left .icon{
+
+}
+.clickb{
+  background: rgb(232, 232, 232);
+}
+.clicka{
+  background:#fff;
+}
+.marginTop{
+  margin-top:10px;
+}
 .weui-none {
   display: none;
 }
-.c_clicence-wrapper {
-  height: 150px;
-}
-.margin_box {
-  margin-top: 5px;
-}
 .pselect {
-  margin: 20px 0 0 15px;
+  margin-left: 15px;
   color: #81818e;
 }
 .motortype-cell {
@@ -185,13 +207,13 @@ export default {
   padding-left: 6%;
   font-size: 16px;
 }
-.checkOption {
-  color: #1690ff;
-  font-size: 17px;
-  font-weight: bold;
-  margin-left: 10px;
+.checkOption{
+  padding-left:20px;
 }
-
+.checkOption i{
+  color: rgb(23, 144, 255) !important;
+  font-size:22px;
+}
 .weui-wepay-flow__bd {
   display: -webkit-box;
   display: -webkit-flex;
@@ -200,8 +222,6 @@ export default {
   -webkit-justify-content: space-between;
   justify-content: space-between;
   -webkit-box-align: left;
-  /* -webkit-align-items: center;
-          align-items: center; */
   -webkit-align-items: baseline;
   align-items: baseline;
 }
@@ -231,6 +251,12 @@ export default {
 }
 .weui-wepay-flow__li_done .weui-wepay-flow__state {
   /*实心蓝色*/
+  background-color: #1690ff;
+}
+.kongxin_c{
+  background-color: #e2e2e2 !important;
+}
+.shixin_c{
   background-color: #1690ff;
 }
 [class^='weui-wepay-flow__title-'],
@@ -525,9 +551,9 @@ export default {
   width: 3px;
   margin-left: 5px;
 }
-.weui-wepay-flow_vertical .weui-wepay-flow__line_d {
+/* .weui-wepay-flow_vertical .weui-wepay-flow__line_d {
   height: 22px;
-}
+} */
 .weui-wepay-flow_vertical .weui-wepay-flow__line_ing .weui-wepay-flow__process {
   height: 50%;
 }
@@ -622,7 +648,5 @@ export default {
 .weui-wepay-flow-auto__info {
   color: #999999;
   font-size: 12px;
-}
-.carModel {
 }
 </style>

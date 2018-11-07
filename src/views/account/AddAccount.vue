@@ -149,7 +149,7 @@ export default {
     }
   },
   activated() {
-    if (this.$route.query.id) {
+    if (this.$route.query.id) { // 编辑时
       this.id = this.$route.query.id
       this.isEdit = true
       this.getDetail()
@@ -161,51 +161,13 @@ export default {
       this.query.accountBalance = '' // 初期余额  编辑是多少就是多少
       this.query.remarks = '' // 备注
       this.query.isEnable = '1'
-      this.query.isReceiptDefault = '0'
-      this.query.recordBalance = '0'
-      this.query.isPayDefault = '0'
+      this.query.isReceiptDefault = '0' // 收款账户
+      this.query.recordBalance = '0' // 流水金额
+      this.query.isPayDefault = '0' // 付款账户
     }
   }
 }
 </script>
 
 <style lang="less">
-.card-date-col {
-  .van-col--8 {
-    padding-bottom: 10px;
-    .primary {
-      color: #fff;
-    }
-  }
-}
-.card-date-day {
-  text-align: center;
-  font-size: 20px;
-  height: 30px;
-  line-height: 30px;
-  color: #666;
-  .day-num {
-    padding: 0 12px;
-    border: 1px solid #c7c7c7;
-    border-radius: 2px;
-  }
-}
-.cardtype-radios {
-  .van-radio {
-    float: left;
-    margin-left: 20px;
-  }
-}
-.tishi {
-  width: 100%;
-  font-size: 12px;
-  padding: 5px 16px 5px 16px;
-  color: #666666;
-  box-sizing: border-box;
-  line-height: 18px;
-}
-.addGoods {
-  font-size: 16px;
-  font-weight: 500;
-}
 </style>
