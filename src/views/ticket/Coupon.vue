@@ -261,7 +261,7 @@ export default {
         shareUrl:
         `http://dp.51chebian.com/store/ssp/ci/store/coupon/temp/receive/form?id=${item.id}`,
         title: '测试',
-        thumbnail: 'https://ss1.bdstatic.com/lvoZeXSm1A5BphGlnYG/skin/836.jpg',
+        thumbnail: 'https://static-oss-chebian.oss-cn-beijing.aliyuncs.com/public/share-popup.svg',
         summary: '描述'
       })
     }
