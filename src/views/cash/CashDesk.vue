@@ -6,22 +6,22 @@
       <cube-scroll ref="scroll" :data="orderOfCustom">
         <!-- <order-custom noHeader></order-custom> -->
         <v-br height="20"></v-br>
-         <div style="display:flex;background:#e8e8e8">
-      <order-custom noHeader style="flex:1;border-bottom-right-radius: 10px;border-top-right-radius: 10px;overflow:hidden"  :search-to="{name:'OrderSearch',query:{src:'kuaidan'}}"></order-custom>
-      <div style="width:65px;" class="order-base-info-box"  @click="orderBaseInfoVisiable=true">
-        <div class="order-base-info-card">
-          <v-icon name="icon-dingdanjibenxinxi"></v-icon>
-          <div>订单信息</div>
+        <div style="display:flex;background:#e8e8e8">
+          <order-custom noHeader style="flex:1;border-bottom-right-radius: 10px;border-top-right-radius: 10px;overflow:hidden" :search-to="{name:'OrderSearch',query:{src:'kuaidan'}}"></order-custom>
+          <div style="width:65px;" class="order-base-info-box" @click="orderBaseInfoVisiable=true">
+            <div class="order-base-info-card">
+              <v-icon name="icon-dingdanjibenxinxi"></v-icon>
+              <div>订单信息</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
         <v-cell title="客户名" v-model="newCustomName" v-if="newCustomTel" input></v-cell>
         <v-br :height="20"></v-br>
         <!-- TIP: 在条件为车辆，新车辆，新客户都是没法使用优惠券的 -->
-        <v-business input  @click.native="showKeyFunc" :cursor="showKeyboard" :money="orderPrice" ></v-business>
+        <v-business input @click.native="showKeyFunc" :cursor="showKeyboard" :money="orderPrice"></v-business>
         <v-br :height="20"></v-br>
         <v-cell-group v-if="couponList.length>0">
-          <v-cell title="优惠券"  class="order-total-price-color" link :descText="filterCoupon" :text="(couponList.length==0||filterCouponList.length==0)?'无可用券':(currCoupon?currCoupon.temp.name:filterCouponList.length+' 张可用')" @click.native="choiceCus"></v-cell>
+          <v-cell title="优惠券" class="order-total-price-color" link :descText="filterCoupon" :text="(couponList.length==0||filterCouponList.length==0)?'无可用券':(currCoupon?currCoupon.temp.name:filterCouponList.length+' 张可用')" @click.native="choiceCus"></v-cell>
           <!-- <v-cell title="抹零" input v-model="moneyErasing" type="number"></v-cell> -->
         </v-cell-group>
         <p style="font-size:12px;padding:0 15px;color:#666;line-height:1.2;margin-top:-10px;">快单：不用选择服务/商品，即可对客户快速收银或扣储值账户。</p>
@@ -82,7 +82,7 @@
       <v-cell-group style="margin-bottom:5px">
         <v-cell title="销售人" :text="currentStaff.name" link @click.native="staffVisible = true"></v-cell>
       </v-cell-group>
-      <v-remark v-model="orderRemarks" placeholder="订单备注"></v-remark>
+      <v-remark v-model="orderRemarks" placeholder="订单备注" :kdlist="1" @kjRemarkChecked="gteKjRemarkChecked"></v-remark>
       <v-footer>
         <v-footer-item @click.native="orderBaseInfoVisiable=false">保存</v-footer-item>
       </v-footer>
@@ -143,6 +143,7 @@ export default {
       toast: '',
       orderRemarks: '',
       remarks: '',
+      quickRemarksFlag: 0,
       filterCouponList: [],
       accounType: [
         {
@@ -165,7 +166,9 @@ export default {
           icon: '',
           color: ''
         }
-      ]
+      ],
+      kuaidanOrderData: '',
+      isShow: 1
     }
   },
   computed: {
@@ -225,8 +228,13 @@ export default {
     memberId() {
       return this.orderOfCustom && this.orderOfCustom.id
         ? this.orderOfCustom.id
-        : this.orderOfCar && this.orderOfCar.member ? this.orderOfCar.member.id : ''
+        : this.orderOfCar && this.orderOfCar.member
+          ? this.orderOfCar.member.id
+          : ''
     }
+    // kuaidanOrderData() {
+    //   return this.$store.state.order.kdOrderData
+    // }
   },
   watch: {
     orderPrice: {
@@ -328,7 +336,8 @@ export default {
         orderNoHand: this.orderNoHand,
         startTime: this.startTime,
         'sellEmployee.id': this.currentStaff.id || '',
-        orderRemarks: this.orderRemarks
+        orderRemarks: this.orderRemarks,
+        quickRemarksFlag: this.quickRemarksFlag
       }
       if (!data['member.id'] && !data['motor.id']) {
         this.$toast('请选择客户/车辆')
@@ -355,6 +364,12 @@ export default {
         this.moneyErasing = ''
         this.pwd = ''
         this.couponList = []
+        this.orderRemarks = ''
+        this.orderNoHand = ''
+        this.motorMileCurrent = ''
+        this.startTime = ''
+        this.currentStaff = ''
+        this.isShow = 1
         this.$store.commit('CLEAR_ORDER_CUSTOM')
         this.$router.replace({ name: 'Order', params: { refresh: true } })
       }
@@ -366,16 +381,47 @@ export default {
       this.moneyErasing = ''
       this.pwd = ''
       this.couponList = []
+      this.orderRemarks = ''
+      this.orderNoHand = ''
+      this.motorMileCurrent = ''
+      this.startTime = ''
+      this.currentStaff = ''
       this.$router.back()
     },
     chargeSave() {
       this.passwordKey = true
       this.getCollect()
+    },
+    gteKjRemarkChecked(item) {
+      console.log('获取到当前的item =', item)
+      if (item === true) {
+        this.quickRemarksFlag = 1
+      } else {
+        this.quickRemarksFlag = 0
+      }
+    },
+    isNull() {
+      this.currCoupon = ''
+      this.orderPrice = ''
+      this.remarks = ''
+      this.moneyErasing = ''
+      this.pwd = ''
+      this.couponList = []
+      this.orderRemarks = ''
+      this.orderNoHand = ''
+      this.motorMileCurrent = ''
+      this.startTime = ''
+      this.currentStaff = ''
+      this.isShow = 1
     }
   },
   activated() {
     this.couponList = []
     this.getEmployee()
+    this.kuaidanOrderData = this.$store.state.order.kdOrderData
+    if (this.kuaidanOrderData === 0) {
+      this.isNull()
+    }
   }
 }
 </script>
