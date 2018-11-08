@@ -2,35 +2,53 @@
   <div>
     <v-header title="优惠券" righticon="icon-xiaotubiao-20" @right-click="handlerFilter" :border="false"></v-header>
     <v-search v-model="keywords" placeholder="券名"></v-search>
-    <v-tab-bar :data="tab" v-model="active" style="background:#f8f8f8"></v-tab-bar>
+    <v-tab-bar :data="tab" :count="count" v-model="active" style="background:#f8f8f8"></v-tab-bar>
     <div class="c-scroll-wrapper-top-search-tab">
       <cube-scroll ref="scroll" :data="couponList" :options="options" @pulling-up="onPullingUp" @pulling-down="onPullingDown">
         <filter-bar :data="filterBarList" @change-filter="changeFilter"></filter-bar>
         <div v-if="couponList.length>0">
-          <div class="c-card-coupon--wrapper " v-for="item in couponList " :key="item.id" :class="{ 'c-card-coupon--disabled':item.status==2} ">
-            <div class="c-card-coupon--temp-icon" v-if="item.dataSrc==0">车边模板</div>
-            <div class="c-card-coupon--title clearfix " @click="toDetail(item)">
-              <div class="c-card-coupon--title--left textover1 ">{{item.name}}
-                <v-badge size="small " v-if="item.type==2 " :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="礼品券">礼品券</v-badge>
-                <v-badge size="small " v-else :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="通用券">通用券</v-badge>
-              </div>
-              <div class="c-card-coupon--title--right textover1 ">{{item.moneyCondition|currency('￥')}}
-                <v-icon name="icon-youjiantou1 "></v-icon>
-              </div>
+        <div class="c-card-coupon--wrapper clearfix" v-for="item in couponList " :key="item.id" :class="{ 'c-card-coupon--disabled':item.status==2} ">
+          <div class="c-card-coupon--temp-icon" v-if="item.dataSrc==0">车边模板</div>
+            <div class="c-card-coupon--footer--dot--top" style="top:-10px "></div>
+            <div style="border-left: 1px dashed #fff;height:90%;line-height:2px;position: absolute;top:10%;left:67%;"></div>
+            <div class="c-card-coupon--footer--dot--bottom " style="bottom:-10px "></div>
+
+          <div class="c-card-coupon--title clearfix " @click="toDetail(item)">
+            <div class="c-card-coupon--title--left textover1 ">{{item.name}}
+              <!-- <v-badge size="small " v-if="item.type==2 " :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="礼品券" >礼品券</v-badge>
+              <v-badge size="small " v-else :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="通用券">通用券</v-badge> -->
             </div>
-            <div class="c-card-coupon--desc textover1 ">{{item.gift}} {{item.descriptionUse}}</div>
-            <div class="c-card-coupon--footer clearfix ">
-              <div class="c-card-coupon--footer--left ">
-                已领 {{item.numReceive}} 份
-              </div>
-              <div class="c-card-coupon--footer--right ">
-                <span v-if="item.status==1 " class="c-card-coupon--footer--right--btn tap-area" @click="toShare(item)">发券 </span>
-                <span v-else>已停用</span>
-              </div>
-              <div class="c-card-coupon--footer--dot " style="left:-10px "></div>
-              <div class="c-card-coupon--footer--dot " style="right:-10px "></div>
+            <div class="c-card-coupon--title--right textover1 ">{{item.moneyCondition|currency('￥')}}
+              <!-- <v-icon name="icon-youjiantou1 "></v-icon> -->
             </div>
           </div>
+          <div class="c-card-coupon--desc textover1 " @click="toDetail(item)">
+            <div class="c-card-coupon--footer--left ">
+              <span class="c-card-coupon--text">满{{item.moneyReduce|currency('')}}元可用</span>
+              <v-badge size="small " v-if="item.type==2 " :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="礼品券" >礼品券</v-badge>
+              <v-badge size="small " v-else :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="通用券">通用券</v-badge>
+            </div>
+            <div class="c-card-coupon--footer--right text">
+              已领 {{item.numReceive}} 份
+            </div>
+            <!-- {{item.gift}} {{item.descriptionUse}} -->
+          </div>
+          <!-- <span class="c-card-coupon--title">满600.00元可用</span> -->
+
+          <div class="c-card-coupon--footer clearfix " >
+            <div class="c-card-coupon--footer--left " @click="toDetail(item)">
+              <span class="c-card-coupon--footer--text" v-if="item.restrictTimeType=='1'">有效期：{{item.restrictDateStart|timeFormat('YYYY-MM-DD')}}至{{item.restrictDateEnd|timeFormat('YYYY-MM-DD')}}</span>
+              <span class="c-card-coupon--footer--text" v-else>有效期：自办理 {{item.restrictDays}} 天有效</span>
+            </div>
+            <div class="c-card-coupon--footer--right ">
+              <!-- <span v-if="item.status==1 " class="c-card-coupon--footer--right--btn tap-area" @click="toShare(item)">发券 </span> -->
+              <span v-if="item.status==1 " class="c-card-coupon--btn tap-area" @click="toShare(item)" style="background: #971a28;">发券 </span>
+              <span v-else style="background: #c7c7c7;">已停用</span>
+            </div>
+            <!-- <div class="c-card-coupon--footer--dot " style="left:-10px "></div>
+            <div class="c-card-coupon--footer--dot " style="right:-10px "></div> -->
+          </div>
+        </div>
         </div>
         <div v-else>
           <v-nodata></v-nodata>
@@ -131,6 +149,7 @@ export default {
       active: 0,
       totalPage: 0,
       filterBarList: [],
+      count: [],
       keywords: ''
     }
   },
@@ -229,6 +248,7 @@ export default {
     async getData() {
       let res = await this.$api.LIST_STORE_COUPON_TEMP(this.query)
       if (res.status === 1) {
+        this.count = [res.data.numStatusUp, res.data.numStatusDown]
         if (this.query.pageNo === 1) {
           this.couponList = res.page.list || []
         } else {
@@ -240,7 +260,7 @@ export default {
       }
     },
     toShare(item) {
-      this.$toast.fail('敬请期待')
+      // this.$toast.fail('敬请期待')
       // this.showShare = true
       // this.$nextTick(() => {
       //   soshm('#shareBtn', {
@@ -260,9 +280,9 @@ export default {
       this.$api.NATIVE_SHARE({
         shareUrl:
         `http://dp.51chebian.com/store/ssp/ci/store/coupon/temp/receive/form?id=${item.id}`,
-        title: '测试',
-        thumbnail: 'https://static-oss-chebian.oss-cn-beijing.aliyuncs.com/public/share-popup.svg',
-        summary: '描述'
+        title: `您有一张价值${item.moneyCondition|currency('')}元的优惠券`,
+        thumbnail: 'https://static-oss-chebian.oss-cn-beijing.aliyuncs.com/public/share-popup-01.png',
+        summary: `满${item.moneyReduce|currency('')}元可用`
       })
     }
   },
@@ -277,6 +297,14 @@ export default {
 // TIP: 样式不用修改
 @import '../../assets/style/var.less';
 @import '../../assets/style/border.less';
+.c-card-coupon--wrapper{
+  border-radius: 8px;
+  margin: 10px auto;
+  background: -webkit-linear-gradient(left, #f2511f, #fe2a45);
+}
+.c-card-coupon--disabled{
+  background: rgb(199, 199, 199);
+}
 .share-btn-box {
   text-align: center;
 }
@@ -287,6 +315,28 @@ export default {
   font-size: 12px;
   color: @primary-text;
   text-align: center;
+}
+.c-card-coupon--title--left,
+.c-card-coupon--footer--left,
+.c-card-coupon--title--right,
+.c-card-coupon--footer--right{
+  color:#fff;
+}
+.c-card-coupon--title--right{
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+.c-card-coupon--text,
+.c-card-coupon--footer--right.text{
+  line-height: 20px;
+}
+.c-card-coupon--footer--right.text{
+  margin-right: 2%;
+}
+.c-card-coupon--footer--text{
+    height: 25px;
+    line-height: 25px;
 }
 .c-filter--box {
   padding: 5px 10px;
@@ -308,5 +358,31 @@ export default {
       color: @secondary-text!important;
     }
   }
+}
+.c-card-coupon--btn{
+    display: inline-block;
+    width: 70px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 8px;
+    color: #fff;
+    // background: #971a28;
+}
+.c-card-coupon--footer{
+    background-image:none;
+}
+
+.c-card-coupon--footer--dot--top,
+.c-card-coupon--footer--dot--bottom {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    // top: -10px;
+    // top:0;
+    left:65%;
+    background: #e8e8e8;
+    border-radius: 50%;
 }
 </style>

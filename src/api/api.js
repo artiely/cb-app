@@ -1532,6 +1532,14 @@ const KJ_REMARK_LIST = params => {
     data: params
   })
 }
+/* 账户管理接口 key：FinanceAccountApi */
+const ACCOUNTMANAGEMENT_ALL = params => {
+  return fetch({
+    url: 'fm/fa/finance/account/sum/balance',
+    method: 'post',
+    data: params
+  })
+}
 
 /* 删除快捷备注列表 */
 const KJ_REMARK_DELETE = params => {
@@ -1541,7 +1549,59 @@ const KJ_REMARK_DELETE = params => {
     data: params
   })
 }
+/* 记账账户接口 key：FinanceAccountApi */
+const ACCOUNT_LIST = params => {
+  return fetch({
+    url: 'fm/fa/finance/account/list/all',
+    method: 'post',
+    data: params
+  })
+}
 
+/* 记账账户排序接口 key：FinanceAccountApi */
+const ACCOUNT_SORT = params => {
+  return fetch({
+    url: 'fm/fa/finance/account/update/sort/no/all',
+    method: 'post',
+    data: params
+  })
+}
+
+/* 新增记账账户接口 key：FinanceAccountApi */
+const ADDACCOUNT_LIST = params => {
+  return fetch({
+    url: 'fm/fa/finance/account/save',
+    method: 'post',
+    data: params
+  })
+}
+
+/* 删除记账账户接口 key：FinanceAccountApi */
+const DELACCOUNT_LIST = params => {
+  return fetch({
+    url: 'fm/fa/finance/account/del',
+    method: 'post',
+    data: params
+  })
+}
+
+/* 记账账户详情接口 key：financeRecordSum  编辑获取数据加id */
+const ACCOUNTDETAILS_LIST = params => {
+  return fetch({
+    url: 'fm/fa/finance/account/info',
+    method: 'post',
+    data: params
+  })
+}
+
+/* 记账账户详情-启用状态接口 key：FinanceAccountApi */
+const ACCOUNTDETAILSSTATUS_LIST = params => {
+  return fetch({
+    url: 'fm/fa/finance/account/update/is/enable',
+    method: 'post',
+    data: params
+  })
+}
 const apiList = {
   LOGIN,
   ORDER_DEL,
@@ -1705,7 +1765,14 @@ const apiList = {
   ROLE_DELETE,
   BRAND_JINGYING,
   KJ_REMARK_LIST,
-  KJ_REMARK_DELETE
+  KJ_REMARK_DELETE,
+  ACCOUNTMANAGEMENT_ALL,
+  ACCOUNT_LIST,
+  ACCOUNTDETAILS_LIST,
+  ADDACCOUNT_LIST,
+  ACCOUNTDETAILSSTATUS_LIST,
+  DELACCOUNT_LIST,
+  ACCOUNT_SORT
 }
 
 export default apiList

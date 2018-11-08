@@ -199,6 +199,15 @@ const state = {
       icon: 'icon-xiaoxi1',
       params: '',
       num: 0
+    },
+    {
+      text: '账户管理',
+      path: '/accountmanagement',
+      name: 'AccountManagement',
+      color: '#0ebfee',
+      bgColor: 'transparent',
+      icon: 'icon-xiaoxi1',
+      params: ''
     }
   ]
 }

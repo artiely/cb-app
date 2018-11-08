@@ -188,6 +188,12 @@ export default {
     } else {
       this.keywords = ''
     }
+    // 记账账户详情--查看
+    if (this.$route.query.id) {
+      this.query['financeAccount.id'] = this.$route.query.id
+    } else {
+      this.query['financeAccount.id'] = ''
+    }
   }
 }
 </script>

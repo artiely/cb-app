@@ -366,6 +366,52 @@ const routes = [
       auth: true
     }
   },
+  // 账户管理
+  {
+    path: '/accountmanagement',
+    name: 'AccountManagement',
+    component: lazyLoad('account/AccountManagement'),
+    meta: {
+      auth: true
+    }
+  },
+  // 记账账户
+  {
+    path: '/account',
+    name: 'Account',
+    component: lazyLoad('account/Account'),
+    meta: {
+      auth: true
+    }
+  },
+  // 新增记账账户
+  {
+    path: '/addaccount',
+    name: 'AddAccount',
+    component: lazyLoad('account/AddAccount'),
+    meta: {
+      auth: true
+    }
+  },
+  // 记账账户详情
+  {
+    path: '/accountdetails',
+    name: 'AccountDetails',
+    component: lazyLoad('account/AccountDetails'),
+    meta: {
+      auth: true
+    }
+  },
+  // 账户提示
+  {
+    path: '/accounttips',
+    name: 'AccountTips',
+    component: lazyLoad('account/AccountTips'),
+    meta: {
+      auth: true
+    }
+  },
+
   {
     path: '/ticket',
     name: 'Ticket',

@@ -3,7 +3,7 @@
     <v-header :title="gasType=='1'?'商品详情':'服务详情'" righttext="编辑" @right-click="editDetail"></v-header>
     <v-scroll-page top="44" style="overflow-y:scroll">
       <v-br height="20"></v-br>
-    
+
     <!-- <div class="c-scroll-wrapper-top"> -->
       <!-- <cube-scroll :data="data"> -->
         <div class="goods-detail-name" v-if="data">{{data.name}}

@@ -4,6 +4,9 @@
     </v-header>
     <div class="c-scroll-wrapper-top">
       <v-br :height="20"></v-br>
+
+
+
       <!-- 车牌号组件 -->
       <v-cell-group style="padding:15px 0">
         <v-licence v-model="carId" title="车牌号" @click.native="keyboardShow=true"></v-licence>
@@ -12,7 +15,7 @@
       <v-more v-model="more"></v-more>
       <div v-if="more">
         <v-cell-group>
-          <!-- <v-cell title="车型" link @click.native="goMotorType" :wrap="motorType.length>0" :text="motorTypeText"></v-cell> -->
+          <v-cell title="车型" link @click.native="goMotorType" :wrap="motorType.length>0" :text="motorTypeText"></v-cell>
           <v-cell title="VIN码" input v-model="query.vin"></v-cell>
           <v-cell title="发动机号" input v-model="query.engineNo"></v-cell>
         </v-cell-group>
@@ -194,4 +197,5 @@ export default {
 </script>
 
 <style>
+
 </style>
