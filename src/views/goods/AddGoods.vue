@@ -293,7 +293,11 @@ export default {
         this.currentCate.name = ''
         this.currentCate.id = ''
       } else {
-        this.currentCate.name = names.join('>')
+        if (this.category[indexs[0]].subCategorys) {
+          this.currentCate.name = names.join('>')
+        } else {
+          this.currentCate.name = names.join('')
+        }
       }
     },
     async brandSave() {

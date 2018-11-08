@@ -340,6 +340,9 @@ export default {
   color: #333333;
 }
 .jiluBox{
+  .c_cell_wrapper{
+    background: #fff;
+  }
   .c_cell_wrapper:last-child .c_cell{
     background-image: none;
   }

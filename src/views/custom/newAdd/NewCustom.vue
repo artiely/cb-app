@@ -60,7 +60,7 @@
         <v-br></v-br>
         <van-cell-group>
           <v-scroll-page top="44">
-            <cube-scroll :data="data">
+            <cube-scroll :data="data" class="vancellListBox">
               <van-cell :title="item.name" is-link :label="item.remarks" v-for="item in data" :key="item.id" @click.native="setInfo(item)" />
             </cube-scroll>
           </v-scroll-page>
@@ -413,6 +413,11 @@ export default {
         color: #d73962;
       }
     }
+  }
+  .vancellListBox{
+    .van-hairline::after{
+      border: none !important;
+    }  
   }
 }
 .tagCell {
