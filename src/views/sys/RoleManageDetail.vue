@@ -2,6 +2,8 @@
   <div class="RoleManageDetailBox">
     <v-header title="详情" :border="true" :left-click="handleLeft" righttext="编辑" @right-click="toRoleManageEdit">
     </v-header>
+    <v-scroll-page top="44" style="overflow-y:scroll">
+      <v-br height="20"></v-br>
     <div class="jsBox">
       <div class="jsPosition">
         <div class="jsPositionLable">角色名称</div>
@@ -29,10 +31,7 @@
       <div class="authList" v-for="(authitem , index) in authInfo" :key="index">{{authitem.name}}</div>
     </div>
     <v-remark v-model="remark" disabled></v-remark>
-    <!-- <div class="remarkBox">
-      <div class="remarkLabel">备注</div>
-      <div class="remarkNr">{{remark}}</div>
-    </div> -->
+    </v-scroll-page>
   </div>
 </template>
 
@@ -119,7 +118,6 @@ export default {
 .RoleManageDetailBox {
   .jsBox {
     width: 100%;
-    margin-top: 64px;
     background-color: #ffffff;
     padding: 0 0 15px 16px;
   }

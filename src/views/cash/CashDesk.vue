@@ -364,6 +364,7 @@ export default {
         this.moneyErasing = ''
         this.pwd = ''
         this.couponList = []
+        this.KeyValue = []
         this.orderRemarks = ''
         this.orderNoHand = ''
         this.motorMileCurrent = ''
@@ -381,6 +382,7 @@ export default {
       this.moneyErasing = ''
       this.pwd = ''
       this.couponList = []
+      this.KeyValue = []
       this.orderRemarks = ''
       this.orderNoHand = ''
       this.motorMileCurrent = ''
@@ -407,6 +409,7 @@ export default {
       this.moneyErasing = ''
       this.pwd = ''
       this.couponList = []
+      this.KeyValue = []
       this.orderRemarks = ''
       this.orderNoHand = ''
       this.motorMileCurrent = ''
