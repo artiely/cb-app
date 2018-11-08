@@ -6,7 +6,7 @@
         <div class="v-upload-close" v-if="!readonly" @click="close(index)">
           <v-icon name="icon-shanchu1"></v-icon>
         </div>
-        <div class="v-upload-pic">
+        <div class="v-upload-pic" @click="showView(index)">
           <img :src="imgBaseUrl+item" alt="单据/照片">
         </div>
       </div>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { ImagePreview } from 'vant'
 export default {
   name: 'v-upload',
   data() {
@@ -50,6 +51,20 @@ export default {
     close(index) {
       this.$store.commit('NATIVE_PIC_DEL_ORDER', index)
     },
+    showView(index) {
+      let images = this.data.map(v => {
+        return this.imgBaseUrl + v
+      })
+      if (this.readonly) {
+        ImagePreview({
+          images: images,
+          startPosition: index,
+          onClose() {
+            // do something
+          }
+        })
+      }
+    },
     callNative() {
       this.$api.GET_CAMERA({ serviceType: 'kaidan' })
     }
@@ -65,9 +80,12 @@ export default {
 }
 .v-upload-picbox {
   padding: 5px 15px;
+  display: flex;
   .v-upload-picitem {
     position: relative;
     display: inline-block;
+    width: 60px;
+    height: 60px;
     margin-right: 10px;
     .v-upload-close {
       position: absolute;
@@ -81,11 +99,15 @@ export default {
       overflow: hidden;
       text-align: center;
       line-height: 20px;
+      z-index: 2004;
       .icon {
         color: #fff !important;
       }
     }
     .v-upload-pic {
+      position: absolute;
+      top: 0;
+      left: 0;
       height: 60px;
       width: 60px;
       background: #ddd;

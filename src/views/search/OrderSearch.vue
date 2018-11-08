@@ -19,6 +19,7 @@
               <div slot="text">
                 <div class="custom-result-item" @click="handleItem(item)">
                   <div class="custom-result-icon">
+                    <img :src="baseUrl+item.motor.motorBrand.logo" v-if="item.motor&&item.motor.motorBrand&&item.motor.motorBrand.logo" alt="">
                     <v-icon name="icon-morencheliang"></v-icon>
                   </div>
                   <div class="custom-result-info">
@@ -129,6 +130,9 @@ export default {
   computed: {
     returnDataFlag() {
       return this.query['searchParameter.keyWord'] === '' ? 0 : 1
+    },
+    baseUrl() {
+      return this.$store.state.sys.chebianSaticBrandUrl
     }
   },
   methods: {

@@ -26,7 +26,8 @@
               <div slot="text">
                 <div class="custom-result-item">
                   <div class="custom-result-icon" @click="toDetail(item)">
-                    <v-icon name="icon-morencheliang"></v-icon>
+                    <img :src="baseUrl+item.motor.motorBrand.logo" v-if="item.motor&&item.motor.motorBrand&&item.motor.motorBrand.logo" alt="">
+                    <v-icon name="icon-morencheliang" v-else></v-icon>
                   </div>
                   <div class="custom-result-info" @click="toDetail(item)">
                     <div class="custom-result-info-idcard" v-if="item.motor">{{item.motor.licence|carIdFormat()}}</div>
@@ -180,6 +181,9 @@ export default {
           return v
         }
       })
+    },
+    baseUrl() {
+      return this.$store.state.sys.chebianSaticBrandUrl
     }
   },
   methods: {

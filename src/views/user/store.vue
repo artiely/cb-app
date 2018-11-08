@@ -15,19 +15,6 @@
         </v-remark>
 
       </v-cell-group>
-      <!-- <p class="store-tip">客服电话将显示在 【精准推送】 的短信内，请正确填写。</p> -->
-      <!-- <v-cell-group style="margin:0">
-        <v-cell title="店铺所在地" link :text="addressStr" @click.native="addressShow=true"></v-cell>
-        <v-cell title="详细地址" input v-model="areaDetail"></v-cell>
-      </v-cell-group>
-      <p class="store-tip">店铺所在地与添加车辆时默认车牌前缀关联，请正确填写。</p> -->
-      <!-- <v-cell-group>
-        <v-cell title="店铺类型" link @click.native="typeShow=true" :text="typeItem.name"></v-cell>
-      </v-cell-group> -->
-
-      <!-- <v-remark placeholder="简介" v-model="summary"></v-remark> -->
-      <!-- <el-amap ref="map" vid="amapDemo" :amap-manager="amapManager" :center="center" :zoom="zoom" :plugin="plugin" :events="events" class="amap-demo">
-      </el-amap> -->
     </v-scroll-page>
     <!-- 经营项目的弹框 -->
     <van-popup v-model="typeShow" style="width:100%;height:70%" position="bottom" :lock-scroll="false" class="popup-radius">
@@ -374,18 +361,14 @@ export default {
   },
   created() {},
   activated() {
-    // if(!this.$route.back){
-    //   alert(1)
-    //   this.isNull()
-    // } else {
-    //   alert(2)
-    // }
     if (this.$route.query.id) {
       this.id = this.$route.query.id
     }
     if (this.$route.params.data) {
       this.address = this.$route.params.data
-      this.areaDetail = this.address.district + this.address.address
+      this.areaDetail = this.address.district
+        ? this.address.district
+        : '' + this.address.address
     }
 
     this.storeMessage()

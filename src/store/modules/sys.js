@@ -19,6 +19,7 @@ const state = {
   currentUser: '', // 当前登陆者信息
   refresh: false, // 全局定义的刷新状态，在为true的时候执行特定的操作，然后重置为false
   brand: {}, // 当前新增的商品的品牌
+  chebianSaticBrandUrl: 'https://static-oss-chebian.oss-cn-beijing.aliyuncs.com/', // 车边车辆品牌图标前缀地址
   roleAdmin: [
     // {
     //   text: '充值',
