@@ -1,48 +1,48 @@
 <template>
-<div class="motortypt">
-  <van-popup v-model="value" style="width:100%;height:100%" position="bottom">
-    <v-header title="请选择车型" :border="false" :left-click="closePopup"></v-header>
-    <v-search placeholder="可直接输入车系搜索"></v-search>
-   
-     <div class="weui-wepay-flow weui-wepay-flow_vertical" style="padding:20px;" :class="styleFlage==0?'clickb':'clicka'">
-      <div class="weui-wepay-flow__bd">
-        <div v-for="(item,index) in result" @click="handleResult(item)" :key="item.id">
-          <div class="weui-wepay-flow__li weui-wepay-flow__li_done">
-            <!-- 实心 -->
-            <div class="weui-wepay-flow__state" :class="{'shixin_c':result.length>=3,'kongxin_c':index==3}"></div>
-            <p class="weui-wepay-flow__title-right"> {{item.name}}</p>
-          </div>
+  <div class="motortypt">
+    <van-popup v-model="value" style="width:100%;height:100%" position="bottom">
+      <v-header title="请选择车型" :border="false" :left-click="closePopup"></v-header>
+      <v-search placeholder="可直接输入车系搜索"></v-search>
 
-          <div class="weui-wepay-flow__line weui-wepay-flow__line_done" :class="{'weui-none':index==3}">
-            <div class="weui-wepay-flow__process"></div>
+      <div class="weui-wepay-flow weui-wepay-flow_vertical" style="padding:20px;" :class="styleFlage==0?'clickb':'clicka'">
+        <div class="weui-wepay-flow__bd">
+          <div v-for="(item,index) in result" @click="handleResult(item)" :key="item.id">
+            <div class="weui-wepay-flow__li weui-wepay-flow__li_done">
+              <!-- 实心 -->
+              <div class="weui-wepay-flow__state" :class="{'shixin_c':result.length>=3,'kongxin_c':index==3}"></div>
+              <p class="weui-wepay-flow__title-right"> {{item.name}}</p>
+            </div>
+
+            <div class="weui-wepay-flow__line weui-wepay-flow__line_done" :class="{'weui-none':index==3}">
+              <div class="weui-wepay-flow__process"></div>
+            </div>
           </div>
-        </div>
-        <div class="weui-wepay-flow__li">
-          <!-- 空心 -->
-          <div class="weui-wepay-flow__state" v-if="result.length<=3&&result.length!==0"></div>
-          <p class="weui-wepay-flow__title-right" v-if="result.length==1">请选择厂商</p>
-          <p class="weui-wepay-flow__title-right" v-if="result.length==2">请选择车系</p>
-          <p class="weui-wepay-flow__title-right" v-if="result.length==3">请选择车型</p>
+          <div class="weui-wepay-flow__li">
+            <!-- 空心 -->
+            <div class="weui-wepay-flow__state" v-if="result.length<=3&&result.length!==0"></div>
+            <p class="weui-wepay-flow__title-right" v-if="result.length==1">请选择厂商</p>
+            <p class="weui-wepay-flow__title-right" v-if="result.length==2">请选择车系</p>
+            <p class="weui-wepay-flow__title-right" v-if="result.length==3">请选择车型</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <v-scroll-page :top="top" style="margin-top:0px;" class="scroll_page">
-      <scroller :on-refresh="refresh" :on-infinite="infinite">
-        <p class="pselect" v-if="result.length==0" :class="styleFlage==0?'':'marginTop'">选择品牌</p>
-        <p class="pselect" v-if="result.length==1" :class="styleFlage==0?'':'marginTop'">选择厂商</p>
-        <p class="pselect" v-if="result.length==2" :class="styleFlage==0?'':'marginTop'">选择车系</p>
-        <p class="pselect" v-if="result.length==3" :class="styleFlage==0?'':'marginTop'">选择车型</p>
-        <div v-for="(item,index) in data" class="motortype-cell" @click="checkCell(item)" :key="item.id">
-          <span class="carModel" style="margin-top:10px;"> {{item.name}}</span>
-          <span class="checkOption">
-            <i class="icon iconfont icon-duigou1" v-if="index==currSelectIndex"></i>
-            <!-- <v-icon name="icon-duigou1" class="duigou" v-if="index==currSelectIndex"></v-icon> -->
+      <v-scroll-page :top="top" style="margin-top:0px;" class="scroll_page">
+        <scroller :on-refresh="refresh" :on-infinite="infinite">
+          <p class="pselect" v-if="result.length==0" :class="styleFlage==0?'':'marginTop'">选择品牌</p>
+          <p class="pselect" v-if="result.length==1" :class="styleFlage==0?'':'marginTop'">选择厂商</p>
+          <p class="pselect" v-if="result.length==2" :class="styleFlage==0?'':'marginTop'">选择车系</p>
+          <p class="pselect" v-if="result.length==3" :class="styleFlage==0?'':'marginTop'">选择车型</p>
+          <div v-for="(item,index) in data" class="motortype-cell" @click="checkCell(item)" :key="item.id">
+            <span class="carModel" style="margin-top:10px;"> {{item.name}}</span>
+            <span class="checkOption">
+              <i class="icon iconfont icon-duigou1" v-if="index==currSelectIndex"></i>
+              <!-- <v-icon name="icon-duigou1" class="duigou" v-if="index==currSelectIndex"></v-icon> -->
             </span>
-        </div>
-      </scroller>
-    </v-scroll-page>
-  </van-popup>
+          </div>
+        </scroller>
+      </v-scroll-page>
+    </van-popup>
   </div>
 </template>
 
@@ -80,16 +80,16 @@ export default {
   },
   computed: {
     top() {
-      if(this.result.length==0){
+      if (this.result.length === 0) {
         return 94 + this.result.length * 40 + 17
-      }else if(this.result.length==1){
+      } else if (this.result.length === 1) {
         return 94 + this.result.length * 40 + 40
-      }else if(this.result.length==2){
+      } else if (this.result.length === 2) {
         return 94 + this.result.length * 40 + 27
-      }else if(this.result.length==3){
+      } else if (this.result.length === 3) {
         return 94 + this.result.length * 40 + 15
-      }else if(this.result.length==4){
-        return 94 + this.result.length * 40 -17
+      } else if (this.result.length === 4) {
+        return 94 + this.result.length * 40 - 17
       }
     }
   },
@@ -104,6 +104,11 @@ export default {
   methods: {
     async getData(done) {
       let res = await this.$api.MOTOR_TYPE(this.query)
+      // 作用域
+      let vm = this
+      function _findIndex(element) {
+        return element.id === vm.currSelectId
+      }
       if (res.status === 1) {
         if (this.query.pageNo === 1 || this.query.pageNo === '1') {
           this.data = res.page.list || []
@@ -112,12 +117,7 @@ export default {
         }
         this.totalPage = res.page.totalPage
         this.currentLevel = Number(res.message)
-        console.log('this.currSelectId', this.currSelectId)
-        // 作用域
-        let vm = this
-        function _findIndex(element) {
-          return element.id === vm.currSelectId
-        }
+        // console.log('this.currSelectId', this.currSelectId)
         this.currSelectIndex = this.data.findIndex(_findIndex)
         console.log('index--', this.currSelectIndex)
         done && done()
@@ -142,7 +142,7 @@ export default {
       this.getData()
     },
     checkCell(item) {
-      this.styleFlage=1
+      this.styleFlage = 1
       this.getResult({ type: this.currentLevel, categoryId: item.id })
       if (this.currentLevel === 4) {
         this.$emit('input', false)
@@ -182,17 +182,16 @@ export default {
 </script>
 
 <style scoped>
-.c_header .c_header_left .icon{
-
+.c_header .c_header_left .icon {
 }
-.clickb{
+.clickb {
   background: rgb(232, 232, 232);
 }
-.clicka{
-  background:#fff;
+.clicka {
+  background: #fff;
 }
-.marginTop{
-  margin-top:10px;
+.marginTop {
+  margin-top: 10px;
 }
 .weui-none {
   display: none;
@@ -207,12 +206,12 @@ export default {
   padding-left: 6%;
   font-size: 16px;
 }
-.checkOption{
-  padding-left:20px;
+.checkOption {
+  padding-left: 20px;
 }
-.checkOption i{
+.checkOption i {
   color: rgb(23, 144, 255) !important;
-  font-size:22px;
+  font-size: 22px;
 }
 .weui-wepay-flow__bd {
   display: -webkit-box;
@@ -253,10 +252,10 @@ export default {
   /*实心蓝色*/
   background-color: #1690ff;
 }
-.kongxin_c{
+.kongxin_c {
   background-color: #e2e2e2 !important;
 }
-.shixin_c{
+.shixin_c {
   background-color: #1690ff;
 }
 [class^='weui-wepay-flow__title-'],

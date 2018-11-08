@@ -37,7 +37,7 @@
 
           <div class="c-card-coupon--footer clearfix " >
             <div class="c-card-coupon--footer--left " @click="toDetail(item)">
-              <span class="c-card-coupon--footer--text" v-if="item.restrictTimeType=='1'">有效期：{{item.restrictDateStart|timeFormat('YYYY-MM-DD')}}至{{item.restrictDateEnd|timeFormat('YYYY-MM-DD')}}</span>
+              <span class="c-card-coupon--footer--text" v-if="item.restrictTimeType=='1'">有效期：{{item.restrictDateStart|timeFormat('YYYY.MM.DD')}}至{{item.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</span>
               <span class="c-card-coupon--footer--text" v-else>有效期：自办理 {{item.restrictDays}} 天有效</span>
             </div>
             <div class="c-card-coupon--footer--right ">

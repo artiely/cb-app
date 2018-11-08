@@ -194,9 +194,9 @@ const state = {
       text: '小程序管理',
       path: '/wxmp',
       name: 'Wxmp',
-      color: '#0ebfee',
+      color: '#0090ff',
       bgColor: 'transparent',
-      icon: 'icon-xiaoxi1',
+      icon: 'icon-xiaochengxu',
       params: '',
       num: 0
     },
@@ -204,9 +204,9 @@ const state = {
       text: '账户管理',
       path: '/accountmanagement',
       name: 'AccountManagement',
-      color: '#0ebfee',
+      color: '#0dcc6d',
       bgColor: 'transparent',
-      icon: 'icon-xiaoxi1',
+      icon: 'icon-zhanghuguanli',
       params: ''
     }
   ]
