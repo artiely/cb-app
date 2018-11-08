@@ -44,6 +44,12 @@ const mutations = {
       state.wxPicList.push(payload.fileName)
     }
   },
+  [types.SET_NATIVE_PIC](state, payload) {
+    state.wxPicList = payload
+  },
+  [types.NATIVE_PIC_DEL](state, index) {
+    state.wxPicList.splice(index, 1)
+  },
   [types.NATIVE_PIC_UPLOAD_OK_ORDER](state, payload) {
     if (state.orderPicList.length < 4) {
       state.orderPicList.push(payload.fileName)

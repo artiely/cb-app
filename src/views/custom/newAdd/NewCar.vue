@@ -5,8 +5,6 @@
     <div class="c-scroll-wrapper-top">
       <v-br :height="20"></v-br>
 
-
-
       <!-- 车牌号组件 -->
       <v-cell-group style="padding:15px 0">
         <v-licence v-model="carId" title="车牌号" @click.native="keyboardShow=true"></v-licence>
@@ -163,6 +161,15 @@ export default {
           'YYYY-MM-DD'
         )
         this.remarks = res.data.remarks
+        // 拼接车型的数组 品牌+厂商+车系+车型
+        this.motorType = [
+          res.data.motorBrand || '',
+          res.data.motorCompany || '',
+          res.data.motorSeries || '',
+          res.data.motorModel || ''
+        ].filter(v => {
+          return v !== ''
+        })
       }
     }
   },
@@ -174,6 +181,7 @@ export default {
     this.more = false
     if (this.$route.query.memberId) {
       this.memberId = this.$route.query.memberId
+      this.keyboardShow = false
     } else {
       this.memberId = ''
     }
@@ -191,11 +199,10 @@ export default {
       this.query.insuranceDueDate = ''
       this.query.checkDueDate = ''
     }
-    this.keyboardShow = true
+    // this.keyboardShow = true
   }
 }
 </script>
 
 <style>
-
 </style>

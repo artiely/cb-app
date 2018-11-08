@@ -55,3 +55,4 @@ export const NATIVE_PIC_DEL_ORDER = 'NATIVE_PIC_DEL_ORDER' // 设置客户的储
 export const SET_NATIVE_PIC_ORDER = 'SET_NATIVE_PIC_ORDER' // 设置客户的储值账户
 export const CLEAR_NATIVE_PIC_ORDER = 'CLEAR_NATIVE_PIC_ORDER' // 设置客户的储值账户
 export const CLEAR_ORDER_DATA = 'CLEAR_ORDER_DATA' // 清空快单订单中的默认数据
+export const SET_NATIVE_PIC = 'SET_NATIVE_PIC' // 清空快单订单中的默认数据

@@ -72,7 +72,7 @@ export default {
       totalPage: 0,
       data: [],
       currentLevel: 1,
-      result: [],
+      result: this.resultData,
       currSelectId: '',
       currSelectIndex: 0,
       styleFlage: 0

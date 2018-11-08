@@ -104,7 +104,7 @@
       </v-footer>
     </v-scroll-page>
     <!-- TIP:订单基本信息 -->
-    <van-popup v-model="orderBaseInfoVisiable" position="right" style="height:100%;width:100%;background:#f0f0f0">
+    <van-popup v-model="orderBaseInfoVisiable" position="right" style="height:100%;width:100%;background:#f0f0f0" :lock-scroll="false">
       <v-header title="订单基本信息" :left-click="closeBaseinfo"></v-header>
       <v-br :height="64"></v-br>
       <v-cell-group>
@@ -125,6 +125,7 @@
       </v-cell-group>
       <v-remark v-model="remarks" placeholder="添加订单备注，如车主描述，维修说明..." ></v-remark>
       <v-upload :data="attachment"></v-upload>
+      <v-br height="50"></v-br>
       <v-footer>
         <v-footer-item @click.native="orderBaseInfoVisiable=false">保存</v-footer-item>
       </v-footer>

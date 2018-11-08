@@ -128,18 +128,17 @@ export default {
         map: map
       })
       positionPicker.on('success', function(positionResult) {
-      console.log('xx', positionResult)
-      _this.addressList=[positionResult]
+        console.log('xx', positionResult)
+        _this.addressList = [positionResult]
+      })
+      positionPicker.on('fail', function(positionResult) {
+        console.log('ss', positionResult)
+      })
+      positionPicker.start(map.getBounds().getSouthWest())
+      //  map.addControl(new AMap.ToolBar({
+      //     liteStyle: true
+      // }))
     })
-    positionPicker.on('fail', function(positionResult) {
-            console.log('ss', positionResult)
-        });
-         positionPicker.start(map.getBounds().getSouthWest())
-        //  map.addControl(new AMap.ToolBar({
-        //     liteStyle: true
-        // }))
-    })
-    
   },
   activated() {
     if (this.$route.query.id) {
