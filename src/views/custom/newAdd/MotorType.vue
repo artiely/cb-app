@@ -181,8 +181,6 @@ export default {
 </script>
 
 <style scoped>
-.c_header .c_header_left .icon {
-}
 .clickb {
   background: rgb(232, 232, 232);
 }
@@ -202,11 +200,11 @@ export default {
 .motortype-cell {
   height: 45px;
   line-height: 45px;
-  padding-left: 6%;
-  font-size: 16px;
+  padding-left: 5%;
+  font-size: 15px;
 }
 .checkOption {
-  padding-left: 20px;
+  padding-left: 5px;
 }
 .checkOption i {
   color: rgb(23, 144, 255) !important;
