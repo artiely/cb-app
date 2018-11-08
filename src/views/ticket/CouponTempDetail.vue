@@ -14,7 +14,7 @@
           <!-- <v-cell title="券种" :text="data.type==1?'代金券':'礼品券'"></v-cell> -->
           <!-- <v-cell title="券名" :text="data.name"></v-cell> -->
           <v-cell v-if="data.type==1" title="面值" :text="data.moneyReduce|currency('￥')"></v-cell>
-          <v-cell v-if="data.type==2" title="面值" :text="data.moneyCondition|currency('￥')"></v-cell>
+          <v-cell v-if="data.type==2" title="面值" :text="data.moneyGift|currency('￥')"></v-cell>
           <v-cell title="启用状态">
             <div slot="right" class="right-slot">
               <van-switch v-model="checked" @input="upDown" />
@@ -34,11 +34,11 @@
           </div>
           <div class="clearfix cb_detail_item" v-if="data.restrictTimeType==2">
             <div class="fl">有效期至</div>
-            <div class="fr">{{'自办理起' +data.restrictDays+ ' 天'}}</div>
+            <div class="fr">{{'自领取起' +data.restrictDays+ ' 天'}}</div>
           </div>
           <div class="clearfix cb_detail_item" v-if="data.restrictTimeType==1">
             <div class="fl">有效期至</div>
-            <div class="fr">{{data.restrictDateStart|timeFormat('YYYY-MM-DD')}} ~ {{data.restrictDateEnd|timeFormat('YYYY-MM-DD')}}</div>
+            <div class="fr">{{data.restrictDateStart|timeFormat('YYYY.MM.DD')}} ~ {{data.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</div>
           </div>
           <div class="clearfix cb_detail_item">
             <div class="fl">使用时间</div>
@@ -87,7 +87,7 @@
           <v-cell title="备注" :text="data.remarks" :maxlength="200" wrap></v-cell>
           </v-cell-group>
           <p class="c-store--adtit">店铺宣传信息</p>
-          <div class="c-store--adimg clearfix"> 
+          <div class="c-store--adimg clearfix">
             <div class="c-store--adimg--box" v-if="!data.storeImg">
             </div>
             <img v-else :src="'https://static-oss-chebian.oss-cn-beijing.aliyuncs.com/public/'+data.storeImg" alt="店铺宣传图">
@@ -129,6 +129,7 @@ export default {
       let res = await this.$api.COUPON_TEMP_DETAIL({ id: this.id })
       if (res.status === 1) {
         this.data = res.data
+        console.log('-----' + this.data)
         this.checked = res.data.status === '1'
       } else {
         console.error('获取详情失败')

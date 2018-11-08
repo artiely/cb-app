@@ -23,7 +23,8 @@
             <div class="preview-money" v-else>{{data.moneyCondition|currency('￥')}}</div>
             <p style="font-size:18px;color:#666;text-align:center;padding-bottom:5px">全店商品满立减</p>
             <p style="font-size:14px;color:#999;text-align:center"> {{'满 '+data.moneyCondition+'元可用'}}</p>
-            <p style="font-size:14px;color:#999;text-align:center;padding-top:30px">{{data.restrictDateStart|timeFormat('YYYY.MM.DD')}} - {{data.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</p>
+            <p style="font-size:14px;color:#999;text-align:center;padding-top:30px" v-if="data.restrictTimeType==1">{{data.restrictDateStart|timeFormat('YYYY.MM.DD')}} - {{data.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</p>
+            <p style="font-size:14px;color:#999;text-align:center;padding-top:30px" v-else>自领取 {{data.restrictDays}} 天有效</p>
             <div></div>
             <div class="preview-border">
               <div class="preview-dot dot-left"></div>

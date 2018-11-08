@@ -18,13 +18,16 @@
               <!-- <v-badge size="small " v-if="item.type==2 " :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="礼品券" >礼品券</v-badge>
               <v-badge size="small " v-else :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="通用券">通用券</v-badge> -->
             </div>
-            <div class="c-card-coupon--title--right textover1 ">{{item.moneyCondition|currency('￥')}}
-              <!-- <v-icon name="icon-youjiantou1 "></v-icon> -->
+            <!-- 满减面值 -->
+            <div class="c-card-coupon--title--right textover1 " v-if="item.type==1">{{item.moneyReduce|currency('￥')}}
+            </div>
+            <!-- 满赠面值 -->
+            <div class="c-card-coupon--title--right textover1 " v-if="item.type==2">{{item.moneyGift|currency('￥')}}
             </div>
           </div>
           <div class="c-card-coupon--desc textover1 " @click="toDetail(item)">
             <div class="c-card-coupon--footer--left ">
-              <span class="c-card-coupon--text">满{{item.moneyReduce|currency('')}}元可用</span>
+              <span class="c-card-coupon--text">满{{item.moneyCondition|currency('')}}元可用</span>
               <v-badge size="small " v-if="item.type==2 " :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="礼品券" >礼品券</v-badge>
               <v-badge size="small " v-else :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="通用券">通用券</v-badge>
             </div>
@@ -38,12 +41,12 @@
           <div class="c-card-coupon--footer clearfix " >
             <div class="c-card-coupon--footer--left " @click="toDetail(item)">
               <span class="c-card-coupon--footer--text" v-if="item.restrictTimeType=='1'">有效期：{{item.restrictDateStart|timeFormat('YYYY.MM.DD')}}至{{item.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</span>
-              <span class="c-card-coupon--footer--text" v-else>有效期：自办理 {{item.restrictDays}} 天有效</span>
+              <span class="c-card-coupon--footer--text" v-else>有效期：自领取 {{item.restrictDays}} 天有效</span>
             </div>
             <div class="c-card-coupon--footer--right ">
               <!-- <span v-if="item.status==1 " class="c-card-coupon--footer--right--btn tap-area" @click="toShare(item)">发券 </span> -->
-              <span v-if="item.status==1 " class="c-card-coupon--btn tap-area" @click="toShare(item)" style="background: #971a28;">发券 </span>
-              <span v-else style="background: #c7c7c7;">已停用</span>
+              <span v-if="item.numReceive>0 " class="c-card-coupon--btn tap-area" @click="toShare(item)" style="background: #971a28;">发券 </span>
+              <span v-else class="c-card-coupon--btn tap-area" style="background: #c7c7c7;">已领完</span>
             </div>
             <!-- <div class="c-card-coupon--footer--dot " style="left:-10px "></div>
             <div class="c-card-coupon--footer--dot " style="right:-10px "></div> -->
@@ -300,7 +303,22 @@ export default {
 .c-card-coupon--wrapper{
   border-radius: 8px;
   margin: 10px auto;
-  background: -webkit-linear-gradient(left, #f2511f, #fe2a45);
+  background: -webkit-linear-gradient(
+          left,
+          #f2511f,
+          #ff2300
+        ); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(
+          left,
+          #f2511f,
+          #ff2300
+        ); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(
+          left,
+          #f2511f,
+          #ff2300
+        ); /* Firefox 3.6 - 15 */
+  background: linear-gradient(left, #d40000, #ff2300); /* 标准的语法 */
 }
 .c-card-coupon--disabled{
   background: rgb(199, 199, 199);
