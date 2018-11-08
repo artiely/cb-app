@@ -51,7 +51,7 @@ export default {
       this.$store.commit('NATIVE_PIC_DEL_ORDER', index)
     },
     callNative() {
-      this.$api.GET_CAMERA({ serverType: 'kaidan' })
+      this.$api.GET_CAMERA({ serviceType: 'kaidan' })
     }
   }
 }

@@ -24,7 +24,7 @@
         场景5 新客户
         总结 只有有客户的情况下才有券 
           有客户还的区分是否有券 -->
-          <v-br :height="5"></v-br>
+        <v-br :height="5"></v-br>
         <v-cell-group>
           <v-cell v-if="data.order&&data.order.member" title="优惠券" :link="couponList.length!==0&&filterCouponList.length!==0" :text="(couponList.length==0||filterCouponList.length==0)?'无可用券':(currCoupon?currCoupon.temp.name:filterCouponList.length+' 张可用')" @click.native="showCoupon" />
           <v-cell title="抹零" input v-model="query.moneyErasing" type="number" currency :maxValue="maxMoney"></v-cell>
@@ -48,7 +48,7 @@
     <!-- 券 -->
     <van-popup v-model="couponShow" position="bottom" style="width:100%;height:70%;background:#f0f0f0" :lock-scroll="false">
       <v-popup-title title="请选择券" @close="couponShow=false"></v-popup-title>
-      <div class="popup-scroll-wrapper" style="top:60px;">
+      <div class="popup-scroll-wrapper" style="top:70px;">
         <cube-scroll v-if="couponList" :data="filterCouponList">
           <div class="c-card-coupon--wrapper " v-for="item in filterCouponList " :class="{ 'active':currCoupon.id==item.id} " @click="choiceCoupon(item)" :key="item.key">
             <div class="c-card-coupon--title clearfix ">
@@ -131,7 +131,11 @@ export default {
     'query.money': {
       handler(val) {
         let moneyLeft =
-          (this.data && this.data.order.moneyLeft ? this.data.order.moneyLeft : 0) - (this.query.moneyErasing || 0) - (this.currCoupon && this.currCoupon.temp.moneyReduce
+          (this.data && this.data.order.moneyLeft
+            ? this.data.order.moneyLeft
+            : 0) -
+          (this.query.moneyErasing || 0) -
+          (this.currCoupon && this.currCoupon.temp.moneyReduce
             ? this.currCoupon.temp.moneyReduce
             : 0)
         if (val > moneyLeft) {
@@ -179,7 +183,9 @@ export default {
         this.query.money =
           (this.data && this.data.order.moneyLeft
             ? this.data.order.moneyLeft
-            : 0) - (val && val.temp.moneyReduce ? val.temp.moneyReduce : 0) - (this.query.moneyErasing ? this.query.moneyErasing : 0)
+            : 0) -
+          (val && val.temp.moneyReduce ? val.temp.moneyReduce : 0) -
+          (this.query.moneyErasing ? this.query.moneyErasing : 0)
       },
       immediate: true
     },
@@ -273,10 +279,13 @@ export default {
     handleLeft() {
       this.query.moneyErasing = ''
       this.query.money =
-      this.data && this.data.order.moneyLeft ? this.data.order.moneyLeft : 0
+        this.data && this.data.order.moneyLeft ? this.data.order.moneyLeft : 0
       this.currCoupon = ''
       this.query.remarks = ''
-      this.$router.replace({name: 'OrderDetail', query: {id: this.query['order.id']}})
+      this.$router.replace({
+        name: 'OrderDetail',
+        query: { id: this.query['order.id'] }
+      })
     },
     chargeSave() {
       this.paySave()
@@ -338,6 +347,25 @@ export default {
       this.query.memberCardPwd = ''
       if (res.status === 1) {
         this.$toast.success('结算成功')
+        let str = ''
+        if (this.data.order.motorLicence && this.data.order.memberUsername) {
+          let pre1 = this.data.order.motorLicence.slice(0, 1)
+          let pre2 = this.data.order.motorLicence.slice(1, 2)
+          let end = this.data.order.motorLicence.slice(2)
+          str = `${pre1},${pre2},${end}, 收款成功`
+        } else if (this.data.order.motorLicence) {
+          let pre1 = this.data.order.motorLicence.slice(0, 1)
+          let pre2 = this.data.order.motorLicence.slice(1, 2)
+          let end = this.data.order.motorLicence.slice(2)
+          str = `${pre1},${pre2},${end}, 收款成功`
+        } else if (this.data.order.memberUsername) {
+          let end4 = this.data.order.memberUsername.slice(7, 11)
+          str = `手机尾号， "${end4}", 收款成功`
+        } else {
+          str = '收款成功'
+        }
+        this.$api.NATIVE_AUDIO({ type: 'jiesuan', str: str })
+        console.log('播报的数据', str)
         this.query.moneyErasing = ''
         this.$router.replace({
           name: 'Order',

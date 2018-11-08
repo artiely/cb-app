@@ -28,8 +28,8 @@ var s = {
 const state = {
   orderInfo: {
     // 接车单信息
-    'senderName': '',
-    'senderMobile': '',
+    senderName: '',
+    senderMobile: '',
     attachment: '',
     // 'receptionOrder.motorTotalMile': '',
     // 'receptionOrder.question': '',
@@ -71,7 +71,8 @@ const state = {
   refresh: 0, // 刷新
   storeStaff: '', // 店铺的员工 由于店铺员工多出使用 FIXME:其他页面的单独请求 去掉
   orderId: '', // 当前操作的订单id 进入开单清空-> 订单保存后生成 修改的时候是订单id
-  currentCard: '' // 当前划卡的卡信息
+  currentCard: '', // 当前划卡的卡信息
+  kdOrderData: 0 // 当前快单订单默认信息状态 0：清空当前数据  1：不变
 }
 
 // getters
@@ -180,9 +181,9 @@ const mutations = {
   [types.CLEAR_ORDER_INFO](state, payload) {
     // 应该还没地方需要使用
     state.orderInfo = {
-      'senderName': '',
-      'senderMobile': '',
-      'attachment': '', // 附件
+      senderName: '',
+      senderMobile: '',
+      attachment: '', // 附件
       // 'receptionOrder.motorTotalMile': '',
       // 'receptionOrder.question': '',
       // 'receptionOrder.suggest': '',
@@ -348,6 +349,9 @@ const mutations = {
   },
   [types.CLEAR_CURRENT_CARD](state) {
     state.currentCard = ''
+  },
+  [types.CLEAR_ORDER_DATA](state, orderDataState) {
+    state.kdOrderData = orderDataState
   }
 }
 

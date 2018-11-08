@@ -1524,6 +1524,14 @@ const MOTOR_TYPE_RESULT = params => {
   })
 }
 
+/* 快捷备注列表 */
+const KJ_REMARK_LIST = params => {
+  return fetch({
+    url: 'cfg/qr/quick/remarks/list/by/type',
+    method: 'post',
+    data: params
+  })
+}
 /* 账户管理接口 key：FinanceAccountApi */
 const ACCOUNTMANAGEMENT_ALL = params => {
   return fetch({
@@ -1533,6 +1541,14 @@ const ACCOUNTMANAGEMENT_ALL = params => {
   })
 }
 
+/* 删除快捷备注列表 */
+const KJ_REMARK_DELETE = params => {
+  return fetch({
+    url: 'cfg/qr/quick/remarks/del',
+    method: 'post',
+    data: params
+  })
+}
 /* 记账账户接口 key：FinanceAccountApi */
 const ACCOUNT_LIST = params => {
   return fetch({
@@ -1748,6 +1764,8 @@ const apiList = {
   ROLE_SAVE,
   ROLE_DELETE,
   BRAND_JINGYING,
+  KJ_REMARK_LIST,
+  KJ_REMARK_DELETE,
   ACCOUNTMANAGEMENT_ALL,
   ACCOUNT_LIST,
   ACCOUNTDETAILS_LIST,

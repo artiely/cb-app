@@ -50,7 +50,9 @@
           </div>
         </div>
         </div>
-        <div v-else><v-nodata></v-nodata></div>
+        <div v-else>
+          <v-nodata></v-nodata>
+        </div>
       </cube-scroll>
     </div>
     <!-- 筛选 -->
@@ -258,7 +260,7 @@ export default {
       }
     },
     toShare(item) {
-      this.$toast.fail('敬请期待')
+      // this.$toast.fail('敬请期待')
       // this.showShare = true
       // this.$nextTick(() => {
       //   soshm('#shareBtn', {
@@ -275,6 +277,13 @@ export default {
       //     sites: ['weixin', 'weixintimeline', 'weibo', 'qq', 'qzone', 'tqq']
       //   })
       // })
+      this.$api.NATIVE_SHARE({
+        shareUrl:
+        `http://dp.51chebian.com/store/ssp/ci/store/coupon/temp/receive/form?id=${item.id}`,
+        title: `您有一张价值${item.moneyCondition}元的优惠券`,
+        thumbnail: 'https://static-oss-chebian.oss-cn-beijing.aliyuncs.com/public/share-popup-01.png',
+        summary: `满${item.moneyReduce}元可用`
+      })
     }
   },
   created() {

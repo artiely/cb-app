@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-header righticon="icon-xiaotubiao-20" :border="false" @right-click="handlerFilter">
+    <v-header righticon="icon-xiaotubiao-20" :border="false" @right-click="handlerFilter" :left-click="handleLeft">
       <div slot="title">
         <v-tab-bar type="btn" :data="[{name:'服务库',id:0},{name:'商品库',id:1}]" v-model="active" style="background:#f8f8f8"></v-tab-bar>
       </div>
@@ -18,6 +18,7 @@
           <v-icon name="icon-iconfontarrows"></v-icon>
         </div>
       </div>
+      <v-fad-button @click.native="addNewGoods"></v-fad-button>
       <keep-alive>
         <choice-service v-if="active==0" :keywords="keywords" :srcType="srcType" :statusType="statusType" :orderByType="orderByType" :active="active"></choice-service>
         <choice-goods v-if="active==1" :keywords="keywords" :srcType="srcType" :statusType="statusType" :orderByType="orderByType" :active="active"></choice-goods>
@@ -42,6 +43,7 @@
       </v-popup-title>
       <div class="sku-goods-wrapper">
         <cube-scroll :data="okCart" ref="scroll">
+          <v-br></v-br>
           <div class="selected-sku-box" v-for="(it) in okCart" :key="it.id">
             <div class="selected-sku-item ">
               <div class="selected-sku-del tap-area" @click="delSku(it)">
@@ -192,12 +194,37 @@ export default {
       return this.$store.getters.skuListFilter
     }
   },
+  beforeRouteLeave(to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    // console.log(to,from,to.path,from.path)
+    // if (from.path === '/service' && to.path !== '/addgoods') {
+    //   next({path: '/kaidan'})
+    // }
+    next()
+  },
   methods: {
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.currentStore = item
       this.storeShow = false
       this.srcType = item.id
+    },
+    handleLeft() {
+      this.$router.replace('kaidan')
+    },
+    addNewGoods() {
+      if (this.active === 0) {
+        this.$router.push({
+          name: 'AddGoods',
+          query: { gasType: '2', src: 'Service' }
+        })
+      } else {
+        this.$router.push({
+          name: 'AddGoods',
+          query: { gasType: '1', src: 'Service' }
+        })
+      }
     },
     onCancel() {
       this.storeShow = false

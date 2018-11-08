@@ -1,8 +1,16 @@
+/* eslint-disable */
 import store from '../store'
-/* global sendNativeApi */
+/* global sendNativeApi sendNativeApiOfAudio:true */
+/*eslint no-undef: "error"*/
 window.cbStorePicUploadResult = params => {
-  alert('回调了成功函数，参数为：', params)
-  store.commit('NATIVE_PIC_UPLOAD_OK', params)
+  console.log('回调了成功函数，参数为：', params)
+  if (params.serviceType === 'kaidan') {
+    store.commit('NATIVE_PIC_UPLOAD_OK_ORDER', params)
+  } else if (params.serviceType === 'wx') {
+    store.commit('NATIVE_PIC_UPLOAD_OK', params)
+  } else {
+    store.commit('NATIVE_PIC_UPLOAD_OK', params)
+  }
 }
 // 支付成功的回传
 window.cbStorePayResult = params => {
@@ -19,6 +27,10 @@ window.cbStorePicDownOK = params => {
 
 }
 
+window.cbStoreAudioResult = params => {
+  console.log('声音播报成功回调', params)
+}
+
 window.sendNativeApi = (method, param) => {
   const _AGREEMENT = 'chebian://'
   const _PARAM = '?param='
@@ -26,7 +38,7 @@ window.sendNativeApi = (method, param) => {
   if (param === null || param === '') {
     request.src = _AGREEMENT + method
   } else {
-    param = escape(param)
+    param = encodeURI(param)
     request.src = _AGREEMENT + method + _PARAM + param
   }
   request.style.display = 'none'
@@ -34,6 +46,12 @@ window.sendNativeApi = (method, param) => {
   window.setTimeout(() => {
     document.body.removeChild(request)
   }, 2000)
+}
+
+
+const NATIVE_AUDIO = params => {
+  console.log('播报数据', params)
+  return sendNativeApi('audio', JSON.stringify(params))
 }
 /**
  * @param {String} params #c7c7c7
@@ -48,7 +66,6 @@ const SET_STATUSBAR_COLOR = params => {
 }
 
 const GET_CAMERA = params => {
-  alert(`camera,参数：${params}`, JSON.stringify(params))
   if (window.sendNativeApi) {
     return sendNativeApi('camera', JSON.stringify(params))
   } else {
@@ -65,9 +82,17 @@ const NATIVE_PAY = params => {
   }
 }
 
+const NATIVE_SHARE = params => {
+  console.info(`share,参数：${params}`,JSON.stringify(params))
+  return sendNativeApi('share', JSON.stringify(params))
+ 
+}
+
 const nativeApiList = {
   SET_STATUSBAR_COLOR,
   GET_CAMERA,
-  NATIVE_PAY
+  NATIVE_PAY,
+  NATIVE_SHARE,
+  NATIVE_AUDIO
 }
 export default nativeApiList

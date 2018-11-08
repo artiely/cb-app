@@ -43,7 +43,6 @@ export default {
           // 图片导出为 png 格式
           var type = 'png'
           var imgData = canvas.toDataURL(type)
-          alert(imgData)
 
           var _imgSrc = canvas.toDataURL('image/png', 1)
           var storeImage = new Image()
@@ -99,7 +98,6 @@ export default {
           var filename = 'chebian' + new Date().getTime() + '.' + type
           // download
           console.log(imgData)
-          alert(imgData)
           saveFile(imgData, filename)
         })
       })

@@ -10,9 +10,7 @@ import Order from '@/views/order/Order'
 import Custom from '@/views/custom/Custom'
 import OrderSearch from '@/views/search/OrderSearch'
 import CashDesk from '@/views/cash/CashDesk'
-import {
-  Toast
-} from 'vant'
+import { Toast } from 'vant'
 var timer
 
 function lazyLoad(path) {
@@ -31,15 +29,18 @@ function lazyLoad(path) {
         })
       }
     }, 10000)
-    return import(`@/views/${path}`).then(component => {
-      return component
-    }).catch(() => {
-      console.error('获取页面失败')
-      window.location.reload()
-    }).finally(() => {
-      toast.clear()
-      toast = null
-    })
+    return import(`@/views/${path}`)
+      .then(component => {
+        return component
+      })
+      .catch(() => {
+        console.error('获取页面失败')
+        window.location.reload()
+      })
+      .finally(() => {
+        toast.clear()
+        toast = null
+      })
   }
 }
 
@@ -951,6 +952,10 @@ Router.prototype.back = function() {
 }
 let token = window.sessionStorage.getItem('__token__')
 router.beforeEach((to, from, next) => {
+  // console.log('打印router的路由路径to =', to)
+  // console.log('打印router的路由路径from =', from)
+  // console.log('打印router的路由路径next =', next)
+
   token = window.sessionStorage.getItem('__token__')
   // 判断是否有页面的访问权限
   function has(el) {
@@ -959,6 +964,15 @@ router.beforeEach((to, from, next) => {
   if (store.state.sys.unAuthMenu.some(has)) {
     Toast.fail('权限不足')
     return
+  }
+  //  快单中默认信息清空
+  if (from.path === '/cashdesk' && to.path === '/index') {
+    console.log('执行到了这一步-----------传值为0')
+    store.commit('CLEAR_ORDER_DATA', 0)
+  } else if (from.path === '/cashdesk' && to.path === '/ordersearch') {
+    // 执行到了这一步-----------传值为1
+    console.log('执行到了这一步-----------传值为1')
+    store.commit('CLEAR_ORDER_DATA', 1)
   }
   if (to.meta.auth) {
     if (token && token !== 'undefined') {

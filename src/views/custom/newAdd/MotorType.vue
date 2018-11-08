@@ -117,7 +117,6 @@ export default {
         }
         this.totalPage = res.page.totalPage
         this.currentLevel = Number(res.message)
-        // console.log('this.currSelectId', this.currSelectId)
         this.currSelectIndex = this.data.findIndex(_findIndex)
         console.log('index--', this.currSelectIndex)
         done && done()

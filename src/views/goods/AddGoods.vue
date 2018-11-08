@@ -59,7 +59,7 @@
     </v-scroll-page>
     <!-- 规格 -->
     <van-popup v-model="specificationShow" style="width:100%;height:100%;background:#f0f0f0;" position="right" :overlay="true">
-      <v-header :title="isGoods ? '商品规格':'服务规格'" :left-click="hideSku" righttext="保存" @right-click="saveSpecification"></v-header>
+      <v-header :title="isGoods ? '商品规格':'服务规格'" :left-click="hideSku" righttext="确定" @right-click="saveSpecification" lefttext="取消"></v-header>
       <v-cell-group class="GoodsDetailList" style="margin-top:43px">
         <v-cell title="商品规格" required :input="true" :maxlength="15" v-model="skulist.name" v-if="isGoods" placeholder="型号、容量、尺寸、颜色等"></v-cell>
         <v-cell title="服务规格" required :input="true" v-model="skulist.name" v-else placeholder="服务类型、方式、适用对象等"></v-cell>
