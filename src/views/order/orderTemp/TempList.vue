@@ -3,8 +3,8 @@
     <v-header title="开单模板" :left-click="handleLeft"></v-header>
     <v-scroll-page top="44" style="overflow-y:scroll">
       <div v-if="data.length>0">
-      <p class="temp-list-tip">可将常用的服务/商品设为模板，开单时一键即可选择。模板在列表中上下的位置，即为开单页面的排列顺序。</p>
-        <v-cell-group >
+        <p class="temp-list-tip">可将常用的服务/商品设为模板，开单时一键即可选择。模板在列表中上下的位置，即为开单页面的排列顺序。</p>
+        <v-cell-group>
           <draggable v-model="data" :move="getmove" @update="datadragEnd" :options="{animation:500,handle:'.temp-list-right'}" :no-transition-on-drag="true" @start="drag=true" @end="drag=false">
             <!-- <transition-group name="list-complete" :css="true"> -->
             <v-cell wrap v-for="item  in data" :key="item.id" class="temp-list" @click.native="toEdit(item)">
