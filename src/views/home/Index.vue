@@ -129,11 +129,7 @@ export default {
       return this.$store.state.sys.isExp
     },
     storeName() {
-      return this.$store.state.sys.currentUser &&
-        this.$store.state.sys.currentUser.company.shortname
-        ? this.$store.state.sys.currentUser.company.shortname
-        : this.$store.state.sys.currentUser &&
-          this.$store.state.sys.currentUser.company.name
+      return this.$store.state.sys.currentUser.company.name
           ? this.$store.state.sys.currentUser.company.name
           : '去编辑店铺名'
     }
