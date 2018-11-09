@@ -32,7 +32,7 @@
       </slot>
     </div>
     <van-popup v-model="show" position="bottom" style="height:300px;width:100%;" :get-container="getBody">
-      <van-datetime-picker v-model="currentDate" :type="dateType" :min-date="minDate" :max-date="maxDate" :visible-item-count="6" @confirm="confirm" @cancel="cancel" @change="change" confirm-button-text="确定" />
+      <van-datetime-picker v-model="currentDate" :type="dateType"  :visible-item-count="6" @confirm="confirm" @cancel="cancel" @change="change" confirm-button-text="确定" />
     </van-popup>
   </div>
 </template>
@@ -50,8 +50,6 @@ export default {
       show: false,
       minHour: 10,
       maxHour: 20,
-      minDate: new Date(),
-      maxDate: new Date(2025, 10, 1),
       datetimeValue: '',
       currentDate: new Date()
     }

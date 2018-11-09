@@ -1,4 +1,6 @@
 /* eslint-disable */
+
+// 这是设置原生api的地方
 import store from '../store'
 /* global sendNativeApi sendNativeApiOfAudio:true */
 /*eslint no-undef: "error"*/

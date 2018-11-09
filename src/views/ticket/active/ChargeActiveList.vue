@@ -171,6 +171,9 @@ export default {
   },
   activated() {
     this.getData()
+    this.$nextTick(() => {
+      this.$refs.scroll && this.$refs.scroll.refresh()
+    })
   }
 }
 </script>

@@ -111,6 +111,7 @@ export default {
           })
           this.$store.dispatch('clearOrder')
         }
+        this.$store.commit('CLEAR_NATIVE_PIC_ORDER')
       } else {
         this.$toast.fail('保存失败')
       }

@@ -83,6 +83,7 @@
         <v-cell title="销售人" :text="currentStaff.name" link @click.native="staffVisible = true"></v-cell>
       </v-cell-group>
       <v-remark v-model="orderRemarks" placeholder="订单备注" :kdlist="1" @kjRemarkChecked="gteKjRemarkChecked"></v-remark>
+      <v-upload :data="attachment"></v-upload>
       <v-footer>
         <v-footer-item @click.native="orderBaseInfoVisiable=false">保存</v-footer-item>
       </v-footer>
@@ -183,6 +184,12 @@ export default {
     },
     isCar() {
       return this.$store.getters.isCar
+    },
+    attachment: {
+      get() {
+        return this.$store.state.native.orderPicList
+      },
+      set() {}
     },
     decMoney() {
       let moneyErasing = this.moneyErasing ? this.moneyErasing : 0
@@ -337,7 +344,8 @@ export default {
         startTime: this.startTime,
         'sellEmployee.id': this.currentStaff.id || '',
         orderRemarks: this.orderRemarks,
-        quickRemarksFlag: this.quickRemarksFlag
+        quickRemarksFlag: this.quickRemarksFlag,
+        attachment: this.attachment.join(',')
       }
       if (!data['member.id'] && !data['motor.id']) {
         this.$toast('请选择客户/车辆')

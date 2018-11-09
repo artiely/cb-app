@@ -347,17 +347,19 @@ export default {
       this.query.memberCardPwd = ''
       if (res.status === 1) {
         this.$toast.success('结算成功')
+        /* 语音播报 s */
+        /*
         let str = ''
         if (this.data.order.motorLicence && this.data.order.memberUsername) {
           let pre1 = this.data.order.motorLicence.slice(0, 1)
           let pre2 = this.data.order.motorLicence.slice(1, 2)
           let end = this.data.order.motorLicence.slice(2)
-          str = `${pre1},${pre2},${end}, 收款成功`
+          str = `"${pre1},${pre2},${end}", 收款成功`
         } else if (this.data.order.motorLicence) {
           let pre1 = this.data.order.motorLicence.slice(0, 1)
           let pre2 = this.data.order.motorLicence.slice(1, 2)
           let end = this.data.order.motorLicence.slice(2)
-          str = `${pre1},${pre2},${end}, 收款成功`
+          str = `"${pre1},${pre2},${end}", 收款成功`
         } else if (this.data.order.memberUsername) {
           let end4 = this.data.order.memberUsername.slice(7, 11)
           str = `手机尾号， "${end4}", 收款成功`
@@ -366,6 +368,8 @@ export default {
         }
         this.$api.NATIVE_AUDIO({ type: 'jiesuan', str: str })
         console.log('播报的数据', str)
+        */
+        /* 语音播报 e */
         this.query.moneyErasing = ''
         this.$router.replace({
           name: 'Order',

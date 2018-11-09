@@ -291,7 +291,12 @@ export default {
   created() {
     this.getData()
   },
-  mounted() {}
+  mounted() {},
+  activated() {
+    this.$nextTick(() => {
+      this.$refs.scroll && this.$refs.scroll.refresh()
+    })
+  }
 }
 </script>
 

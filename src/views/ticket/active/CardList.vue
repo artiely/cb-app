@@ -228,6 +228,9 @@ export default {
       this.query.pageNo = 1
       this.getData()
     }
+    this.$nextTick(() => {
+      this.$refs.scroll && this.$refs.scroll.refresh()
+    })
   }
 }
 </script>
