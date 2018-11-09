@@ -370,7 +370,7 @@ export default {
         ? this.address.district
         : '' + this.address.address
     }
-
+    this.getInfo()
     this.storeMessage()
   }
 }
