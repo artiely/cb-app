@@ -104,8 +104,7 @@
       </cube-scroll>
     </div>
     <van-popup v-model="dateVisible" style="width:100%;" position="bottom">
-      <!-- <mu-date-picker :date.sync="delayDete" actions :min-date="minDate"></mu-date-picker> -->
-      <van-datetime-picker v-model="currentDate" type="date" :min-date="minDate" :max-date="maxDate" @confirm="confirm" @cancel="cancel" confirm-button-text="确定" />
+      <van-datetime-picker v-if="dateVisible" v-model="currentDate" type="date" :min-date="minDate" :max-date="maxDate" @confirm="confirm" @cancel="cancel" confirm-button-text="确定" />
     </van-popup>
   </div>
 </template>
