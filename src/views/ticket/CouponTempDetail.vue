@@ -29,7 +29,7 @@
             <div class="fr">{{'满 '+data.moneyCondition+' 可用'}}</div>
           </div>
           <div class="clearfix cb_detail_item">
-            <div class="fl">没人限领</div>
+            <div class="fl">每人限领</div>
             <div class="fr">{{data.restrictNum+' 张'}}</div>
           </div>
           <div class="clearfix cb_detail_item" v-if="data.restrictTimeType==2">
