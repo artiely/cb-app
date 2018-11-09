@@ -39,8 +39,10 @@
                 <span class="c-card-coupon--footer--text" v-else>有效期：自领取 {{item.restrictDays}} 天有效</span>
               </div>
               <div class="c-card-coupon--footer--right ">
-                <span v-if="item.numReceive>0 " class="c-card-coupon--btn tap-area" @click="toShare(item)" :class="{'backgroundSpan':valShow==0}">发券 </span>
-                <span v-else class="c-card-coupon--btn tap-area" style="background: #c7c7c7;">已领完</span>
+                <!-- <span v-if="item.numReceive==item.numPublish" class="c-card-coupon--btn tap-area" @click="toShare(item)" :class="{'backgroundSpan':valShow==0}">发券 </span> -->
+                <!-- numPublish 没有该字段可以继续发券（无限量） -->
+                <span v-if="item.numPublish&&item.numReceive==item.numPublish" class="c-card-coupon--btn tap-area" style="background: #c7c7c7;">已领完</span>
+                <span v-else class="c-card-coupon--btn tap-area" @click="toShare(item)" :class="{'backgroundSpan':valShow==0}">发券 </span>
               </div>
             </div>
           </div>
