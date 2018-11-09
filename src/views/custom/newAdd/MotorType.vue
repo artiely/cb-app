@@ -194,13 +194,13 @@ export default {
   display: none;
 }
 .pselect {
-  margin-left: 15px;
+  margin-left: 10px;
   color: #81818e;
 }
 .motortype-cell {
   height: 45px;
   line-height: 45px;
-  padding-left: 5%;
+  padding-left: 10px;
   font-size: 15px;
 }
 .checkOption {
@@ -542,14 +542,10 @@ export default {
   box-sizing: border-box;
 }
 .weui-wepay-flow_vertical .weui-wepay-flow__line {
-  height: 15px;
-  /* height: auto; */
+  height: 18px;
   width: 3px;
   margin-left: 5px;
 }
-/* .weui-wepay-flow_vertical .weui-wepay-flow__line_d {
-  height: 22px;
-} */
 .weui-wepay-flow_vertical .weui-wepay-flow__line_ing .weui-wepay-flow__process {
   height: 50%;
 }

@@ -18,11 +18,11 @@
                 <!-- <v-badge size="small " v-if="item.type==2 " :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="礼品券" >礼品券</v-badge>
               <v-badge size="small " v-else :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="通用券">通用券</v-badge> -->
               </div>
-              <div class="c-card-coupon--title--right textover1 ">{{item.moneyCondition|currency('￥')}}
-                <!-- <v-icon name="icon-youjiantou1 "></v-icon> -->
-              </div>
-            </div>
-            <div class="c-card-coupon--desc textover1 " @click="toDetail(item)">
+              <!-- <div class="c-card-coupon--title--right textover1 ">{{item.moneyCondition|currency('￥')}}
+                <v-icon name="icon-youjiantou1 "></v-icon>
+              </div> -->
+            <!-- </div> -->
+            <!-- <<<<<<< HEAD <div class="c-card-coupon--desc textover1 " @click="toDetail(item)">
               <div class="c-card-coupon--footer--left ">
                 <span class="c-card-coupon--text">满{{item.moneyReduce|currency('')}}元可用</span>
                 <v-badge size="small " v-if="item.type==2 " :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="礼品券">礼品券</v-badge>
@@ -32,62 +32,95 @@
                 已领 {{item.numReceive}} 份
               </div>
               <!-- {{item.gift}} {{item.descriptionUse}} -->
-            </div>
-            <!-- <span class="c-card-coupon--title">满600.00元可用</span> -->
+          <!-- </div> -->
+          <!-- <span class="c-card-coupon--title">满600.00元可用</span> -->
 
-            <div class="c-card-coupon--footer clearfix ">
-              <div class="c-card-coupon--footer--left " @click="toDetail(item)">
-                <span class="c-card-coupon--footer--text" v-if="item.restrictTimeType=='1'">有效期：{{item.restrictDateStart|timeFormat('YYYY.MM.DD')}}至{{item.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</span>
-                <span class="c-card-coupon--footer--text" v-else>有效期：自办理 {{item.restrictDays}} 天有效</span>
-              </div>
-              <div class="c-card-coupon--footer--right ">
-                <!-- <span v-if="item.status==1 " class="c-card-coupon--footer--right--btn tap-area" @click="toShare(item)">发券 </span> -->
-                <span v-if="item.status==1 " class="c-card-coupon--btn tap-area" @click="toShare(item)" style="background: #971a28;">发券 </span>
-                <span v-else style="background: #c7c7c7;">已停用</span>
-              </div>
-              <!-- <div class="c-card-coupon--footer--dot " style="left:-10px "></div>
-            <div class="c-card-coupon--footer--dot " style="right:-10px "></div> -->
+          <!-- <div class="c-card-coupon--footer clearfix ">
+            <div class="c-card-coupon--footer--left " @click="toDetail(item)">
+              <span class="c-card-coupon--footer--text" v-if="item.restrictTimeType=='1'">有效期：{{item.restrictDateStart|timeFormat('YYYY.MM.DD')}}至{{item.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</span>
+              <span class="c-card-coupon--footer--text" v-else>有效期：自办理 {{item.restrictDays}} 天有效</span>
+            </div>
+            <div class="c-card-coupon--footer--right ">
+              <span v-if="item.status==1 " class="c-card-coupon--footer--right--btn tap-area" @click="toShare(item)">发券 </span>
+              <span v-if="item.status==1 " class="c-card-coupon--btn tap-area" @click="toShare(item)" style="background: #971a28;">发券 </span>
+              <span v-else style="background: #c7c7c7;">已停用</span>
+            </div> -->
+            <!-- <div class="c-card-coupon--footer--dot " style="left:-10px "></div>
+======= -->
+            <!-- 满减面值 -->
+            <div class="c-card-coupon--title--right textover1 " v-if="item.type==1">{{item.moneyReduce|currency('￥')}}
+            </div>
+            <!-- 满赠面值 -->
+            <div class="c-card-coupon--title--right textover1 " v-if="item.type==2">{{item.moneyGift|currency('￥')}}
             </div>
           </div>
+          <div class="c-card-coupon--desc textover1 " @click="toDetail(item)">
+            <div class="c-card-coupon--footer--left ">
+              <span class="c-card-coupon--text">满{{item.moneyCondition|currency('')}}元可用</span>
+              <v-badge size="small " v-if="item.type==2 " :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="礼品券">礼品券</v-badge>
+              <v-badge size="small " v-else :class="{ 'c-card-coupon--badge--disabled':item.status==2} " type="通用券">通用券</v-badge>
+            </div>
+            <div class="c-card-coupon--footer--right text">
+              已领 {{item.numReceive}} 份
+            </div>
+            <!-- {{item.gift}} {{item.descriptionUse}} -->
+          </div>
+          <!-- <span class="c-card-coupon--title">满600.00元可用</span> -->
+
+          <div class="c-card-coupon--footer clearfix ">
+            <div class="c-card-coupon--footer--left " @click="toDetail(item)">
+              <span class="c-card-coupon--footer--text" v-if="item.restrictTimeType=='1'">有效期：{{item.restrictDateStart|timeFormat('YYYY.MM.DD')}}至{{item.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</span>
+              <span class="c-card-coupon--footer--text" v-else>有效期：自领取 {{item.restrictDays}} 天有效</span>
+            </div>
+            <div class="c-card-coupon--footer--right ">
+              <!-- <span v-if="item.status==1 " class="c-card-coupon--footer--right--btn tap-area" @click="toShare(item)">发券 </span> -->
+              <span v-if="item.numReceive>0 " class="c-card-coupon--btn tap-area" @click="toShare(item)" style="background: #971a28;">发券 </span>
+              <span v-else class="c-card-coupon--btn tap-area" style="background: #c7c7c7;">已领完</span>
+            </div>
+            <!-- <div class="c-card-coupon--footer--dot " style="left:-10px "></div>
+>>>>>>> zxq_dev
+            <div class="c-card-coupon--footer--dot " style="right:-10px "></div> -->
+          </div>
         </div>
-        <div v-else>
-          <v-nodata></v-nodata>
-        </div>
-      </cube-scroll>
     </div>
-    <!-- 筛选 -->
-    <van-popup v-model="filterVisiable " position="right " style="width:80%;height:100%; ">
-      <v-popup-title @close="filterVisiable=false "></v-popup-title>
-      <div class="popup-innerbox " style="padding:10px ">
-        <!-- <div class="filter-title ">来源</div>
+    <div v-else>
+      <v-nodata></v-nodata>
+    </div>
+    </cube-scroll>
+  </div>
+  <!-- 筛选 -->
+  <van-popup v-model="filterVisiable " position="right " style="width:80%;height:100%; ">
+    <v-popup-title @close="filterVisiable=false "></v-popup-title>
+    <div class="popup-innerbox " style="padding:10px ">
+      <!-- <div class="filter-title ">来源</div>
         <van-row gutter="10 ">
           <van-col span="8 " v-for="(item) in filterItem " :key="item.name " @click.native="changeSrc(item) " style="margin-bottom:10px; ">
             <v-button :type="item.id===currentCouponSrc.id? 'primary-solid': '' ">{{item.name}} </v-button>
           </van-col>
         </van-row> -->
 
-        <div class="filter-title ">券种</div>
-        <van-row gutter="10 ">
-          <van-col span="8 " v-for="(item) in filterStatus " :key="item.name " @click.native="changeType(item) " style="margin-bottom:10px; ">
-            <v-button :type="item.id==currentCouponType.id? 'primary-solid': '' ">{{item.name}} </v-button>
-          </van-col>
-        </van-row>
-        <!-- <div class="filter-title ">按创建时间</div>
+      <div class="filter-title ">券种</div>
+      <van-row gutter="10 ">
+        <van-col span="8 " v-for="(item) in filterStatus " :key="item.name " @click.native="changeType(item) " style="margin-bottom:10px; ">
+          <v-button :type="item.id==currentCouponType.id? 'primary-solid': '' ">{{item.name}} </v-button>
+        </van-col>
+      </van-row>
+      <!-- <div class="filter-title ">按创建时间</div>
         <v-cell title="开始 " datepicker v-model="startDate "></v-cell>
         <v-cell title="截止 " datepicker v-model="endDate " :mindate="startDate "></v-cell> -->
-      </div>
-      <v-footer>
-        <v-footer-item class="footer-white" @click.native="handleShuRest ">重置</v-footer-item>
-        <v-footer-item @click.native="filterVisiable=false ">确定</v-footer-item>
-      </v-footer>
-    </van-popup>
-    <van-actionsheet v-model="showShare" title="支持以下分享方式">
-      <p class="coupon-share-tip">微信分享仅支持 QQ 或 UC 浏览器</p>
-      <div class="share-btn-box">
-        <div id="shareBtn" style="margin:10px auto;text-algin:center"> </div>
-      </div>
-    </van-actionsheet>
-    <v-fad-button @click.native="AddCouponTemp"></v-fad-button>
+    </div>
+    <v-footer>
+      <v-footer-item class="footer-white" @click.native="handleShuRest ">重置</v-footer-item>
+      <v-footer-item @click.native="filterVisiable=false ">确定</v-footer-item>
+    </v-footer>
+  </van-popup>
+  <van-actionsheet v-model="showShare" title="支持以下分享方式">
+    <p class="coupon-share-tip">微信分享仅支持 QQ 或 UC 浏览器</p>
+    <div class="share-btn-box">
+      <div id="shareBtn" style="margin:10px auto;text-algin:center"> </div>
+    </div>
+  </van-actionsheet>
+  <v-fad-button @click.native="AddCouponTemp"></v-fad-button>
   </div>
 </template>
 
@@ -307,7 +340,23 @@ export default {
 .c-card-coupon--wrapper {
   border-radius: 8px;
   margin: 10px auto;
-  background: -webkit-linear-gradient(left, #f2511f, #fe2a45);
+  background: -webkit-linear-gradient(
+    left,
+    #f2511f,
+    #ff2300
+  ); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(
+    left,
+    #f2511f,
+    #ff2300
+  ); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(
+    left,
+    #f2511f,
+    #ff2300
+  ); /* Firefox 3.6 - 15 */
+  background: linear-gradient(left, #d40000, #ff2300);
+  /* 标准的语法 */
 }
 .c-card-coupon--disabled {
   background: rgb(199, 199, 199);
@@ -380,7 +429,6 @@ export default {
 .c-card-coupon--footer {
   background-image: none;
 }
-
 .c-card-coupon--footer--dot--top,
 .c-card-coupon--footer--dot--bottom {
   height: 20px;

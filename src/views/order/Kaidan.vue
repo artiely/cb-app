@@ -2,9 +2,9 @@
   <div>
     <v-header title="开单" :leftClick="handleLeft"></v-header>
     <!-- <v-br :height="64"></v-br> -->
-    
+
     <v-scroll-page :top="44" :bottom="50">
-      
+
       <cube-scroll ref="orderScroll" :data="okCart">
         <div>
           <v-br height="20"></v-br>
@@ -116,8 +116,8 @@
          <v-cell-group>
         <v-cell title="进场时间" date v-model="startTime" link></v-cell>
         <v-cell title="当前里程(km)" input v-model="motorMileCurrent" type="number"></v-cell>
-        <v-cell title="送车人" input v-model="senderName" 
-        
+        <v-cell title="送车人" input v-model="senderName"
+
         ></v-cell>
         <v-cell title="送车人电话" input v-model="senderMobile" type="tel" maxlength="11"></v-cell>
       </v-cell-group>
