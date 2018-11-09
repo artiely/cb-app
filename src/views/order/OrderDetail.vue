@@ -92,7 +92,8 @@
           </div>
         </div>
         <v-remark v-model="data.remarks" :data="{dataId:id,tableCode:'order'}" placeholder="订单备注"></v-remark>
-        <v-upload readonly :data="picList"></v-upload>
+        <!-- 单据/照片 -->
+        <v-upload  :data="picList"></v-upload>
         <v-br></v-br>
         <div class="main-info" @click="switchOrderinfoShow">
           <!-- 订单信息 -->
@@ -342,7 +343,7 @@ export default {
       mileCurrentShow: false,
       motorMileCurrent: '',
       orderNoHand: '',
-      picList: [],
+      // picList: [],
       id: '',
       oid: '',
       data: {},
@@ -390,6 +391,9 @@ export default {
             v.num * (v.price - this.currentCard.discount * v.price).toFixed(2)
         })
       return this.data.createType === '1' ? this.data.moneyDec : _money
+    },
+    picList() {
+      return this.$store.state.native.orderPicList
     },
     orderOfCustomObject() {
       return this.$store.getters.orderOfCustomObject
@@ -576,7 +580,8 @@ export default {
         }
         this.data = res.data
         this.id = res.data.id
-        this.picList = res.data.attachment ? res.data.attachment.split(',') : []
+        // this.picList = res.data.attachment ? res.data.attachment.split(',') : []
+        this.$store.commit('SET_NATIVE_PIC_ORDER', this.data.attachment ? this.data.attachment.split(',') : [])
         this.motorMileCurrent = res.data.motorMileCurrent
         this.orderNoHand = res.data.orderNoHand
         // 有卡的信息设置当前卡否则无法
@@ -672,7 +677,10 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
+    // 刷新 refresh默认是false 做了操作后刷新（数据过大）
     to.params.refresh = this.refresh
+    // 离开页面清空图片()
+    this.$store.commit('CLEAR_NATIVE_PIC_ORDER')
     next()
   },
   activated() {

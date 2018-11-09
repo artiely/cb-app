@@ -9,7 +9,8 @@
         <v-cell title="客服电话" required input v-model="tel" type="tel" maxlength="11"></v-cell>
         <v-cell title="店铺所在地" required wrap @click.native="handleAddress" :text="areaDetail"></v-cell>
 
-        <v-cell title="营业时间" link @click.native="dateShow=true" :text="openHour"></v-cell>
+        <!-- <v-cell title="营业时间" link @click.native="dateShow=true" :text="openHour"></v-cell> -->
+         <v-cell title="营业时间" link @click.native="dateShow=true" :text="openHourModel"></v-cell>
         <v-remark placeholder="可输入活动信息、广告、店铺简介等..." :maxlength="30" title="公告" v-model="summary">
           <v-cell slot="handle" title="公告" :wrap="summary.length!==0" :text="summary" link></v-cell>
         </v-remark>
@@ -205,6 +206,7 @@ export default {
       type: '',
       dateShow: false,
       openHour: '',
+      openHourModel: '', // 选择时间确定后时间才改变
       roleLabel: '',
       roleLabelArr: [],
       typeResult: [],
@@ -255,6 +257,8 @@ export default {
       this.openHour = picker.getValues().join('~')
     },
     handleDateOk() {
+      // 确定后赋值
+      this.openHourModel = this.openHour
       this.dateShow = false
     },
     handleAddress() {
@@ -283,14 +287,16 @@ export default {
     async getInfo() {
       let res = await this.$api.STORE_INFO({ id: this.id })
       if (res.status === 1) {
-        // console.log('res000 =', res)
         this.name = res.data.name ? res.data.name : this.name
         this.tel = res.data.tel ? res.data.tel : this.tel
         this.type = res.data.type
         this.summary = res.data.summary ? res.data.summary : this.summary
-        this.openHour = res.data.businessTimeStart
+        // this.openHour = res.data.businessTimeStart
+        //   ? res.data.businessTimeStart
+        //   : this.openHour
+        this.openHourModel = res.data.businessTimeStart
           ? res.data.businessTimeStart
-          : this.openHour
+          : this.openHourModel
         this.areaDetail = res.data.areaDetail
           ? res.data.areaDetail
           : this.areaDetail
@@ -303,15 +309,14 @@ export default {
       }
     },
     async save() {
-      // console.log('this.typeResult =', this.typeResult)
-      // console.log('this.typeResult =', this.typeResult.join(','))
       let data = {
         id: this.id,
         name: this.name,
         // type: this.typeItem.id,
         categorys: this.typeResult ? this.typeResult.join(',') : '',
         tel: this.tel,
-        businessTimeStart: this.openHour,
+        // businessTimeStart: this.openHour,
+        businessTimeStart: this.openHourModel,
         areaDetail: this.areaDetail,
         summary: this.summary
       }
@@ -338,7 +343,6 @@ export default {
       console.log('code_res =', res)
       if (res.status === 1) {
         this.roleList = res.list
-        // this.$toast.success('保存成功')
       }
     },
     toggle(index) {
@@ -403,12 +407,4 @@ export default {
     border: none !important;
   }
 }
-
-// .van-hairline::after{
-//   border: 1px solid #4a4a4a;
-// }
-
-// .van-hairline--bottom::after{
-//   border: none;
-// }
 </style>
