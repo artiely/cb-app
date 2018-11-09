@@ -90,11 +90,18 @@ const NATIVE_SHARE = params => {
  
 }
 
+const DOWN_IMG = params => {
+  console.info(`3.	downImg,参数：${params}`,JSON.stringify(params))
+  return sendNativeApi('3.	downImg', JSON.stringify(params))
+ 
+}
+
 const nativeApiList = {
   SET_STATUSBAR_COLOR,
   GET_CAMERA,
   NATIVE_PAY,
   NATIVE_SHARE,
+  DOWN_IMG,
   NATIVE_AUDIO
 }
 export default nativeApiList

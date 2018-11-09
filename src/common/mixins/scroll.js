@@ -47,5 +47,8 @@ export default {
       }
       // this.getTagList()
     }
+  },
+  activated() {
+    this.$refs.scroll && this.$refs.scroll.refresh()
   }
 }

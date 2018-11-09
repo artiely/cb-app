@@ -1602,12 +1602,22 @@ const ACCOUNTDETAILSSTATUS_LIST = params => {
     data: params
   })
 }
+
+/* 记账账户详情-启用状态接口 key：FinanceAccountApi */
+const STORE_WXCODE = params => {
+  return fetch({
+    url: 'sts/si/store/wxa/wxacode',
+    method: 'post',
+    data: params
+  })
+}
 const apiList = {
   LOGIN,
   ORDER_DEL,
   MOTOR_TYPE_RESULT,
   UPDATE_COUPON_STATUS,
   BRAND_SAVE,
+  STORE_WXCODE,
   MOTOR_TYPE,
   UPDATE_COUPON_PUB_NUN,
   ADD_NEW_COUPON_TEMP,

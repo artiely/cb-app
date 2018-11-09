@@ -136,7 +136,7 @@ export default {
       filterBarList: [],
       count: [],
       keywords: '',
-      valShow: ''
+      valShow: 0
     }
   },
   computed: {

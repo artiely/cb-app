@@ -2,7 +2,7 @@
   <div>
     <v-header title="小程序二维码"></v-header>
     <v-scroll-page top="44" style="overflow-y:scroll">
-      <div id="capture">
+      <!-- <div id="capture">
         <div class="wx_code_header">
           {{data.name}}
         </div>
@@ -13,9 +13,10 @@
           <p class="wx_code_info">打开微信[扫一扫]</p>
           <p class="wx_code_info">查看消费详情</p>
         </div>
-      </div>
+      </div> -->
+      <img :src="codeUrl" alt="小程序二维码" style="width：100%">
       <div style="padding:10px 40px;text-align:center">
-        <div class="primary" @click="takeScreenshot()">保存到相册</div>
+        <div class="primary" @click="downImg">保存到相册</div>
       </div>
       <p style="font-size:12px;color:#666;text-align:center">保存后可打印到店内或分享给朋友。</p>
       <img src="" alt="" id="WximgQrCode">
@@ -28,7 +29,8 @@ import html2canvas from 'html2canvas'
 export default {
   data() {
     return {
-      data: ''
+      data: '',
+      codeUrl: ''
     }
   },
   methods: {
@@ -108,11 +110,21 @@ export default {
         this.id = res.data.id
         this.data = res.data
       }
+    },
+    async getCode() {
+      let res = await this.$api.STORE_WXCODE()
+      if (res.status === 1) {
+        this.codeUrl = res.message
+      }
+    },
+    downImg() {
+      this.$api.DOWN_IMG({url: this.codeUrl})
     }
   },
   mounted() {},
   activated() {
     this.getInfo()
+    this.getCode()
   }
 }
 </script>
