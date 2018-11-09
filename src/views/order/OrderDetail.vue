@@ -41,10 +41,11 @@
                 <v-icon name="icon-lujing1" color="#1690ff"></v-icon>
               </span>
             </div>
-           
+
             <div class="order-baseinfo-item clearfix">
               <span class="fl">销售人</span>
-              <span class="fr" v-if="data.sellEmployee">{{data.sellEmployee.name}}</span>
+              <span class="fr" v-if="data.sellEmployee.name">{{data.sellEmployee.name}}</span>
+              <span class="fr" v-else>-</span>
             </div>
             <div class="order-baseinfo-item clearfix">
               <span class="fl">创建时间</span>
@@ -69,7 +70,8 @@
           <div class="order-card-info">
              <div class="order-baseinfo-item clearfix">
               <span class="fl">进场时间</span>
-              <span class="fr">{{data.startTime}}</span>
+              <span class="fr" v-if="data.startTime">{{data.startTime}}</span>
+              <span class="fr" v-else>-</span>
             </div>
             <div class="order-baseinfo-item clearfix" @click="mileCurrentShow=true">
               <span class="fl">当前里程(km)</span>
@@ -79,11 +81,13 @@
             </div>
             <div class="order-baseinfo-item clearfix">
               <span class="fl">送车人</span>
-              <span class="fr">{{data.senderName}}</span>
+              <span class="fr" v-if="data.senderName">{{data.senderName}}</span>
+              <spn class="fr" v-else>-</spn>
             </div>
              <div class="order-baseinfo-item clearfix">
               <span class="fl">送车人电话</span>
-              <span class="fr">{{data.senderMobile}}</span>
+              <span class="fr" v-if="data.senderMobile">{{data.senderMobile}}</span>
+              <span class="fr" v-else>-</span>
             </div>
           </div>
         </div>
