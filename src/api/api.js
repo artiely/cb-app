@@ -1606,7 +1606,7 @@ const ACCOUNTDETAILSSTATUS_LIST = params => {
 /* 记账账户详情-启用状态接口 key：FinanceAccountApi */
 const STORE_WXCODE = params => {
   return fetch({
-    url: 'sts/si/store/wxa/wxacode',
+    url: 'sts/si/wxa/store/wxacode',
     method: 'post',
     data: params
   })

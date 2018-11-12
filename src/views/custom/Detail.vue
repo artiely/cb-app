@@ -188,14 +188,14 @@
     <van-popup v-model="cardTypeVisible" style="width:100%;height:70%" position="bottom" class="popup-radius" :lock-scroll="false">
       <v-popup-title title="客户卡包" desc="该处仅显示可用折扣卡/次卡" @close="cardTypeVisible = false"></v-popup-title>
       <!-- <p class="popup-scroll-tishi"></p> -->
-      <div class="popup-scroll-wrapper" style="background:#f0f0f0;top:62px;bottom:52px;">
-        <cube-scroll :data="data">
+      <div class="popup-scroll-wrapper" style="background:#f0f0f0;top:62px;bottom:52px;overflow-y:scroll">
+        <!-- <cube-scroll :data="data"> -->
           <div v-if="data.length" >
             <div  v-for="item in data" :key="item.id" style="padding:10px">
             <v-cb-card :currentCard="item"  btnText="办卡" @click-btn="toCard(item)" ></v-cb-card></div>
           </div>
           <div v-else class="motor-no-card">该客户暂无可用卡</div>
-        </cube-scroll>
+        <!-- </cube-scroll> -->
       </div>
       <div key="办理新卡" class="addNewcar addCar" @click="transactionNewCard" style="color:#1690ff">
         <v-icon name="icon-add_bg"></v-icon> 办理新卡</div>
@@ -204,8 +204,8 @@
     <!-- TIP: 选优惠券 -->
     <van-popup v-model="couponTypeVisible" style="width:100%;height:70%" position="bottom" :lock-scroll="false">
       <v-popup-title title="客户优惠券" desc="该处仅显示可用优惠券" @close="couponTypeVisible = false"></v-popup-title>
-      <div class="popup-scroll-wrapper" style="background:#f0f0f0;top:70px;bottom:50px;">
-        <cube-scroll>
+      <div class="popup-scroll-wrapper" style="background:#f0f0f0;top:70px;bottom:50px;overflow-y:scroll">
+        <!-- <cube-scroll> -->
           <div v-if="couponList.length>0">
             <div class="c-card-coupon-receive--wrapper " v-for="item in couponList" :key="item.id" >
               <div class="clearfix coupon-list">
@@ -236,7 +236,7 @@
             </div>
           </div>
           <div v-else class="motor-no-card">该客户暂无可用优惠券</div>
-        </cube-scroll>
+        <!-- </cube-scroll> -->
       </div>
       <div key="办理新卡" class="addNewcar addCar" @click="transactionNewCoupon">
         <v-icon name="icon-add_bg"></v-icon>送券</div>
@@ -284,7 +284,7 @@ export default {
       data: [],
       query: {
         pageNo: 1,
-        pageSize: 20,
+        pageSize: 50,
         cardType: '',
         usableType: '1', // 有效类型。1：有效 2：已过期 3：已用完。
         cardTypes: ['3', '2'],
