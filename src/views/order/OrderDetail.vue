@@ -679,8 +679,10 @@ export default {
   beforeRouteLeave(to, from, next) {
     // 刷新 refresh默认是false 做了操作后刷新（数据过大）
     to.params.refresh = this.refresh
-    // 离开页面清空图片()
-    this.$store.commit('CLEAR_NATIVE_PIC_ORDER')
+    // 离开页面 (不是开单清空图片)
+    if (to.path !== '/kaidan') {
+      this.$store.commit('CLEAR_NATIVE_PIC_ORDER')
+    }
     next()
   },
   activated() {
