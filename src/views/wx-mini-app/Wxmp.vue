@@ -27,7 +27,7 @@
                 <div class="cb_store-info">
                   <h1 style="font-size:20px;color:#333;font-weight:500">{{data.name}}</h1>
                   <p style="font-size:14px;color:#999;padding-top:5px;">
-                    <span v-for="item in data.categoryMap">{{item}} · </span>
+                    <span v-for="item in data.categoryMap" :key="item.id">{{item}} · </span>
                   </p>
                 </div>
               </div>
@@ -51,7 +51,7 @@
       <v-br height="44"></v-br>
       <p style="font-size:12px;padding:15px 0 0 15px;color:#666">宣传图片（最多 4 张）</p>
       <div style="display:flex">
-      <div v-for="(item,index) in wxPicList" class="cb_mp_box">
+      <div v-for="(item,index) in wxPicList" :key="index" class="cb_mp_box">
         <div class="cb_mp_item">
           <img :src="imgBaseUrl+item">
         </div>
