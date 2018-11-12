@@ -55,15 +55,13 @@ export default {
       let images = this.data.map(v => {
         return this.imgBaseUrl + v
       })
-      if (this.readonly) {
-        ImagePreview({
-          images: images,
-          startPosition: index,
-          onClose() {
-            // do something
-          }
-        })
-      }
+      ImagePreview({
+        images: images,
+        startPosition: index,
+        onClose() {
+          // do something
+        }
+      })
     },
     callNative() {
       this.$api.GET_CAMERA({ serviceType: 'kaidan' })
