@@ -97,8 +97,8 @@ export default {
           })
         }
       } else {
-        console.log('this.$route', this.$route)
-        console.log('this.$router', this.$router)
+        // console.log('this.$route', this.$route)
+        // console.log('this.$router', this.$router)
         this.$router.back()
       }
     },

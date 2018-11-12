@@ -251,6 +251,13 @@ export default {
         })
         this.currCoupon = ''
       }
+    },
+    $route(to, from) {
+      if (from.path === '/cashdesk' && to.path === '/index') {
+        this.$store.commit('CLEAR_ORDER_DATA', 0)
+      } else if (from.path === '/cashdesk' && to.path === '/ordersearch') {
+        this.$store.commit('CLEAR_ORDER_DATA', 1)
+      }
     }
   },
   methods: {
@@ -430,6 +437,7 @@ export default {
     this.couponList = []
     this.getEmployee()
     this.kuaidanOrderData = this.$store.state.order.kdOrderData
+    console.log('打印当前的开单订单状态 =', this.kuaidanOrderData)
     if (this.kuaidanOrderData === 0) {
       this.isNull()
     }
