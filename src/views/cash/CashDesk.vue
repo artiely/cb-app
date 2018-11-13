@@ -239,9 +239,6 @@ export default {
           ? this.orderOfCar.member.id
           : ''
     }
-    // kuaidanOrderData() {
-    //   return this.$store.state.order.kdOrderData
-    // }
   },
   watch: {
     orderPrice: {
