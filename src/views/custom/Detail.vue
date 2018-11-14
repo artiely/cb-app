@@ -25,10 +25,10 @@
                 <div class="top-cus-phone">
                   {{cusDate.username |telFormat()}}
                   <!-- <span class="telBox"> -->
-                  <a :href="'sms:'+ detailData.member.username" v-if="detailData&&detailData.member" class="smsTopPicBox" >
+                  <a :href="'sms:'+ detailData.member.username" v-if="detailData&&detailData.member" class="smsTopPicBox">
                     <v-icon class="smsTopPic" name="icon-dianhua-" color="#1690ff" size="20"></v-icon>
                   </a>
-                  <a :href="'tel:'+ detailData.member.username" v-if="detailData&&detailData.member" >
+                  <a :href="'tel:'+ detailData.member.username" v-if="detailData&&detailData.member">
                     <v-icon class="telTopPic" name="icon-dianhua-1" color="#1690ff" size="20"></v-icon>
                   </a>
                   <!-- </span> -->
@@ -42,7 +42,7 @@
                   <v-icon name="icon-dianhua-1" color="#1690ff"></v-icon>
                 </a>
               </div> -->
-              <div class="topMoreBox"  @click="toCusDetail">
+              <div class="topMoreBox" @click="toCusDetail">
                 更多
                 <v-icon class="link-icon topRight" name="icon-youjiantou1" color="#1790ff"></v-icon>
               </div>
@@ -109,7 +109,7 @@
                   </div>
                   <span class="tab-item-text">待结算</span>
                 </div>
-                <div class="detail-tab-item"  @click="toChargeRecords">
+                <div class="detail-tab-item" @click="toChargeRecords">
                   <div class="tab-item-icon">
                     {{cusDate.expendMoney?cusDate.expendMoney:0|currency('￥')}}
                   </div>
@@ -126,7 +126,7 @@
             <van-tabs v-model="currCarIndex" class="my-detail--tabs my-detail--tabs-nws" swipe-threshold="2">
               <van-tab v-for="(car,index) in detailData.motors" :title="car.licence|carIdFormat()" :key="index">
                 <v-cell-group>
-                  <v-cell title="车型" :text="car.motorModel?car.motorModel.name:''" van-if="car.motorModel" ></v-cell>
+                  <v-cell title="车型" :text="car.motorModel?car.motorModel.name:''" van-if="car.motorModel"></v-cell>
                   <v-cell title="最近养修时间" :text="car.lastOrderTime|timeFormat('YYYY-MM-DD')"></v-cell>
                   <v-cell title="最近养修里程(km)" :text="car.mileCurrent"></v-cell>
                   <v-cell title="该车辆历史养修订单" link @click.native="checkOrderByCar()" text=" "></v-cell>
@@ -146,7 +146,7 @@
                 <!-- <v-cell-group>
                   <v-cell title="备注" :text="car.remarks" wrap></v-cell>
                 </v-cell-group> -->
-                <v-remark v-model="car.remarks" disabled v-if="car.remarks" ></v-remark>
+                <v-remark v-model="car.remarks" disabled v-if="car.remarks"></v-remark>
                 <v-br height="20"></v-br>
                 <v-cell-group>
                   <v-cell title="编辑该车辆" text=" " class="editblue" @click.native="addCarFun('edit')"></v-cell>
@@ -190,11 +190,12 @@
       <!-- <p class="popup-scroll-tishi"></p> -->
       <div class="popup-scroll-wrapper" style="background:#f0f0f0;top:62px;bottom:52px;overflow-y:scroll">
         <!-- <cube-scroll :data="data"> -->
-          <div v-if="data.length" >
-            <div  v-for="item in data" :key="item.id" style="padding:10px">
-            <v-cb-card :currentCard="item"  btnText="办卡" @click-btn="toCard(item)" ></v-cb-card></div>
+        <div v-if="data.length">
+          <div v-for="item in data" :key="item.id" style="padding:10px">
+            <v-cb-card :currentCard="item" btnText="办卡" @click-btn="toCard(item)"></v-cb-card>
           </div>
-          <div v-else class="motor-no-card">该客户暂无可用卡</div>
+        </div>
+        <div v-else class="motor-no-card">该客户暂无可用卡</div>
         <!-- </cube-scroll> -->
       </div>
       <div key="办理新卡" class="addNewcar addCar" @click="transactionNewCard" style="color:#1690ff">
@@ -206,42 +207,17 @@
       <v-popup-title title="客户优惠券" desc="该处仅显示可用优惠券" @close="couponTypeVisible = false"></v-popup-title>
       <div class="popup-scroll-wrapper" style="background:#f0f0f0;top:70px;bottom:50px;overflow-y:scroll">
         <!-- <cube-scroll> -->
-          <div v-if="couponList.length>0">
-            <div class="c-card-coupon-receive--wrapper " v-for="item in couponList" :key="item.id" >
-              <div class="clearfix coupon-list">
-                <div class="c-card-coupon-receive--left">
-                  <h3 class="c-card-coupon-receive--title textover1">
-                    <span v-if="item.member && item.member.username">{{item.member.username | telFormat()}}</span>
-                    <span v-if="item.member&&item.member.name">{{item.member.name}}</span>
-                    
-                  </h3>
-                  <div class="c-card-coupon-receive--desc textover1" v-if="item.temp&&item.temp.name"> {{item.temp.name}}
-                    <v-badge v-if="item.temp.type==1" size="small" type="代金券">代金券</v-badge>
-                    <v-badge v-else class="success" size="small" type="礼品券">礼品券</v-badge>
-                  </div>
-                </div>
-                <div class="c-card-coupon-receive--right">
-                  <span class="up-circle"></span>
-                  <span class="dwn-circle"></span>
-                  <p class="c-card-coupon-receive--price">{{item.temp.moneyCondition|currency('￥')}}</p>
-                  <small class="c-card-coupon-receive--date">还有{{item.endUsableDate|timeFormatToDays}}天</small>
-                </div>
-              </div>
-              <div class="c-card-coupon-receive--footer clearfix" v-if="active==1">
-                <span class="fl">业务单号：
-                  <span style="color:#1690ff;text-decoration: underline">s</span>
-                </span>
-                <span class="fr">使用时间：2018-12-22</span>
-              </div>
-            </div>
-          </div>
-          <div v-else class="motor-no-card">该客户暂无可用优惠券</div>
+        <div v-if="couponList.length>0">
+          <!-- 客户优惠券数据 可预览 -->
+          <v-coupons-template :data="filterCouponList"></v-coupons-template>
+          <v-br height="20"></v-br>
+        </div>
+        <div v-else class="motor-no-card">该客户暂无可用优惠券</div>
         <!-- </cube-scroll> -->
       </div>
       <div key="办理新卡" class="addNewcar addCar" @click="transactionNewCoupon">
         <v-icon name="icon-add_bg"></v-icon>送券</div>
     </van-popup>
-
   </div>
 
 </template>
@@ -249,12 +225,17 @@
 <script>
 // FIXME: TypeError: Cannot read property 'licence' of undefined
 import OrderCustom from '../order/OrderCustom'
+// import VCouponPreview from '../ticket/CouponDetail'
 export default {
   components: {
     OrderCustom
+    // VCouponPreview
   },
   data() {
     return {
+      // previewShow: false, // 显示预览
+      storeInfo: '', // 数据
+      previewDetail: false, // 关闭优惠券预览
       dataReady: false,
       cardTypeVisible: false,
       couponTypeVisible: false,
@@ -282,6 +263,7 @@ export default {
       totalPage: 0,
       couponList: [],
       data: [],
+      previewDetailData: [],
       query: {
         pageNo: 1,
         pageSize: 50,
@@ -372,6 +354,12 @@ export default {
     }
   },
   computed: {
+    // 取temp
+    filterCouponList() {
+      return this.couponList.map(v => {
+        return {...v.temp, id: v.id, endUsableDate: v.endUsableDate ? v.endUsableDate : 'x'} // 把券数据循环  券id  有效期(过期时间)传到组件去
+      })
+    },
     chargeNum() {
       return this.detailData &&
         this.detailData.member &&
@@ -435,7 +423,7 @@ export default {
           title: '确定移至黑名单吗？',
           message: '移入后可在黑名单中查看或恢复。'
         })
-        .then(async() => {
+        .then(async () => {
           let res = await this.$api.CAR_DETAIL({ id: this.currCar.id })
           if (res.status === 1) {
             this.$toast.success('删除成功')
@@ -457,7 +445,7 @@ export default {
           title: '确定解绑吗？',
           message: '解绑后，该车辆将成为无主车辆。'
         })
-        .then(async() => {
+        .then(async () => {
           // on confirm
           let res = await this.$api.CAR_UNBIND({ id: this.currCar.id })
           if (res.status === 1) {
@@ -505,7 +493,7 @@ export default {
     async toVipCoupon() {
       // 客户优惠券
       if (this.cusDate.couponNum === 0) {
-      // this.$toast.fail('该功能尚未开通!')
+        // this.$toast.fail('该功能尚未开通!')
       }
       this.couponTypeVisible = true
       if (this.cusDate.id) {
@@ -520,12 +508,6 @@ export default {
           console.error('获取券失败')
         }
       }
-
-      // console.log(this.couponList)
-      // this.$router.push({
-      //   name: 'CouponReceive',
-      //   params: { cus: this.cusDate }
-      // })
     },
     toCoupon() {
       this.$router.push('/coupon')
@@ -765,8 +747,8 @@ export default {
 
 <style lang="less">
 @import '../../assets/style/var.less';
-.detailBox{
-  .c_header .c_header-isborder.c_header-border{
+.detailBox {
+  .c_header .c_header-isborder.c_header-border {
     background-image: none;
   }
 }
@@ -1251,7 +1233,7 @@ export default {
       bottom: -1px;
       left: -15px;
       border-radius: 30px 30px 0 0;
-      border-bottom: #f0f0f0;;
+      border-bottom: #f0f0f0;
     }
   }
 }

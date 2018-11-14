@@ -9,7 +9,7 @@
     <v-scroll-page top="44" bottom="50">
       <cube-scroll :data="activeCardList">
         <!-- <div class="c_tab--wrapper-new">
-            
+
           </div> -->
         <!-- TIP: 充值 -->
         <v-br height="20"></v-br>

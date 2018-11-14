@@ -1,8 +1,9 @@
 <template>
-  <van-popup :value="value" style="width:100%;height:100%;background:#e8e8e8" position="bottom">
+  <van-popup :value="value" style="width:100%;height:100%;background:#e8e8e8" get-container="body" position="bottom">
     <div>
       <!-- 预览 -->
-      <v-header title="优惠券预览" :left-click="handleLeft">
+      <v-header :title="showDetail?'客户优惠券预览':'优惠券预览'" :left-click="handleLeft">
+        <v-icon name="icon-shanchu1"></v-icon>
       </v-header>
       <v-scroll-page top="44" style="overflow-y:scroll">
         <div style="padding:10px">
@@ -21,11 +22,15 @@
           <div class="preview-body">
             <div class="preview-money" v-if="data.type==1">{{data.moneyReduce|currency('￥')}}</div>
             <div class="preview-money" v-else>{{data.moneyCondition|currency('￥')}}</div>
-            <p style="font-size:18px;color:#666;text-align:center;padding-bottom:5px">全店商品满立减</p>
-            <p style="font-size:14px;color:#999;text-align:center"> {{'满 '+data.moneyCondition+'元可用'}}</p>
-            <p style="font-size:14px;color:#999;text-align:center;padding-top:30px" v-if="data.restrictTimeType==1">{{data.restrictDateStart|timeFormat('YYYY.MM.DD')}} - {{data.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</p>
-            <p style="font-size:14px;color:#999;text-align:center;padding-top:30px" v-else>自领取 {{data.restrictDays}} 天有效</p>
-            <div></div>
+            <p class="preview-dec-tottom">全店商品满立减</p>
+            <p class="preview-dec-center"> {{'满 '+data.moneyCondition+'元可用'}}</p>
+            <!-- 客户优惠券预览 有效期=endUsableDate结束时间 -->
+            <p class="preview-dec-center preview-dec-top" v-if="data.endUsableDate">有效期至：{{data.endUsableDate|timeFormat('YYYY.MM.DD')}}</p>
+            <!-- 优惠券列表、选择优惠券 -->
+            <div v-else>
+               <p class="preview-dec-center preview-dec-top"  v-if="data.restrictTimeType==1">{{data.restrictDateStart|timeFormat('YYYY.MM.DD')}} - {{data.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</p>
+               <p class="preview-dec-center preview-dec-top"  v-else>自领取 {{data.restrictDays}} 天有效</p>
+            </div>
             <div class="preview-border">
               <div class="preview-dot dot-left"></div>
               <div style="padding:0 5px;overflow:hidden;height:30px">
@@ -68,6 +73,10 @@ export default {
     storeInfo: {
       type: Object,
       default: () => {}
+    },
+    showDetail: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -90,6 +99,21 @@ export default {
     font-weight: 600;
     padding: 25px 0 15px 0;
   }
+  .preview-dec-tottom{
+    font-size:18px;
+    color:#666;
+    text-align:center;
+    padding-bottom:5px;
+  }
+  .preview-dec-top{
+    padding-top:30px;
+  }
+  .preview-dec-center{
+    font-size:14px;
+    color:#999;
+    text-align:center;
+  }
+
 }
 .preview-li {
   line-height: 1.8;

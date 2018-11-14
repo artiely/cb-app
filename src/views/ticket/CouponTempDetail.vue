@@ -32,14 +32,26 @@
             <div class="fl">每人限领</div>
             <div class="fr">{{data.restrictNum+' 张'}}</div>
           </div>
-          <div class="clearfix cb_detail_item" v-if="data.restrictTimeType==2">
+
+          <!-- 客户优惠券预览 -->
+          <div v-if="data.endUsableDate">
+            <div class="clearfix cb_detail_item">
+              <div class="fl">有效期至</div>
+              <div class="fr">{{data.endUsableDate|timeFormat('YYYY.MM.DD')}}</div>
+            </div>
+          </div>
+
+          <div v-else>
+            <div class="clearfix cb_detail_item" v-if="data.restrictTimeType==2">
             <div class="fl">有效期至</div>
             <div class="fr">{{'自领取起' +data.restrictDays+ ' 天'}}</div>
+            </div>
+            <div class="clearfix cb_detail_item" v-if="data.restrictTimeType==1">
+              <div class="fl">有效期至</div>
+              <div class="fr">{{data.restrictDateStart|timeFormat('YYYY.MM.DD')}} ~ {{data.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</div>
+            </div>
           </div>
-          <div class="clearfix cb_detail_item" v-if="data.restrictTimeType==1">
-            <div class="fl">有效期至</div>
-            <div class="fr">{{data.restrictDateStart|timeFormat('YYYY.MM.DD')}} ~ {{data.restrictDateEnd|timeFormat('YYYY.MM.DD')}}</div>
-          </div>
+
           <div class="clearfix cb_detail_item">
             <div class="fl">使用时间</div>
             <div class="fr">{{data.restrictWeek}}</div>
@@ -129,7 +141,6 @@ export default {
       let res = await this.$api.COUPON_TEMP_DETAIL({ id: this.id })
       if (res.status === 1) {
         this.data = res.data
-        console.log('-----' + this.data)
         this.checked = res.data.status === '1'
       } else {
         console.error('获取详情失败')
@@ -179,6 +190,7 @@ export default {
     }
   },
   activated() {
+    console.log(this.$route.query.id)
     if (this.$route.query.id) {
       this.id = this.$route.query.id
       this.getData()
