@@ -162,6 +162,7 @@ export default {
   ); /* Firefox 3.6 - 15 */
   background: linear-gradient(left, #d40000, #ff2300);
   /* 标准的语法 */
+  overflow: visible; //滑动时红线闪动  覆盖overflow: hidden
 }
 .backgroundSpan {
   background: #971a28;
