@@ -5,11 +5,9 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const TransformModulesPlugin = require('webpack-transform-modules-plugin')
 const PostCompilePlugin = require('webpack-post-compile-plugin')
-
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
-
 const createLintingRule = () => ({
   test: /\.(js|vue)$/,
   loader: 'eslint-loader',
@@ -104,5 +102,6 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   },
-  plugins: [new PostCompilePlugin(), new TransformModulesPlugin()]
+  plugins: [new PostCompilePlugin(), new TransformModulesPlugin(),
+]
 }

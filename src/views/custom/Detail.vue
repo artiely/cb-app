@@ -204,7 +204,7 @@
     <!-- TIP: 选优惠券 -->
     <van-popup v-model="couponTypeVisible" style="width:100%;height:70%" position="bottom" :lock-scroll="false">
       <v-popup-title title="客户优惠券" desc="该处仅显示可用优惠券" @close="couponTypeVisible = false"></v-popup-title>
-      <div class="popup-scroll-wrapper" style="background:#f0f0f0;top:70px;bottom:50px;overflow-y:scroll">
+      <div class="popup-scroll-wrapper" style="background:#f0f0f0;top:70px;bottom:0px;overflow-y:scroll">
         <!-- <cube-scroll> -->
           <div v-if="couponList.length>0">
             <div class="c-card-coupon-receive--wrapper " v-for="item in couponList" :key="item.id" >
@@ -238,8 +238,8 @@
           <div v-else class="motor-no-card">该客户暂无可用优惠券</div>
         <!-- </cube-scroll> -->
       </div>
-      <div key="办理新卡" class="addNewcar addCar" @click="transactionNewCoupon">
-        <v-icon name="icon-add_bg"></v-icon>送券</div>
+      <!-- <div key="办理新卡" class="addNewcar addCar" @click="transactionNewCoupon">
+        <v-icon name="icon-add_bg"></v-icon>送券</div> -->
     </van-popup>
 
   </div>
@@ -402,6 +402,7 @@ export default {
     },
     transactionNewCoupon() {
       // TODO:
+      this.$router.push('/coupon')
     },
     checkOrderByCar() {
       this.$router.push({

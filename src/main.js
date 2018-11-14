@@ -137,6 +137,7 @@ new Vue({
   router,
   render: h => h(App)
 })
+
 // var _toast = null
 // setInterval(function() {
 //   var x = navigator.onLine
@@ -168,13 +169,3 @@ console.log(
   '%c车边团队提供技术支持 v2.0.0',
   'background:#1690ff;color:#fff;padding:4px 6px;font-weight:600'
 )
-
-/**
- * 移动端bug总结
- * 部分安卓机（小米）input获取焦点后 点击input外 无法失去焦点
- * 解决办法 特定操作是手动让input失去焦点
- * var input = document.getElementsByClassName('c_cell_input')
-      for (let i = 0; i < input.length; i++) {
-        input[i].blur()
-      }
- */

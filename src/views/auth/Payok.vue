@@ -62,7 +62,7 @@ export default {
           username: res.data.ownerEmployee.username || '',
           password: ''
         }
-        window.localStorage.setItem('__user__', JSON.stringify(params))
+        window.localStorage.setItem('__user__', encodeURI(JSON.stringify(params)))
       }
     },
     async getCode() {

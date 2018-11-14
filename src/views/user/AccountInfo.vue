@@ -53,6 +53,7 @@ export default {
       })
       this.$store.dispatch('logout').then(() => {
         toast.clear()
+        this.$store.commit('SET_AUTOLOGIN', false)
         this.$destroy()
       }).catch((e) => {
         this.$toast.fail(e)

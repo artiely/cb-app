@@ -15,6 +15,9 @@ let FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 // 生成script属性defer
 let ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 
+const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
+// const OmmitCSSPlugin = require('./ommit-css-webpack-plugin')
+
 const env =
   process.env.NODE_ENV === 'testing'
     ? require('../config/test.env')
@@ -56,6 +59,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       // This will result in *all* of your app's CSS being loaded upfront.
       allChunks: false
     }),
+     // inject skeleton content(DOM & CSS) into HTML
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
@@ -63,6 +67,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         ? { safe: true, map: { inline: false } }
         : { safe: true }
     }),
+    new OptimizeCSSPlugin(),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
@@ -114,7 +119,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       children: true,
       minChunks: 3
     }),
-
+    
     // copy custom static assets
     new CopyWebpackPlugin([
       {

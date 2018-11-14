@@ -123,6 +123,7 @@ export default {
           res = await this.$api.LOGIN(this.params)
           if (res.status === 1) {
             this.$store.commit('IS_EXP', false)
+            this.$store.commit('SET_AUTOLOGIN', true)
           }
         } else {
           res = await this.$api.LOGIN_EXP({
@@ -144,7 +145,7 @@ export default {
           }
           let _token = res.list ? res.list.length : 0
           window.sessionStorage.setItem('__token__', _token)
-          window.localStorage.setItem('__user__', JSON.stringify(this.params))
+          window.localStorage.setItem('__user__', encodeURI(JSON.stringify(this.params)))
           this.$router.push('/index')
           this.$store.commit('MENU_LIST', res.list)
         } else if (res.status === 10020) {
@@ -183,7 +184,7 @@ export default {
     if (this.$route.params.active) {
       this.currentPage = this.$route.params.active
     }
-    let accountInfo = window.localStorage.getItem('__user__')
+    let accountInfo = decodeURI(window.localStorage.getItem('__user__'))
     try {
       let obj = JSON.parse(accountInfo)
       if (typeof obj === 'object' && obj) {

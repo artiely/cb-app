@@ -207,17 +207,18 @@
   <script src="https://webapi.amap.com/maps?v=1.4.10&key=34e90f65ad52027c895004cf482bde35&plugin=AMap.Autocomplete,AMap.CitySearch,AMap.ToolBar"></script>
   <!--引入UI组件库（1.0版本） -->
 <script src="//webapi.amap.com/ui/1.0/main.js"></script>
+
 </head>
 
 <body>
-  <div class="scene" id="scene">
+  <!-- <div class="scene" id="scene">
     <div class="loader">
       <h1>欢迎访问车边店管家</h1>
       <span></span>
       <span></span>
       <span></span>
     </div>
-  </div>
+  </div> -->
   <div id="app"></div>
 
   <!-- built files will be auto injected -->
@@ -225,7 +226,7 @@
 <script>
   document.addEventListener("DOMContentLoaded", function (event) {
     console.log("DOM fully loaded and parsed");
-    document.getElementById('scene').style.display = 'none'
+    // document.getElementById('scene').style.display = 'none'
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");

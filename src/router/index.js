@@ -943,6 +943,7 @@ const router = new Router({
       }
     }
   },
+  mode: 'hash',
   routes
 })
 
@@ -951,7 +952,7 @@ Router.prototype.back = function() {
   router.go(-1)
 }
 let token = window.sessionStorage.getItem('__token__')
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // console.log('打印router的路由路径to =', to)
   // console.log('打印router的路由路径from =', from)
   // console.log('打印router的路由路径next =', next)
@@ -967,13 +968,14 @@ router.beforeEach((to, from, next) => {
   }
   //  快单中默认信息清空
   if (from.path === '/cashdesk' && to.path === '/index') {
-    console.log('执行到了这一步-----------传值为0')
+    // console.log('执行到了这一步-----------传值为0')
     store.commit('CLEAR_ORDER_DATA', 0)
   } else if (from.path === '/cashdesk' && to.path === '/ordersearch') {
     // 执行到了这一步-----------传值为1
-    console.log('执行到了这一步-----------传值为1')
+    // console.log('执行到了这一步-----------传值为1')
     store.commit('CLEAR_ORDER_DATA', 1)
   }
+  let accountInfo = decodeURI(window.localStorage.getItem('__user__'))
   if (to.meta.auth) {
     if (token && token !== 'undefined') {
       next({
@@ -982,12 +984,33 @@ router.beforeEach((to, from, next) => {
         }
       })
     } else {
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath
-        }
-      })
+      // 自动登录状态为true并且有用户信息就自动登录
+      try {
+        accountInfo = JSON.parse(accountInfo)
+      } catch (e) {
+        accountInfo = false
+      }
+      console.log('accountInfo', accountInfo)
+      if (store.state.sys.autoLogin && accountInfo) {
+        // 自动登录
+        // let loginRes = await api.LOGIN(accountInfo)
+        store.dispatch('login', accountInfo)
+        // .then(()=>{
+        //   next({
+        //     query: {
+        //       redirect: to.fullPath
+        //     }
+        //   })
+        // })
+        console.log(store)
+      } else {
+        next({
+          path: '/login',
+          query: {
+            redirect: to.fullPath
+          }
+        })
+      }
     }
   } else {
     next()

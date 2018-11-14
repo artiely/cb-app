@@ -129,8 +129,8 @@ export default {
       return this.$store.state.sys.isExp
     },
     storeName() {
-      return this.$store.state.sys.currentUser && this.$store.state.sys.currentUser.company && this.$store.state.sys.currentUser.company.name
-          ? this.$store.state.sys.currentUser.company.name
+      return this.$store.state.sys.currentUser && this.$store.state.sys.currentUser.store && this.$store.state.sys.currentUser.store.name
+          ? this.$store.state.sys.currentUser.store.name
           : '去编辑店铺名'
     }
   },

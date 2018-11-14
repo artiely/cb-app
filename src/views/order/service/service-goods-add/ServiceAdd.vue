@@ -1,11 +1,15 @@
 <template>
-  <div>
+  <div id="serviceadd">
     <v-header title="服务库/商品库" righticon="icon-xiaotubiao-20" :border="false" :left-click="handleLeft" @right-click="handlerFilter">
       <div slot="title">
         <v-tab-bar type="btn" :data="[{name:'服务库',id:0},{name:'商品库',id:1}]" v-model="active" style="background:#f8f8f8"></v-tab-bar>
       </div>
     </v-header>
-    <div class="goods-box">
+    <div v-show="!loadReady">
+      <v-br height="60"></v-br>
+      <img v-for="i in 10" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMTA4MCAyNjEiPjxkZWZzPjxwYXRoIGlkPSJiIiBkPSJNMCAwaDEwODB2MjYwSDB6Ii8+PGZpbHRlciBpZD0iYSIgd2lkdGg9IjIwMCUiIGhlaWdodD0iMjAwJSIgeD0iLTUwJSIgeT0iLTUwJSIgZmlsdGVyVW5pdHM9Im9iamVjdEJvdW5kaW5nQm94Ij48ZmVPZmZzZXQgZHk9Ii0xIiBpbj0iU291cmNlQWxwaGEiIHJlc3VsdD0ic2hhZG93T2Zmc2V0T3V0ZXIxIi8+PGZlQ29sb3JNYXRyaXggaW49InNoYWRvd09mZnNldE91dGVyMSIgdmFsdWVzPSIwIDAgMCAwIDAuOTMzMzMzMzMzIDAgMCAwIDAgMC45MzMzMzMzMzMgMCAwIDAgMCAwLjkzMzMzMzMzMyAwIDAgMCAxIDAiLz48L2ZpbHRlcj48L2RlZnM+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEpIj48dXNlIGZpbGw9IiMwMDAiIGZpbHRlcj0idXJsKCNhKSIgeGxpbms6aHJlZj0iI2IiLz48dXNlIGZpbGw9IiNGRkYiIHhsaW5rOmhyZWY9IiNiIi8+PHBhdGggZmlsbD0iI0Y2RjZGNiIgZD0iTTIzMCA0NGg1MzN2NDZIMjMweiIvPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iMTcyIiB4PSIzMCIgeT0iNDQiIGZpbGw9IiNGNkY2RjYiIHJ4PSI0Ii8+PHBhdGggZmlsbD0iI0Y2RjZGNiIgZD0iTTIzMCAxMThoMzY5djMwSDIzMHpNMjMwIDE4MmgzMjN2MzBIMjMwek04MTIgMTE1aDIzOHYzOUg4MTJ6TTgwOCAxODRoMjQydjMwSDgwOHpNOTE3IDQ4aDEzM3YzN0g5MTd6Ii8+PC9nPjwvc3ZnPg==">
+    </div>
+    <div class="goods-box" v-show="loadReady">
       <div>
         <v-search v-model="keywords" :placeholder="active==1?'编码/名称/品牌':'编码/名称'" style="margin:0;"></v-search>
       </div>
@@ -62,10 +66,11 @@ export default {
   },
   data() {
     return {
+      loadReady: false,
       actions: [
         {
           name: '全部库',
-          id: ' '
+          id: null
         },
         {
           name: '系统库',
@@ -201,7 +206,9 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+    this.loadReady = true
+  },
   beforeDestroy() {
     clearInterval(this.timer)
   },
@@ -220,5 +227,4 @@ export default {
 }
 </script>
 <style lang="less">
-
 </style>

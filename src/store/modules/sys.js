@@ -13,6 +13,7 @@ const state = {
   menuNav: [], // 当前用户可用功能
   unAuthMenu: [],
   messages: [],
+  autoLogin: false, // 自动登录的字段 在用户手动登陆后设置为true,手动退出后设置为false
   isExp: false, // 当前是否体验版
   product: {}, // 购买的产品
   smsNum: 0, // 短信余量
@@ -238,6 +239,9 @@ const mutations = {
   [types.IS_EXP](state, payload) {
     state.isExp = payload
   },
+  [types.SET_AUTOLOGIN](state, payload) {
+    state.autoLogin = payload
+  },
   [types.SET_MESSAGES](state, payload) {
     state.messages = payload
   },
@@ -313,6 +317,55 @@ const actions = {
       } else {
         console.error('退出失败')
         reject(new Error('退出失败'))
+      }
+    })
+  },
+  login({
+    commit
+  }, payload) {
+    return new Promise(async(resolve, reject) => {
+      let res = await api.LOGIN(payload)
+      if (res.status === 1) {
+        // 登录成功
+        // 获取功能权限
+        let res2 = await api.ROLE_MENU()
+        if (res2.status === 1) {
+          commit('SET_MENU_NAV', res2.list || [])
+          let add = []
+          // 手动添加权限 一组权限就是一组路径不可访问 没有列表的权限就没有对应的编辑的权限
+          res2.data.map(v => {
+            if (v.code === 'ChargeActiveList') {
+              add.push({
+                code: 'ChargeActive'
+              })
+            }
+            if (v.code === 'CardList') {
+              add.push({
+                code: 'ChargeTicket'
+              })
+            }
+            if (v.code === 'TempList') {
+              add.push({
+                code: 'TempEdit'
+              })
+            }
+          })
+
+          commit('UNAUTH_MENU', res2.data.concat(add))
+          console.log('获取的菜单结果', res2.list)
+        }
+        if (res.list.length === 0) {
+          this.$toast('获取权限失败！')
+          return
+        }
+        let _token = res.list ? res.list.length : 0
+        window.sessionStorage.setItem('__token__', _token)
+        window.localStorage.setItem('__user__', encodeURI(JSON.stringify(this.params)))
+        commit('MENU_LIST', res.list)
+        resolve()
+      } else {
+        console.error('登录失败')
+        reject(new Error('登录失败'))
       }
     })
   },
