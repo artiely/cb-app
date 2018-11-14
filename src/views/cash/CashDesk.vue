@@ -239,9 +239,6 @@ export default {
           ? this.orderOfCar.member.id
           : ''
     }
-    // kuaidanOrderData() {
-    //   return this.$store.state.order.kdOrderData
-    // }
   },
   watch: {
     orderPrice: {
@@ -250,6 +247,13 @@ export default {
           return v.temp.moneyCondition <= this.orderPrice
         })
         this.currCoupon = ''
+      }
+    },
+    $route(to, from) {
+      if (from.path === '/cashdesk' && to.path === '/index') {
+        this.$store.commit('CLEAR_ORDER_DATA', 0)
+      } else if (from.path === '/cashdesk' && to.path === '/ordersearch') {
+        this.$store.commit('CLEAR_ORDER_DATA', 1)
       }
     }
   },
