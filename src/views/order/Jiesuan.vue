@@ -22,11 +22,11 @@
         场景3 有车辆
         场景4 新车辆
         场景5 新客户
-        总结 只有有客户的情况下才有券 
+        总结 只有有客户的情况下才有券
           有客户还的区分是否有券 -->
         <v-br :height="5"></v-br>
         <v-cell-group>
-          <v-cell v-if="data.order&&data.order.member" title="优惠券" :link="couponList.length!==0&&filterCouponList.length!==0" :text="(couponList.length==0||filterCouponList.length==0)?'无可用券':(currCoupon?currCoupon.temp.name:filterCouponList.length+' 张可用')" @click.native="showCoupon" />
+          <v-cell v-if="data.order&&data.order.member" title="优惠券" :link="couponList.length!==0&&filterCouponList.length!==0" :text="(couponList.length==0||filterCouponList.length==0)?'无可用券':(currCoupon?currCoupon.name:filterCouponList.length+' 张可用')" @click.native="showCoupon" />
           <v-cell title="抹零" input v-model="query.moneyErasing" type="number" currency :maxValue="maxMoney"></v-cell>
         </v-cell-group>
         <div class="jiesuan-input-box">
@@ -49,7 +49,7 @@
     <van-popup v-model="couponShow" position="bottom" style="width:100%;height:70%;background:#f0f0f0" :lock-scroll="false">
       <v-popup-title title="请选择券" @close="couponShow=false"></v-popup-title>
       <div class="popup-scroll-wrapper" style="top:70px;">
-        <cube-scroll v-if="couponList" :data="filterCouponList">
+        <!-- <cube-scroll v-if="couponList" :data="filterCouponList">
           <div class="c-card-coupon--wrapper " v-for="item in filterCouponList " :class="{ 'active':currCoupon.id==item.id} " @click="choiceCoupon(item)" :key="item.key">
             <div class="c-card-coupon--title clearfix ">
               <div class="c-card-coupon--title--left textover1">{{item.temp.name}}
@@ -71,6 +71,11 @@
               <div class="c-card-coupon--footer--dot " style="right:-10px "></div>
             </div>
           </div>
+        </cube-scroll> -->
+        <cube-scroll v-if="couponList">
+          <!-- <div v-for="item in filterCouponList" :key="item.id"> -->
+          <v-coupons-template :data="filterCouponList" @click-detail="toDetail" selectItem></v-coupons-template>
+          <!-- </div> -->
         </cube-scroll>
       </div>
     </van-popup>
@@ -120,8 +125,8 @@ export default {
           (this.data && this.data.order.moneyLeft
             ? this.data.order.moneyLeft
             : 0) -
-          (this.currCoupon && this.currCoupon.temp.moneyReduce
-            ? this.currCoupon.temp.moneyReduce
+          (this.currCoupon && this.currCoupon.moneyReduce
+            ? this.currCoupon.moneyReduce
             : 0) -
           (val || 0)
         // 监听抹零金额 抹零金额改变 自动计算本次最大可结算金额
@@ -135,8 +140,8 @@ export default {
             ? this.data.order.moneyLeft
             : 0) -
           (this.query.moneyErasing || 0) -
-          (this.currCoupon && this.currCoupon.temp.moneyReduce
-            ? this.currCoupon.temp.moneyReduce
+          (this.currCoupon && this.currCoupon.moneyReduce
+            ? this.currCoupon.moneyReduce
             : 0)
         if (val > moneyLeft) {
           this.query.money = moneyLeft
@@ -184,7 +189,7 @@ export default {
           (this.data && this.data.order.moneyLeft
             ? this.data.order.moneyLeft
             : 0) -
-          (val && val.temp.moneyReduce ? val.temp.moneyReduce : 0) -
+          (val && val.moneyReduce ? val.moneyReduce : 0) -
           (this.query.moneyErasing ? this.query.moneyErasing : 0)
       },
       immediate: true
@@ -200,9 +205,13 @@ export default {
   },
   computed: {
     filterCouponList() {
-      return this.couponList.filter(v => {
-        return v.temp.moneyCondition <= this.data.order.moneyLeft
-      })
+      return this.couponList
+        .filter(v => {
+          return v.temp.moneyCondition <= this.data.order.moneyLeft
+        })
+        .map(v => {
+          return {...v.temp, id: v.id, endUsableDate: v.endUsableDate ? v.endUsableDate : 'x'}
+        })
     },
     orderOfCustomObject() {
       return this.$store.getters.orderOfCustomObject
@@ -218,8 +227,8 @@ export default {
         (this.data && this.data.order.moneyLeft
           ? this.data.order.moneyLeft
           : 0) -
-        (this.currCoupon && this.currCoupon.temp.moneyReduce
-          ? this.currCoupon.temp.moneyReduce
+        (this.currCoupon && this.currCoupon.moneyReduce
+          ? this.currCoupon.moneyReduce
           : 0)
       )
     },
@@ -237,8 +246,8 @@ export default {
         this.data && this.data.order.moneyLeft ? this.data.order.moneyLeft : 0
       let yhMoney = 0
       // 判断是否礼品券
-      if (this.currCoupon && this.currCoupon.temp.type === '1') {
-        yhMoney = this.currCoupon ? this.currCoupon.temp.moneyReduce : 0
+      if (this.currCoupon && this.currCoupon.type === '1') {
+        yhMoney = this.currCoupon ? this.currCoupon.moneyReduce : 0
       } else {
         yhMoney = 0
       }
@@ -256,8 +265,8 @@ export default {
       let ysMoney = this.data ? this.data.order.moneyLeft : 0
       let yhMoney = 0
       // 判断是否礼品券
-      if (this.currCoupon && this.currCoupon.temp.type === '1') {
-        yhMoney = this.currCoupon ? this.currCoupon.temp.moneyReduce : 0
+      if (this.currCoupon && this.currCoupon.type === '1') {
+        yhMoney = this.currCoupon ? this.currCoupon.moneyReduce : 0
       } else {
         yhMoney = 0
       }
@@ -297,7 +306,7 @@ export default {
       }
       this.payPopupVisible = true
     },
-    choiceCoupon(item) {
+    toDetail(item) {
       if (this.currCoupon && item.id === this.currCoupon.id) {
         this.currCoupon = ''
       } else {

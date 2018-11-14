@@ -33,6 +33,8 @@ import VSalePeople from './sale-people'
 import VFilterServiceGoods from './filter-service-goods'
 //
 import VHandovertop from './handovertop'
+// 优惠券
+import VCouponsTemplate from './coupons-template'
 // import VDatePicker from './datePicker'
 import { VFooter, VFooterItem } from './footer'
 
@@ -74,7 +76,8 @@ const components = {
   // VTextarea,
   VKeyboardNum,
   // VCellRadio
-  VHandovertop
+  VHandovertop,
+  VCouponsTemplate
 }
 
 const install = function(Vue, Option = {}) {

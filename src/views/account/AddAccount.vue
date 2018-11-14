@@ -14,7 +14,7 @@
         <!-- 新增记账账户 -->
         <v-cell-group style="margin-bottom:0">
           <v-cell title="账号名称" required input v-model="query.accountName" placeholder='如“老板娘的微信” (10字内)' :maxlength="10"></v-cell>
-          <v-cell title="期初余额" placeholder="请输入改账户期初金额，可不填" type="number" currency input v-model="query.accountBalance"></v-cell>
+          <v-cell title="期初余额" placeholder="请输入该账户期初金额，可不填" type="number" currency input v-model="query.accountBalance"></v-cell>
         </v-cell-group>
 
         <v-remark v-model="query.remarks"></v-remark>
@@ -60,8 +60,8 @@ export default {
       cardDateShow: false, // 选择卡类型
       data: [
         { name: '银行/卡', accountType: 1 },
-        { name: '支付宝', accountType: 2 },
-        { name: '微信', accountType: 3 }
+        { name: '微信支付', accountType: 3 },
+        { name: '支付宝', accountType: 2 }
       ]
     }
   },

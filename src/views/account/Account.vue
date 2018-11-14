@@ -7,7 +7,7 @@
     <v-scroll-page top="90" style="overflow-y:scroll">
       <div v-if="data.length>0">
         <div class="clearfix" v-if="valShow==0">
-          <span class="refresh">拖动刷新</span>
+          <span class="refresh">拖动排序</span>
         </div>
         <v-br height="20" v-if="valShow==1"></v-br>
         <div class="account">
@@ -199,7 +199,9 @@ export default {
 
   .refresh {
     float: right;
-    color: #b0b0b0;
+    font-size: 12px;
+    // color: #b0b0b0;
+    color: #333;
     padding: 18px 15px 6px 0;
   }
   .account {
@@ -225,7 +227,7 @@ export default {
     background: #fff;
   }
   .account_info:not(:last-child) {
-    .borderB();
+     .borderB();
   }
   .account_dec,
   .moneyIcon {
@@ -253,9 +255,9 @@ export default {
   }
   .account_sort_bg i {
     font-size: 10px !important;
+    color: #333;
   }
-  .font_min,
-  .account_sort_bg i {
+  .font_min{
     color: #999;
   }
   .details {
@@ -284,5 +286,10 @@ export default {
   .disabled {
     display: none;
   }
+  // .icon-shunxuqiehuan{
+  //   icon{
+  //     font-size: 6px ;
+  //   }
+  // }
 }
 </style>

@@ -88,6 +88,7 @@ export default {
 }
 </script>
 <style lang="less">
+
 .index-grid-box {
   display: flex;
 }
