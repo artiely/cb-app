@@ -831,6 +831,14 @@ const routes = [
     }
   },
   {
+    path: '/helpcenter',
+    name: 'helpCenter',
+    component: lazyLoad('user/helpCenter'),
+    meta: {
+      auth: true
+    }
+  },
+  {
     path: '/store',
     name: 'store',
     component: lazyLoad('user/store'),
